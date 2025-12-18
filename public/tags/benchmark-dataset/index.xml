@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Benchmark Dataset on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/benchmark-dataset/</link>
+    <description>Recent content in Benchmark Dataset on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Sat, 13 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/benchmark-dataset/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MeltwaterBench: Deep learning for spatiotemporal downscaling of surface meltwater</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/meltwaterbench-deep-learning-for-spatiotemporal-downscaling-of-surface-meltwater/</link>
+      <pubDate>Sat, 13 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/meltwaterbench-deep-learning-for-spatiotemporal-downscaling-of-surface-meltwater/</guid>
+      <description>Abstract The Greenland ice sheet is melting at an accelerated rate due to processes that are not fully understood and hard to measure. The distribution of surface meltwater can help understand these processes and is observable through remote sensing, but current maps of meltwater face a trade-off: They are either high-resolution in time or space, but not both. We develop a deep learning model that creates gridded surface meltwater maps at daily 100m resolution by fusing data streams from remote sensing observations and physics-based models.</description>
+    </item>
+    
+  </channel>
+</rss>

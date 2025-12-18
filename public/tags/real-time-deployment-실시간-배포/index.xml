@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Real-Time Deployment (실시간 배포) on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/real-time-deployment-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EB%B0%B0%ED%8F%AC/</link>
+    <description>Recent content in Real-Time Deployment (실시간 배포) on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Sun, 07 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/real-time-deployment-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EB%B0%B0%ED%8F%AC/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DAUNet: A Lightweight UNet Variant with Deformable Convolutions and Parameter-Free Attention for Medical Image Segmentation</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/daunet-a-lightweight-unet-variant-with-deformable-convolutions-and-parameter-free-attention-for-medical-image-segmentation/</link>
+      <pubDate>Sun, 07 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/daunet-a-lightweight-unet-variant-with-deformable-convolutions-and-parameter-free-attention-for-medical-image-segmentation/</guid>
+      <description>Abstract Medical image segmentation plays a pivotal role in automated diagnostic and treatment planning systems. In this work, we present DAUNet, a novel lightweight UNet variant that integrates Deformable V2 Convolutions and Parameter-Free Attention (SimAM) to improve spatial adaptability and context-aware feature fusion without increasing model complexity. DAUNet&amp;rsquo;s bottleneck employs dynamic deformable kernels to handle geometric variations, while the decoder and skip pathways are enhanced using SimAM attention modules for saliency-aware refinement.</description>
+    </item>
+    
+  </channel>
+</rss>

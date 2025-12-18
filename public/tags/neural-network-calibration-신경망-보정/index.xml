@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Neural Network Calibration (신경망 보정) on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/neural-network-calibration-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%EB%B3%B4%EC%A0%95/</link>
+    <description>Recent content in Neural Network Calibration (신경망 보정) on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Wed, 26 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/neural-network-calibration-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%EB%B3%B4%EC%A0%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Integrating LSTM Networks with Neural Levy Processes for Financial Forecasting</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/integrating-lstm-networks-with-neural-levy-processes-for-financial-forecasting/</link>
+      <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/integrating-lstm-networks-with-neural-levy-processes-for-financial-forecasting/</guid>
+      <description>Abstract This paper investigates an optimal integration of deep learning with financial models for robust asset price forecasting. Specifically, we developed a hybrid framework combining a Long Short-Term Memory (LSTM) network with the Merton-Lévy jump-diffusion model. To optimise this framework, we employed the Grey Wolf Optimizer (GWO) for the LSTM hyperparameter tuning, and we explored three calibration methods for the Merton-Levy model parameters: Artificial Neural Networks (ANNs), the Marine Predators Algorithm (MPA), and the PyTorch-based TorchSDE library.</description>
+    </item>
+    
+  </channel>
+</rss>

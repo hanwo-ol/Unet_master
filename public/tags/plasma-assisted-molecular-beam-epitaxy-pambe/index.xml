@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Plasma-Assisted Molecular Beam Epitaxy (PAMBE) on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/plasma-assisted-molecular-beam-epitaxy-pambe/</link>
+    <description>Recent content in Plasma-Assisted Molecular Beam Epitaxy (PAMBE) on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Wed, 17 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/plasma-assisted-molecular-beam-epitaxy-pambe/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fabrication of (In,Ga)N pseudo-substrates by a three-step growth protocol without ex-situ processing</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/fabrication-of-ingan-pseudo-substrates-by-a-three-step-growth-protocol-without-ex-situ-processing/</link>
+      <pubDate>Wed, 17 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/fabrication-of-ingan-pseudo-substrates-by-a-three-step-growth-protocol-without-ex-situ-processing/</guid>
+      <description>Abstract We fabricate (In,Ga)N pseudo-substrates with a total thickness of ~1 um grown on GaN templates using plasma-assisted molecular beam epitaxy. In a three-step process, we change growth conditions from N-rich to metal-rich in order to sequentially form a roughened GaN layer, relaxed (In,Ga)N nanostructures, and a coalesced, smooth (In,Ga)N layer. Samples are analyzed by scanning electron and atomic force microscopy, X-ray diffraction, as well as photo- and cathodoluminescence spectroscopy. Compared to a reference layer grown directly on GaN, the pseudo-substrate exhibits a higher In content (~0.</description>
+    </item>
+    
+  </channel>
+</rss>

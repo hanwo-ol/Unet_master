@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>UNet Hybrid Architecture on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/unet-hybrid-architecture/</link>
+    <description>Recent content in UNet Hybrid Architecture on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Mon, 08 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/unet-hybrid-architecture/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Robust Variational Model Based Tailored UNet: Leveraging Edge Detector and Mean Curvature for Improved Image Segmentation</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/robust-variational-model-based-tailored-unet-leveraging-edge-detector-and-mean-curvature-for-improved-image-segmentation/</link>
+      <pubDate>Mon, 08 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/robust-variational-model-based-tailored-unet-leveraging-edge-detector-and-mean-curvature-for-improved-image-segmentation/</guid>
+      <description>Abstract To address the challenge of segmenting noisy images with blurred or fragmented boundaries, this paper presents a robust version of Variational Model Based Tailored UNet (VM_TUNet), a hybrid framework that integrates variational methods with deep learning. The proposed approach incorporates physical priors, an edge detector and a mean curvature term, into a modified Cahn-Hilliard equation, aiming to combine the interpretability and boundary-smoothing advantages of variational partial differential equations (PDEs) with the strong representational ability of deep neural networks.</description>
+    </item>
+    
+  </channel>
+</rss>
