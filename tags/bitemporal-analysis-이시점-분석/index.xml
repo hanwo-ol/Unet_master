@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>**Bitemporal Analysis (이시점 분석)** on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/bitemporal-analysis-%EC%9D%B4%EC%8B%9C%EC%A0%90-%EB%B6%84%EC%84%9D/</link>
+    <description>Recent content in **Bitemporal Analysis (이시점 분석)** on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Mon, 24 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/bitemporal-analysis-%EC%9D%B4%EC%8B%9C%EC%A0%90-%EB%B6%84%EC%84%9D/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Satellite to Street : Disaster Impact Estimator</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/satellite-to-street-disaster-impact-estimator/</link>
+      <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/satellite-to-street-disaster-impact-estimator/</guid>
+      <description>Abstract Accurate post-disaster damage assessment is of high importance for prioritizing emergency response; however, manual interpretation of satellite imagery is slow, subjective, and hard to scale. While deep-learning models for image segmentation, such as U-Net-based baselines and change-detection models, are useful baselines, they often struggle with subtle structural variations and severe class imbalance, yielding poor detection of highly damaged regions. The present work proposes a deep-learning framework that jointly processes pre- and post-disaster satellite images to obtain fine-grained pixel-level damage maps: Satellite-to-Street: Disaster Impact Estimator.</description>
+    </item>
+    
+  </channel>
+</rss>

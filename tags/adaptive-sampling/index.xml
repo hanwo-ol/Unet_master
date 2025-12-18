@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Adaptive Sampling on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/adaptive-sampling/</link>
+    <description>Recent content in Adaptive Sampling on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Tue, 02 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/adaptive-sampling/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/a-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media/</link>
+      <pubDate>Tue, 02 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/a-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media/</guid>
+      <description>Abstract This study proposes a new discrete neural operator for surrogate modeling of transient Darcy flow fields in heterogeneous porous media with random parameters. The new method integrates temporal encoding, operator learning and UNet to approximate the mapping between vector spaces of random parameter and spatiotemporal flow fields. The new discrete neural operator can achieve higher prediction accuracy than the SOTA attention-residual-UNet structure. Derived from the finite volume method, the transmissibility matrices rather than permeability is adopted as the inputs of surrogates to enhance the prediction accuracy further.</description>
+    </item>
+    
+  </channel>
+</rss>

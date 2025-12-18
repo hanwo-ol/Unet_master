@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Spatiotemporal Downscaling (시공간 다운스케일링) on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/spatiotemporal-downscaling-%EC%8B%9C%EA%B3%B5%EA%B0%84-%EB%8B%A4%EC%9A%B4%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81/</link>
+    <description>Recent content in Spatiotemporal Downscaling (시공간 다운스케일링) on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/spatiotemporal-downscaling-%EC%8B%9C%EA%B3%B5%EA%B0%84-%EB%8B%A4%EC%9A%B4%EC%8A%A4%EC%BC%80%EC%9D%BC%EB%A7%81/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spatiotemporal Satellite Image Downscaling with Transfer Encoders and Autoregressive Generative Models</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/spatiotemporal-satellite-image-downscaling-with-transfer-encoders-and-autoregressive-generative-models/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/spatiotemporal-satellite-image-downscaling-with-transfer-encoders-and-autoregressive-generative-models/</guid>
+      <description>Abstract We present a transfer-learning generative downscaling framework to reconstruct fine resolution satellite images from coarse scale inputs. Our approach combines a lightweight U-Net transfer encoder with a diffusion-based generative model. The simpler U-Net is first pretrained on a long time series of coarse resolution data to learn spatiotemporal representations; its encoder is then frozen and transferred to a larger downscaling model as physically meaningful latent features. Our application uses NASA&amp;rsquo;s MERRA-2 reanalysis as the low resolution source domain (50 km) and the GEOS-5 Nature Run (G5NR) as the high resolution target (7 km).</description>
+    </item>
+    
+  </channel>
+</rss>

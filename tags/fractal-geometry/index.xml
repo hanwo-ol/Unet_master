@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Fractal Geometry on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/fractal-geometry/</link>
+    <description>Recent content in Fractal Geometry on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/fractal-geometry/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multifractal Recalibration of Neural Networks for Medical Imaging Segmentation</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/multifractal-recalibration-of-neural-networks-for-medical-imaging-segmentation/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/multifractal-recalibration-of-neural-networks-for-medical-imaging-segmentation/</guid>
+      <description>Abstract Multifractal analysis has revealed regularities in many self-seeding phenomena, yet its use in modern deep learning remains limited. Existing end-to-end multifractal methods rely on heavy pooling or strong feature-space decimation, which constrain tasks such as semantic segmentation. Motivated by these limitations, we introduce two inductive priors: Monofractal and Multifractal Recalibration. These methods leverage relationships between the probability mass of the exponents and the multifractal spectrum to form statistical descriptions of encoder embeddings, implemented as channel-attention functions in convolutional networks.</description>
+    </item>
+    
+  </channel>
+</rss>

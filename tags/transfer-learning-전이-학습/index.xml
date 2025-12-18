@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Transfer Learning (전이 학습) on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/transfer-learning-%EC%A0%84%EC%9D%B4-%ED%95%99%EC%8A%B5/</link>
+    <description>Recent content in Transfer Learning (전이 학습) on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/transfer-learning-%EC%A0%84%EC%9D%B4-%ED%95%99%EC%8A%B5/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spatiotemporal Satellite Image Downscaling with Transfer Encoders and Autoregressive Generative Models</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/spatiotemporal-satellite-image-downscaling-with-transfer-encoders-and-autoregressive-generative-models/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/spatiotemporal-satellite-image-downscaling-with-transfer-encoders-and-autoregressive-generative-models/</guid>
+      <description>Abstract We present a transfer-learning generative downscaling framework to reconstruct fine resolution satellite images from coarse scale inputs. Our approach combines a lightweight U-Net transfer encoder with a diffusion-based generative model. The simpler U-Net is first pretrained on a long time series of coarse resolution data to learn spatiotemporal representations; its encoder is then frozen and transferred to a larger downscaling model as physically meaningful latent features. Our application uses NASA&amp;rsquo;s MERRA-2 reanalysis as the low resolution source domain (50 km) and the GEOS-5 Nature Run (G5NR) as the high resolution target (7 km).</description>
+    </item>
+    
+  </channel>
+</rss>

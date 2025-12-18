@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Lévy Processes (Lévy 프로세스) on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/l%C3%A9vy-processes-l%C3%A9vy-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4/</link>
+    <description>Recent content in Lévy Processes (Lévy 프로세스) on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Sat, 03 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/l%C3%A9vy-processes-l%C3%A9vy-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fast Likelihood-Free Parameter Estimation for Lévy Processes</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/fast-likelihood-free-parameter-estimation-for-lvy-processes/</link>
+      <pubDate>Sat, 03 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/fast-likelihood-free-parameter-estimation-for-lvy-processes/</guid>
+      <description>Abstract Lévy processes are widely used in financial modeling due to their ability to capture discontinuities and heavy tails, which are common in high-frequency asset return data. However, parameter estimation remains a challenge when associated likelihoods are unavailable or costly to compute. We propose a fast and accurate method for Lévy parameter estimation using the neural Bayes estimation (NBE) framework &amp;ndash; a simulation-based, likelihood-free approach that leverages permutation-invariant neural networks to approximate Bayes estimators.</description>
+    </item>
+    
+  </channel>
+</rss>

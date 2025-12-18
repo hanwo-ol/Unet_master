@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Multi-Agent System (다중 에이전트 시스템) on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/multi-agent-system-%EB%8B%A4%EC%A4%91-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EC%8B%9C%EC%8A%A4%ED%85%9C/</link>
+    <description>Recent content in Multi-Agent System (다중 에이전트 시스템) on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Mon, 24 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/multi-agent-system-%EB%8B%A4%EC%A4%91-%EC%97%90%EC%9D%B4%EC%A0%84%ED%8A%B8-%EC%8B%9C%EC%8A%A4%ED%85%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cognitive Alpha Mining via LLM-Driven Code-Based Evolution</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/cognitive-alpha-mining-via-llm-driven-code-based-evolution/</link>
+      <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/cognitive-alpha-mining-via-llm-driven-code-based-evolution/</guid>
+      <description>Abstract Discovering effective predictive signals, or ``alphas,&amp;rsquo;&amp;rsquo; from financial data with high dimensionality and extremely low signal-to-noise ratio remains a difficult open problem. Despite progress in deep learning, genetic programming, and, more recently, large language model (LLM)&amp;ndash;based factor generation, existing approaches still explore only a narrow region of the vast alpha search space. Neural models tend to produce opaque and fragile patterns, while symbolic or formula-based methods often yield redundant or economically ungrounded expressions that generalize poorly.</description>
+    </item>
+    
+  </channel>
+</rss>

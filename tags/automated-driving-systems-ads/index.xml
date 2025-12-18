@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Automated Driving Systems (ADS) on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/automated-driving-systems-ads/</link>
+    <description>Recent content in Automated Driving Systems (ADS) on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language>
+    <lastBuildDate>Wed, 17 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/automated-driving-systems-ads/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Can AI Generate more Comprehensive Test Scenarios? Review on Automated Driving Systems Test Scenario Generation Methods</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/can-ai-generate-more-comprehensive-test-scenarios-review-on-automated-driving-systems-test-scenario-generation-methods/</link>
+      <pubDate>Wed, 17 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/can-ai-generate-more-comprehensive-test-scenarios-review-on-automated-driving-systems-test-scenario-generation-methods/</guid>
+      <description>Abstract Ensuring the safety and reliability of Automated Driving Systems (ADS) remains a critical challenge, as traditional verification methods such as large-scale on-road testing are prohibitively costly and time-consuming.To address this,scenario-based testing has emerged as a scalable and efficient alternative,yet existing surveys provide only partial coverage of recent methodological and technological advances.This review systematically analyzes 31 primary studies,and 10 surveys identified through a comprehensive search spanning 2015~2025;however,the in-depth methodological synthesis and comparative evaluation focus primarily on recent frameworks(2023~2025),reflecting the surge of Artificial Intelligent(AI)-assisted and multimodal approaches in this period.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Neural Networks (NN) / Non-parametric Estimation on Research Agent Knowledge Base</title>
+    <link>https://hanwo-ol.github.io/Unet_master/tags/neural-networks-nn-/-non-parametric-estimation/</link>
+    <description>Recent content in Neural Networks (NN) / Non-parametric Estimation on Research Agent Knowledge Base</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ko-kr</language><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/neural-networks-nn-/-non-parametric-estimation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Neural Networks for Tamed Milstein Approximation of SDEs with Additive Symmetric Jump Noise Driven by a Poisson Random Measure</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/neural-networks-for-tamed-milstein-approximation-of-sdes-with-additive-symmetric-jump-noise-driven-by-a-poisson-random-measure/</link>
+      <pubDate>Sun, 06 Jul 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/neural-networks-for-tamed-milstein-approximation-of-sdes-with-additive-symmetric-jump-noise-driven-by-a-poisson-random-measure/</guid>
+      <description>Abstract This work aims to estimate the drift and diffusion functions in stochastic differential equations (SDEs) driven by a particular class of Lévy processes with finite jump intensity, using neural networks. We propose a framework that integrates the Tamed-Milstein scheme with neural networks employed as non-parametric function approximators. Estimation is carried out in a non-parametric fashion for the drift function $f: \mathbb{Z} \to \mathbb{R}$, the diffusion coefficient $g: \mathbb{Z} \to \mathbb{R}$.</description>
+    </item>
+    
+  </channel>
+</rss>
