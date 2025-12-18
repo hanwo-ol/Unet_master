@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Fast Likelihood-Free Parameter Estimation for Lévy Processes | Research Agent Knowledge Base</title>
+<meta name="keywords" content="Auto-Generated, Draft">
+<meta name="description" content="Abstract Lévy processes are widely used in financial modeling due to their ability to capture discontinuities and heavy tails, which are common in high-frequency asset return data. However, parameter estimation remains a challenge when associated likelihoods are unavailable or costly to compute. We propose a fast and accurate method for Lévy parameter estimation using the neural Bayes estimation (NBE) framework &ndash; a simulation-based, likelihood-free approach that leverages permutation-invariant neural networks to approximate Bayes estimators.">
+<meta name="author" content="">
+<link rel="canonical" href="https://hanwo-ol.github.io/Unet_master/posts/fast-likelihood-free-parameter-estimation-for-lvy-processes/">
+<link crossorigin="anonymous" href="/Unet_master/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="sha256-YqolQneX&#43;O/YcwGltpeV3FDfLb55pfugZIzHu42818k=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/Unet_master/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity="sha256-rLVP0yu8GYJCi4hQMX5F0Ha5UBJzClk2Zn5rwhd3aSo="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://hanwo-ol.github.io/Unet_master/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hanwo-ol.github.io/Unet_master/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hanwo-ol.github.io/Unet_master/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hanwo-ol.github.io/Unet_master/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hanwo-ol.github.io/Unet_master/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Fast Likelihood-Free Parameter Estimation for Lévy Processes" />
+<meta property="og:description" content="Abstract Lévy processes are widely used in financial modeling due to their ability to capture discontinuities and heavy tails, which are common in high-frequency asset return data. However, parameter estimation remains a challenge when associated likelihoods are unavailable or costly to compute. We propose a fast and accurate method for Lévy parameter estimation using the neural Bayes estimation (NBE) framework &ndash; a simulation-based, likelihood-free approach that leverages permutation-invariant neural networks to approximate Bayes estimators." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hanwo-ol.github.io/Unet_master/posts/fast-likelihood-free-parameter-estimation-for-lvy-processes/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-05-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-05-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Fast Likelihood-Free Parameter Estimation for Lévy Processes"/>
+<meta name="twitter:description" content="Abstract Lévy processes are widely used in financial modeling due to their ability to capture discontinuities and heavy tails, which are common in high-frequency asset return data. However, parameter estimation remains a challenge when associated likelihoods are unavailable or costly to compute. We propose a fast and accurate method for Lévy parameter estimation using the neural Bayes estimation (NBE) framework &ndash; a simulation-based, likelihood-free approach that leverages permutation-invariant neural networks to approximate Bayes estimators."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Fast Likelihood-Free Parameter Estimation for Lévy Processes",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/fast-likelihood-free-parameter-estimation-for-lvy-processes/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Fast Likelihood-Free Parameter Estimation for Lévy Processes",
+  "name": "Fast Likelihood-Free Parameter Estimation for Lévy Processes",
+  "description": "Abstract Lévy processes are widely used in financial modeling due to their ability to capture discontinuities and heavy tails, which are common in high-frequency asset return data. However, parameter estimation remains a challenge when associated likelihoods are unavailable or costly to compute. We propose a fast and accurate method for Lévy parameter estimation using the neural Bayes estimation (NBE) framework \u0026ndash; a simulation-based, likelihood-free approach that leverages permutation-invariant neural networks to approximate Bayes estimators.",
+  "keywords": [
+    "Auto-Generated", "Draft"
+  ],
+  "articleBody": "Abstract Lévy processes are widely used in financial modeling due to their ability to capture discontinuities and heavy tails, which are common in high-frequency asset return data. However, parameter estimation remains a challenge when associated likelihoods are unavailable or costly to compute. We propose a fast and accurate method for Lévy parameter estimation using the neural Bayes estimation (NBE) framework – a simulation-based, likelihood-free approach that leverages permutation-invariant neural networks to approximate Bayes estimators. We contribute new theoretical results, showing that NBE results in consistent estimators whose risk converges to the Bayes estimator under mild conditions. Moreover, through extensive simulations across several Lévy models, we show that NBE outperforms traditional methods in both accuracy and runtime, while also enabling two complementary approaches to uncertainty quantification. We illustrate our approach on a challenging high-frequency cryptocurrency return dataset, where the method captures evolving parameter dynamics and delivers reliable and interpretable inference at a fraction of the computational cost of traditional methods. NBE provides a scalable and practical solution for inference in complex financial models, enabling parameter estimation and uncertainty quantification over an entire year of data in just seconds. We additionally investigate nearly a decade of high-frequency Bitcoin returns, requiring less than one minute to estimate parameters under the proposed approach.\nPDF Download PDF Download Local PDF View | Arxiv Original\n이 논문은 Lévy 프로세스의 매개변수 추정을 위한 빠르고 정확한 우도-자유(Likelihood-Free) 방법인 신경망 베이즈 추정(Neural Bayes Estimation, NBE) 프레임워크를 제안합니다.\n1. 요약 (Executive Summary) 문제 정의: 금융 모델링에 널리 사용되는 Lévy 프로세스는 불연속성과 두꺼운 꼬리(heavy tails)를 포착하는 데 유용하지만, 복잡한 모델(예: Deep Variance Gamma, DVG)의 경우 우도(likelihood) 함수를 계산하기 어렵거나 불가능하여 매개변수 추정에 어려움이 있습니다. 해결책 제안: 시뮬레이션 기반의 우도-자유 접근 방식인 NBE를 사용하여 베이즈 추정량을 근사합니다. 특히, Lévy 프로세스 증분(increments)의 순열 불변성(permutation invariance)을 활용하기 위해 DeepSets 기반 신경망 아키텍처를 채택했습니다. 이론적 기여: NBE 추정량이 일관성(consistent)을 가지며, 온화한 조건 하에서 베이즈 추정량으로 위험(risk)이 수렴한다는 새로운 이론적 결과를 제공하여 방법론의 대규모 표본 행동에 대한 형식적인 보장을 확립했습니다. 성능 우위: Compound Poisson, Merton, Variance Gamma 등 여러 표준 Lévy 모델에 대한 광범위한 시뮬레이션에서, NBE는 기존의 고전적인 방법(LSQ, MELE) 대비 **정확도(RMSE)**와 계산 효율성(Runtime) 모두에서 일관되게 우수한 성능을 보였습니다. 실제 적용 및 속도: 고빈도 암호화폐 수익률 데이터(9년간의 비트코인 1분 데이터 포함)에 적용한 결과, NBE는 전체 데이터에 대한 일일 매개변수 추정 및 불확실성 정량화를 단 몇 초 만에 완료하여, 기존 방법 대비 수백 배에서 수천 배 빠른 속도(Amortized Inference)를 입증했습니다. 2. 7가지 핵심 질문 분석 (Key Analysis) 1) What is new in the work? (기존 연구와의 차별점) 본 연구는 Lévy 프로세스 매개변수 추정을 위해 DeepSets 아키텍처를 활용하는 유연한 NBE 프레임워크를 최초로 도입했습니다. DeepSets는 Lévy 프로세스 증분의 순열 불변성을 활용하도록 설계되어, 데이터의 순서에 관계없이 효율적인 특징 학습을 가능하게 합니다. 또한, NBE 추정량이 일관성을 가지며 베이즈 추정량으로 위험이 수렴한다는 새로운 **이론적 보장(Theorem 2)**을 제공하여, 방법론의 통계적 건전성을 확립했습니다. 마지막으로, 불확실성 정량화(UQ)를 위해 부트스트랩 기반 신뢰 구간과 후방 분위수 추정이라는 두 가지 보완적인 접근 방식을 통합하여 제공합니다.\n2) Why is the work important? (연구의 중요성) Lévy 프로세스는 금융 시장의 불연속적인 움직임(점프)과 두꺼운 꼬리를 모델링하는 데 필수적입니다. 그러나 Deep Variance Gamma (DVG)와 같은 복잡하고 표현력이 풍부한 모델은 폐쇄형 우도를 가지지 않아 고전적인 추론 방법 적용이 어렵습니다. NBE는 우도 계산 없이 시뮬레이션만으로 추론을 수행하는 우도-자유(likelihood-free) 접근 방식을 제공하며, 특히 훈련 후 추론 시간이 극도로 짧은 상각된 추론(amortized inference) 특성을 통해 고빈도 금융 데이터의 실시간 분석 및 대규모 시뮬레이션 연구에 필요한 확장성과 실용성을 제공합니다.\n3) What is the literature gap? (기존 연구의 한계점) 기존의 고전적인 Lévy 프로세스 추정 방법(예: LSQ, MELE)은 복잡한 모델에서 우도가 다루기 어렵거나, 매개변수 추정을 위해 매번 새로운 최적화 문제를 해결해야 하므로 계산 비용이 매우 높습니다. 특히 고빈도 금융 데이터처럼 대규모 데이터셋에 반복적으로 적용할 경우, 이러한 계산 부담은 실시간 분석을 불가능하게 만듭니다. 또한, 기존 우도-자유 방법들은 통계적 효율성이 떨어지는 경향이 있었습니다.\n4) How is the gap filled? (해결 방안) 본 연구는 NBE 프레임워크를 통해 이 문제를 해결합니다. NBE는 베이즈 위험($R_{\\Omega}$)을 최소화하도록 신경망을 훈련시키며, 이 훈련 과정은 시뮬레이션된 데이터셋을 기반으로 Monte Carlo 근사화를 통해 수행됩니다. 훈련 비용은 초기에 한 번 발생하지만, 일단 훈련된 신경망은 새로운 데이터셋이 들어올 때마다 매개변수 추정치를 거의 즉각적으로 출력할 수 있습니다. 이는 계산 비용을 ‘상각(amortize)‘하여 추론 단계의 속도를 극적으로 향상시킵니다.\n5) What is achieved with the new method? (달성한 성과) NBE는 기존 방법 대비 압도적인 계산 효율성과 우수한 정확도를 달성했습니다.\n정확도 (RMSE 비교): 표준 Lévy 모델 3가지(Compound Poisson, Merton, Variance Gamma) 모두에서 NBE는 모든 매개변수에 대해 가장 낮은 RMSE를 기록했습니다.\n모델 매개변수 NBE RMSE LSQ RMSE MELE RMSE Compound Poisson $\\lambda$ (점프 강도) 0.051 0.058 0.70 Merton $\\mu$ (확산 평균) 0.11 0.17 0.37 Variance Gamma $\\gamma$ (드리프트) 0.048 0.16 0.73 계산 효율성 (추론 시간 비교): 1,000개의 시뮬레이션 데이터셋에 대한 매개변수 추정 시간(초)을 비교했을 때, NBE의 추론 속도는 기존 방법을 압도합니다.\n모델 NBE 추론 시간 [s] LSQ 추론 시간 [s] MELE 추론 시간 [h] Compound Poisson 2.8 833 777.7 Merton 4 695 1155 Variance Gamma 3.5 398 1024 실제 암호화폐 데이터 적용 시, 2022년 전체 기간에 대한 일일 매개변수 추정 시간(Table 4)은 NBE가 5초인 반면, LSQ는 656초, MELE는 45,552초(약 12.6시간)가 소요되어, NBE가 LSQ보다 약 130배, MELE보다 약 9,000배 빠릅니다.\n6) What data are used? (사용 데이터셋) 시뮬레이션 데이터: Compound Poisson, Merton Jump-Diffusion, Variance Gamma, Level-2 Deep Variance Gamma (DVG) 프로세스. 실제 데이터: 고빈도 암호화폐 수익률 데이터. 출처: Klein [2022]의 1분 해상도 가격 데이터. 대상: 비트코인(BTC), 이더리움(ETH), 리플(XRP)의 2022년 1년치 데이터. 장기 분석: 비트코인(BTC)의 2014년부터 2022년까지 9년치 데이터. 도메인 특성: 이 데이터는 고빈도 금융 시계열로서, Lévy 프로세스가 모델링에 적합한 점프(jumps) 및 두꺼운 꼬리(heavy-tailed) 특성을 강하게 나타냅니다. 7) What are the limitations? (저자가 언급한 한계점) 저자들은 다음과 같은 한계점을 언급했습니다 (Page 36):\n저신호 영역에서의 추정 난이도: Level-2 DVG 모델과 같이 깊은 종속성(deep subordination)과 관련된 매개변수($\\alpha_1, \\alpha_2$)는 값이 매우 작거나 신호가 낮은 영역에서 정확한 추정이 더 어려웠습니다. 입력 차원 고정: 현재 설정에서 신경망은 고정된 입력 차원($n_t$)에 맞게 훈련되므로, 다른 차원의 데이터에 적용하려면 네트워크를 재훈련해야 합니다. 미래 확장 방향: 방법론을 다변량 Lévy 프로세스로 일반화하거나, 훈련 시 사용된 사전 분포 범위를 벗어난 매개변수 값에 대한 외삽(extrapolation) 능력을 탐색하는 것이 필요합니다. 3. 아키텍처 및 방법론 (Architecture \u0026 Methodology) Figure 분석: DeepSets 아키텍처 이 논문에서 사용된 신경망 아키텍처는 DeepSets 프레임워크 [Zaheer et al., 2017]를 기반으로 하며, Lévy 프로세스 증분 데이터의 순열 불변성을 활용하도록 설계되었습니다. 이는 이미지 분할에 사용되는 U-Net과는 구조적 목적이 다릅니다.\n아키텍처 구성 요소 및 흐름:\n입력 데이터 ($\\mathbf{X}$): Lévy 프로세스의 이산적으로 관측된 로그 수익률 증분 벡터 $\\mathbf{X} = (\\tilde{X}_1, \\tilde{X}2, \\ldots, \\tilde{X}{n-1})^T$가 입력됩니다. 여기서 $\\tilde{X}j = X{j+1} - X_j$입니다. Summary Network ($\\Lambda$): 각 데이터 포인트 $\\tilde{X}i$는 Summary Network $\\Lambda$ (매개변수 $\\zeta{\\Lambda}$)를 통해 독립적으로 처리되어 학습된 특징 공간으로 매핑됩니다. 집계 함수 ($a(\\cdot)$): 변환된 특징들 $\\left{ \\Lambda(\\tilde{X}i; \\zeta{\\Lambda}) \\right}{i=1}^{n-1}$은 순열 불변 함수 $a(\\cdot)$를 통해 단일 특징 벡터 $T(\\mathbf{X}; \\zeta{\\Lambda})$로 집계됩니다. 본 연구에서는 **산술 평균(arithmetic mean)**을 집계 함수로 사용했습니다. Inference Network ($\\phi$): 집계된 특징 벡터 $T$는 Inference Network $\\phi$ (매개변수 $\\zeta_{\\phi}$)를 통과하여 최종 매개변수 추정치 $\\hat{\\theta}$를 출력합니다. 구체적인 네트워크 설정 (Page 20, 47):\n네트워크 유형: $\\Lambda$와 $\\phi$ 모두 완전 연결 심층 신경망(DNN)을 사용했습니다. 레이어: 3개의 은닉층, 각 레이어당 32개의 뉴런. 활성화 함수: Leaky ReLU. 입력 차원 ($n_t$): 최종 실험에서는 $n_t = 1,440$ (하루 동안의 1분 로그 수익률 수)으로 설정되었습니다. 수식 상세 1. Bayes Risk (베이즈 위험) 베이즈 추정량 $\\hat{\\theta}^*$는 손실 함수 $L(\\theta, \\hat{\\theta}(\\mathbf{X}))$에 대해 베이즈 위험 $R_{\\Omega}(\\hat{\\theta}(\\cdot))$을 최소화하는 함수입니다.\n$$R_{\\Omega}(\\hat{\\theta}(\\cdot)) = \\int_{\\Theta} \\left( \\int_{\\mathcal{S}} L(\\theta, \\hat{\\theta}(\\mathbf{X})) f(\\mathbf{x}|\\theta) d\\mathbf{x} \\right) d\\Omega(\\theta) \\quad (2)$$\n여기서:\n$\\Theta$: 매개변수 공간. $\\mathcal{S}$: 데이터 실현 공간 ($\\mathcal{S} = \\mathbb{R}^n$). $L(\\cdot, \\cdot)$: 비음수 손실 함수. $f(\\mathbf{x}|\\theta)$: $\\theta$가 주어졌을 때 데이터 $\\mathbf{X}$의 밀도 함수. $\\Omega(\\cdot)$: $\\theta$에 대한 사전 분포. 2. Neural Bayes Estimator (NBE) 최적화 문제 신경망 매개변수 $\\zeta$를 포함하는 신경망 추정량 $\\hat{\\theta}(\\mathbf{X}, \\zeta)$를 훈련하여 베이즈 위험을 근사적으로 최소화합니다.\n$$\\zeta^* = \\arg \\min_{\\zeta} R_{\\Omega}(\\hat{\\theta}(\\cdot, \\zeta))$$\nMonte Carlo 근사화를 통한 경험적 위험(Empirical Risk)은 다음과 같습니다 (Eq. 3):\n$$R_{\\Omega}(\\hat{\\theta}(\\cdot, \\zeta)) \\approx \\frac{1}{K} \\sum_{\\theta \\in \\Theta} \\frac{1}{J} \\sum_{\\mathbf{X} \\in \\mathcal{X}_{\\theta}} L(\\theta, \\hat{\\theta}(\\mathbf{X}, \\zeta)) \\quad (3)$$\n여기서 $K$는 사전 분포 $\\Omega(\\cdot)$에서 샘플링된 매개변수 수, $J$는 각 $\\theta$에 대해 시뮬레이션된 데이터셋 수, $\\mathcal{X}_{\\theta}$는 $\\theta$에서 생성된 $J$개의 데이터셋 집합입니다.\n3. DeepSets 아키텍처 수식 순열 불변성을 강제하는 신경망 추정량 $\\hat{\\theta}(\\mathbf{X}; \\zeta)$는 다음과 같이 정의됩니다 (Eq. 4):\n$$\\hat{\\theta}(\\mathbf{X}; \\zeta) = \\phi \\left( T(\\mathbf{X}; \\zeta_{\\Lambda}); \\zeta_{\\phi} \\right)$$ $$T(\\mathbf{X}; \\zeta_{\\Lambda}) = a \\left( \\left{ \\Lambda(\\tilde{X}i; \\zeta{\\Lambda}) \\right}_{i=1}^{n-1} \\right) \\quad (4)$$\n여기서:\n$\\phi$와 $\\Lambda$: 각각 Inference Network와 Summary Network (심층 신경망). $a(\\cdot)$: 순열 불변 함수 (본 연구에서는 평균). $\\tilde{X}_i$: Lévy 프로세스의 $i$번째 증분. 4. 손실 함수 (Loss Function) 본 연구에서 최종적으로 선택된 손실 함수는 **평균 제곱 로그 오차(Mean Squared Logarithmic Error, MSLE)**입니다 (Page 20).\n$$L(\\theta, \\hat{\\theta}) = \\frac{1}{P} \\sum_{p=1}^{P} (\\log(1 + \\theta_p) - \\log(1 + \\hat{\\theta}_p))^2$$ (여기서 $P$는 매개변수의 총 개수이며, $\\theta_p$와 $\\hat{\\theta}_p$는 $p$번째 참값과 추정값입니다. MSLE는 특히 양수 값 매개변수(예: 분산, 강도)에 대해 0 근처의 작은 값에 민감하게 반응하도록 합니다.)\nVanilla U-Net 비교 이 논문에서 사용된 DeepSets 기반 NBE 아키텍처는 이미지 분할에 사용되는 Vanilla U-Net과는 근본적으로 다릅니다.\n특징 DeepSets 기반 NBE Vanilla U-Net 주요 목적 시계열 데이터의 매개변수 점 추정 이미지 분할 (픽셀 단위 분류) 핵심 구조 Summary Network ($\\Lambda$) + 집계 함수 ($a$) + Inference Network ($\\phi$) 인코더(Downsampling) + 디코더(Upsampling) + 스킵 연결 불변성 순열 불변성(Permutation Invariance) 활용 (입력 순서 무관) 공간적 계층 구조 및 지역적 특징 추출 입력/출력 입력: Lévy 증분 벡터 $\\mathbf{X}$. 출력: 매개변수 벡터 $\\hat{\\theta}$ (점 추정치) 입력: 이미지. 출력: 분할 마스크 (입력과 동일한 해상도) 추가/수정 모듈 Lévy 증분의 순열 불변성을 활용하는 **Summary Network ($\\Lambda$)와 평균 집계 함수 ($a$)**가 핵심적인 추가 모듈임. 해당 없음. DeepSets는 U-Net의 인코더-디코더 구조를 사용하지 않음. 4. 태그 제안 (Tags Suggestion) Lévy Processes (Lévy 프로세스) Neural Bayes Estimation (신경망 베이즈 추정) Likelihood-Free Inference (우도-자유 추론) Amortized Inference (상각된 추론) DeepSets Architecture (DeepSets 아키텍처) ",
+  "wordCount" : "1537",
+  "inLanguage": "en",
+  "datePublished": "2025-05-03T00:00:00Z",
+  "dateModified": "2025-05-03T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hanwo-ol.github.io/Unet_master/posts/fast-likelihood-free-parameter-estimation-for-lvy-processes/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Research Agent Knowledge Base",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hanwo-ol.github.io/Unet_master/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hanwo-ol.github.io/Unet_master/" accesskey="h" title="Research Agent Knowledge Base (Alt + H)">Research Agent Knowledge Base</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/categories/" title="categories">
+                    <span>categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hanwo-ol.github.io/Unet_master/">Home</a>&nbsp;»&nbsp;<a href="https://hanwo-ol.github.io/Unet_master/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Fast Likelihood-Free Parameter Estimation for Lévy Processes
+    </h1>
+    <div class="post-meta">&lt;span title=&#39;2025-05-03 00:00:00 &#43;0000 UTC&#39;&gt;May 3, 2025&lt;/span&gt;&amp;nbsp;·&amp;nbsp;8 min
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="abstract">Abstract<a hidden class="anchor" aria-hidden="true" href="#abstract">#</a></h2>
+<p>Lévy processes are widely used in financial modeling due to their ability to capture discontinuities and heavy tails, which are common in high-frequency asset return data. However, parameter estimation remains a challenge when associated likelihoods are unavailable or costly to compute. We propose a fast and accurate method for Lévy parameter estimation using the neural Bayes estimation (NBE) framework &ndash; a simulation-based, likelihood-free approach that leverages permutation-invariant neural networks to approximate Bayes estimators. We contribute new theoretical results, showing that NBE results in consistent estimators whose risk converges to the Bayes estimator under mild conditions. Moreover, through extensive simulations across several Lévy models, we show that NBE outperforms traditional methods in both accuracy and runtime, while also enabling two complementary approaches to uncertainty quantification. We illustrate our approach on a challenging high-frequency cryptocurrency return dataset, where the method captures evolving parameter dynamics and delivers reliable and interpretable inference at a fraction of the computational cost of traditional methods. NBE provides a scalable and practical solution for inference in complex financial models, enabling parameter estimation and uncertainty quantification over an entire year of data in just seconds. We additionally investigate nearly a decade of high-frequency Bitcoin returns, requiring less than one minute to estimate parameters under the proposed approach.</p>
+<h2 id="pdf-download">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download">#</a></h2>
+<h2 id="pdf-download-1">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download-1">#</a></h2>
+<p><a href="//172.22.138.185/Research_pdf/2505.01639v2.pdf">Local PDF View</a> | <a href="http://arxiv.org/abs/2505.01639v2">Arxiv Original</a></p>
+<p>이 논문은 Lévy 프로세스의 매개변수 추정을 위한 빠르고 정확한 우도-자유(Likelihood-Free) 방법인 <strong>신경망 베이즈 추정(Neural Bayes Estimation, NBE)</strong> 프레임워크를 제안합니다.</p>
+<hr>
+<h2 id="1-요약-executive-summary">1. 요약 (Executive Summary)<a hidden class="anchor" aria-hidden="true" href="#1-요약-executive-summary">#</a></h2>
+<ul>
+<li><strong>문제 정의:</strong> 금융 모델링에 널리 사용되는 Lévy 프로세스는 불연속성과 두꺼운 꼬리(heavy tails)를 포착하는 데 유용하지만, 복잡한 모델(예: Deep Variance Gamma, DVG)의 경우 우도(likelihood) 함수를 계산하기 어렵거나 불가능하여 매개변수 추정에 어려움이 있습니다.</li>
+<li><strong>해결책 제안:</strong> 시뮬레이션 기반의 우도-자유 접근 방식인 NBE를 사용하여 베이즈 추정량을 근사합니다. 특히, Lévy 프로세스 증분(increments)의 순열 불변성(permutation invariance)을 활용하기 위해 DeepSets 기반 신경망 아키텍처를 채택했습니다.</li>
+<li><strong>이론적 기여:</strong> NBE 추정량이 일관성(consistent)을 가지며, 온화한 조건 하에서 베이즈 추정량으로 위험(risk)이 수렴한다는 새로운 이론적 결과를 제공하여 방법론의 대규모 표본 행동에 대한 형식적인 보장을 확립했습니다.</li>
+<li><strong>성능 우위:</strong> Compound Poisson, Merton, Variance Gamma 등 여러 표준 Lévy 모델에 대한 광범위한 시뮬레이션에서, NBE는 기존의 고전적인 방법(LSQ, MELE) 대비 **정확도(RMSE)**와 <strong>계산 효율성(Runtime)</strong> 모두에서 일관되게 우수한 성능을 보였습니다.</li>
+<li><strong>실제 적용 및 속도:</strong> 고빈도 암호화폐 수익률 데이터(9년간의 비트코인 1분 데이터 포함)에 적용한 결과, NBE는 전체 데이터에 대한 일일 매개변수 추정 및 불확실성 정량화를 단 몇 초 만에 완료하여, 기존 방법 대비 수백 배에서 수천 배 빠른 속도(Amortized Inference)를 입증했습니다.</li>
+</ul>
+<hr>
+<h2 id="2-7가지-핵심-질문-분석-key-analysis">2. 7가지 핵심 질문 분석 (Key Analysis)<a hidden class="anchor" aria-hidden="true" href="#2-7가지-핵심-질문-분석-key-analysis">#</a></h2>
+<h3 id="1-what-is-new-in-the-work-기존-연구와의-차별점">1) What is new in the work? (기존 연구와의 차별점)<a hidden class="anchor" aria-hidden="true" href="#1-what-is-new-in-the-work-기존-연구와의-차별점">#</a></h3>
+<p>본 연구는 Lévy 프로세스 매개변수 추정을 위해 DeepSets 아키텍처를 활용하는 유연한 NBE 프레임워크를 최초로 도입했습니다. DeepSets는 Lévy 프로세스 증분의 <strong>순열 불변성</strong>을 활용하도록 설계되어, 데이터의 순서에 관계없이 효율적인 특징 학습을 가능하게 합니다. 또한, NBE 추정량이 일관성을 가지며 베이즈 추정량으로 위험이 수렴한다는 새로운 **이론적 보장(Theorem 2)**을 제공하여, 방법론의 통계적 건전성을 확립했습니다. 마지막으로, 불확실성 정량화(UQ)를 위해 부트스트랩 기반 신뢰 구간과 후방 분위수 추정이라는 두 가지 보완적인 접근 방식을 통합하여 제공합니다.</p>
+<h3 id="2-why-is-the-work-important-연구의-중요성">2) Why is the work important? (연구의 중요성)<a hidden class="anchor" aria-hidden="true" href="#2-why-is-the-work-important-연구의-중요성">#</a></h3>
+<p>Lévy 프로세스는 금융 시장의 불연속적인 움직임(점프)과 두꺼운 꼬리를 모델링하는 데 필수적입니다. 그러나 Deep Variance Gamma (DVG)와 같은 복잡하고 표현력이 풍부한 모델은 폐쇄형 우도를 가지지 않아 고전적인 추론 방법 적용이 어렵습니다. NBE는 우도 계산 없이 시뮬레이션만으로 추론을 수행하는 <strong>우도-자유(likelihood-free)</strong> 접근 방식을 제공하며, 특히 훈련 후 추론 시간이 극도로 짧은 <strong>상각된 추론(amortized inference)</strong> 특성을 통해 고빈도 금융 데이터의 실시간 분석 및 대규모 시뮬레이션 연구에 필요한 확장성과 실용성을 제공합니다.</p>
+<h3 id="3-what-is-the-literature-gap-기존-연구의-한계점">3) What is the literature gap? (기존 연구의 한계점)<a hidden class="anchor" aria-hidden="true" href="#3-what-is-the-literature-gap-기존-연구의-한계점">#</a></h3>
+<p>기존의 고전적인 Lévy 프로세스 추정 방법(예: LSQ, MELE)은 복잡한 모델에서 우도가 다루기 어렵거나, 매개변수 추정을 위해 매번 새로운 최적화 문제를 해결해야 하므로 계산 비용이 매우 높습니다. 특히 고빈도 금융 데이터처럼 대규모 데이터셋에 반복적으로 적용할 경우, 이러한 계산 부담은 실시간 분석을 불가능하게 만듭니다. 또한, 기존 우도-자유 방법들은 통계적 효율성이 떨어지는 경향이 있었습니다.</p>
+<h3 id="4-how-is-the-gap-filled-해결-방안">4) How is the gap filled? (해결 방안)<a hidden class="anchor" aria-hidden="true" href="#4-how-is-the-gap-filled-해결-방안">#</a></h3>
+<p>본 연구는 NBE 프레임워크를 통해 이 문제를 해결합니다. NBE는 베이즈 위험($R_{\Omega}$)을 최소화하도록 신경망을 훈련시키며, 이 훈련 과정은 시뮬레이션된 데이터셋을 기반으로 Monte Carlo 근사화를 통해 수행됩니다. 훈련 비용은 초기에 한 번 발생하지만, 일단 훈련된 신경망은 새로운 데이터셋이 들어올 때마다 매개변수 추정치를 거의 즉각적으로 출력할 수 있습니다. 이는 계산 비용을 &lsquo;상각(amortize)&lsquo;하여 추론 단계의 속도를 극적으로 향상시킵니다.</p>
+<h3 id="5-what-is-achieved-with-the-new-method-달성한-성과">5) What is achieved with the new method? (달성한 성과)<a hidden class="anchor" aria-hidden="true" href="#5-what-is-achieved-with-the-new-method-달성한-성과">#</a></h3>
+<p>NBE는 기존 방법 대비 압도적인 계산 효율성과 우수한 정확도를 달성했습니다.</p>
+<p><strong>정확도 (RMSE 비교):</strong>
+표준 Lévy 모델 3가지(Compound Poisson, Merton, Variance Gamma) 모두에서 NBE는 모든 매개변수에 대해 가장 낮은 RMSE를 기록했습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">모델</th>
+<th style="text-align:left">매개변수</th>
+<th style="text-align:left">NBE RMSE</th>
+<th style="text-align:left">LSQ RMSE</th>
+<th style="text-align:left">MELE RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Compound Poisson</td>
+<td style="text-align:left">$\lambda$ (점프 강도)</td>
+<td style="text-align:left"><strong>0.051</strong></td>
+<td style="text-align:left">0.058</td>
+<td style="text-align:left">0.70</td>
+</tr>
+<tr>
+<td style="text-align:left">Merton</td>
+<td style="text-align:left">$\mu$ (확산 평균)</td>
+<td style="text-align:left"><strong>0.11</strong></td>
+<td style="text-align:left">0.17</td>
+<td style="text-align:left">0.37</td>
+</tr>
+<tr>
+<td style="text-align:left">Variance Gamma</td>
+<td style="text-align:left">$\gamma$ (드리프트)</td>
+<td style="text-align:left"><strong>0.048</strong></td>
+<td style="text-align:left">0.16</td>
+<td style="text-align:left">0.73</td>
+</tr>
+</tbody>
+</table>
+<p><strong>계산 효율성 (추론 시간 비교):</strong>
+1,000개의 시뮬레이션 데이터셋에 대한 매개변수 추정 시간(초)을 비교했을 때, NBE의 추론 속도는 기존 방법을 압도합니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">모델</th>
+<th style="text-align:left">NBE 추론 시간 [s]</th>
+<th style="text-align:left">LSQ 추론 시간 [s]</th>
+<th style="text-align:left">MELE 추론 시간 [h]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Compound Poisson</td>
+<td style="text-align:left"><strong>2.8</strong></td>
+<td style="text-align:left">833</td>
+<td style="text-align:left">777.7</td>
+</tr>
+<tr>
+<td style="text-align:left">Merton</td>
+<td style="text-align:left"><strong>4</strong></td>
+<td style="text-align:left">695</td>
+<td style="text-align:left">1155</td>
+</tr>
+<tr>
+<td style="text-align:left">Variance Gamma</td>
+<td style="text-align:left"><strong>3.5</strong></td>
+<td style="text-align:left">398</td>
+<td style="text-align:left">1024</td>
+</tr>
+</tbody>
+</table>
+<p>실제 암호화폐 데이터 적용 시, 2022년 전체 기간에 대한 일일 매개변수 추정 시간(Table 4)은 NBE가 <strong>5초</strong>인 반면, LSQ는 656초, MELE는 45,552초(약 12.6시간)가 소요되어, NBE가 LSQ보다 약 130배, MELE보다 약 9,000배 빠릅니다.</p>
+<h3 id="6-what-data-are-used-사용-데이터셋">6) What data are used? (사용 데이터셋)<a hidden class="anchor" aria-hidden="true" href="#6-what-data-are-used-사용-데이터셋">#</a></h3>
+<ul>
+<li><strong>시뮬레이션 데이터:</strong> Compound Poisson, Merton Jump-Diffusion, Variance Gamma, Level-2 Deep Variance Gamma (DVG) 프로세스.</li>
+<li><strong>실제 데이터:</strong> 고빈도 암호화폐 수익률 데이터.
+<ul>
+<li><strong>출처:</strong> Klein [2022]의 1분 해상도 가격 데이터.</li>
+<li><strong>대상:</strong> 비트코인(BTC), 이더리움(ETH), 리플(XRP)의 2022년 1년치 데이터.</li>
+<li><strong>장기 분석:</strong> 비트코인(BTC)의 2014년부터 2022년까지 9년치 데이터.</li>
+</ul>
+</li>
+<li><strong>도메인 특성:</strong> 이 데이터는 고빈도 금융 시계열로서, Lévy 프로세스가 모델링에 적합한 점프(jumps) 및 두꺼운 꼬리(heavy-tailed) 특성을 강하게 나타냅니다.</li>
+</ul>
+<h3 id="7-what-are-the-limitations-저자가-언급한-한계점">7) What are the limitations? (저자가 언급한 한계점)<a hidden class="anchor" aria-hidden="true" href="#7-what-are-the-limitations-저자가-언급한-한계점">#</a></h3>
+<p>저자들은 다음과 같은 한계점을 언급했습니다 (Page 36):</p>
+<ol>
+<li><strong>저신호 영역에서의 추정 난이도:</strong> Level-2 DVG 모델과 같이 깊은 종속성(deep subordination)과 관련된 매개변수($\alpha_1, \alpha_2$)는 값이 매우 작거나 신호가 낮은 영역에서 정확한 추정이 더 어려웠습니다.</li>
+<li><strong>입력 차원 고정:</strong> 현재 설정에서 신경망은 고정된 입력 차원($n_t$)에 맞게 훈련되므로, 다른 차원의 데이터에 적용하려면 네트워크를 재훈련해야 합니다.</li>
+<li><strong>미래 확장 방향:</strong> 방법론을 다변량 Lévy 프로세스로 일반화하거나, 훈련 시 사용된 사전 분포 범위를 벗어난 매개변수 값에 대한 외삽(extrapolation) 능력을 탐색하는 것이 필요합니다.</li>
+</ol>
+<hr>
+<h2 id="3-아키텍처-및-방법론-architecture--methodology">3. 아키텍처 및 방법론 (Architecture &amp; Methodology)<a hidden class="anchor" aria-hidden="true" href="#3-아키텍처-및-방법론-architecture--methodology">#</a></h2>
+<h3 id="figure-분석-deepsets-아키텍처">Figure 분석: DeepSets 아키텍처<a hidden class="anchor" aria-hidden="true" href="#figure-분석-deepsets-아키텍처">#</a></h3>
+<p>이 논문에서 사용된 신경망 아키텍처는 DeepSets 프레임워크 [Zaheer et al., 2017]를 기반으로 하며, Lévy 프로세스 증분 데이터의 <strong>순열 불변성</strong>을 활용하도록 설계되었습니다. 이는 이미지 분할에 사용되는 U-Net과는 구조적 목적이 다릅니다.</p>
+<p><strong>아키텍처 구성 요소 및 흐름:</strong></p>
+<ol>
+<li><strong>입력 데이터 ($\mathbf{X}$):</strong> Lévy 프로세스의 이산적으로 관측된 로그 수익률 증분 벡터 $\mathbf{X} = (\tilde{X}_1, \tilde{X}<em>2, \ldots, \tilde{X}</em>{n-1})^T$가 입력됩니다. 여기서 $\tilde{X}<em>j = X</em>{j+1} - X_j$입니다.</li>
+<li><strong>Summary Network ($\Lambda$):</strong> 각 데이터 포인트 $\tilde{X}<em>i$는 Summary Network $\Lambda$ (매개변수 $\zeta</em>{\Lambda}$)를 통해 독립적으로 처리되어 학습된 특징 공간으로 매핑됩니다.</li>
+<li><strong>집계 함수 ($a(\cdot)$):</strong> 변환된 특징들 $\left{ \Lambda(\tilde{X}<em>i; \zeta</em>{\Lambda}) \right}<em>{i=1}^{n-1}$은 순열 불변 함수 $a(\cdot)$를 통해 단일 특징 벡터 $T(\mathbf{X}; \zeta</em>{\Lambda})$로 집계됩니다. 본 연구에서는 **산술 평균(arithmetic mean)**을 집계 함수로 사용했습니다.</li>
+<li><strong>Inference Network ($\phi$):</strong> 집계된 특징 벡터 $T$는 Inference Network $\phi$ (매개변수 $\zeta_{\phi}$)를 통과하여 최종 매개변수 추정치 $\hat{\theta}$를 출력합니다.</li>
+</ol>
+<p><strong>구체적인 네트워크 설정 (Page 20, 47):</strong></p>
+<ul>
+<li><strong>네트워크 유형:</strong> $\Lambda$와 $\phi$ 모두 완전 연결 심층 신경망(DNN)을 사용했습니다.</li>
+<li><strong>레이어:</strong> 3개의 은닉층, 각 레이어당 32개의 뉴런.</li>
+<li><strong>활성화 함수:</strong> Leaky ReLU.</li>
+<li><strong>입력 차원 ($n_t$):</strong> 최종 실험에서는 $n_t = 1,440$ (하루 동안의 1분 로그 수익률 수)으로 설정되었습니다.</li>
+</ul>
+<h3 id="수식-상세">수식 상세<a hidden class="anchor" aria-hidden="true" href="#수식-상세">#</a></h3>
+<h4 id="1-bayes-risk-베이즈-위험">1. Bayes Risk (베이즈 위험)<a hidden class="anchor" aria-hidden="true" href="#1-bayes-risk-베이즈-위험">#</a></h4>
+<p>베이즈 추정량 $\hat{\theta}^*$는 손실 함수 $L(\theta, \hat{\theta}(\mathbf{X}))$에 대해 베이즈 위험 $R_{\Omega}(\hat{\theta}(\cdot))$을 최소화하는 함수입니다.</p>
+<p>$$R_{\Omega}(\hat{\theta}(\cdot)) = \int_{\Theta} \left( \int_{\mathcal{S}} L(\theta, \hat{\theta}(\mathbf{X})) f(\mathbf{x}|\theta) d\mathbf{x} \right) d\Omega(\theta) \quad (2)$$</p>
+<p>여기서:</p>
+<ul>
+<li>$\Theta$: 매개변수 공간.</li>
+<li>$\mathcal{S}$: 데이터 실현 공간 ($\mathcal{S} = \mathbb{R}^n$).</li>
+<li>$L(\cdot, \cdot)$: 비음수 손실 함수.</li>
+<li>$f(\mathbf{x}|\theta)$: $\theta$가 주어졌을 때 데이터 $\mathbf{X}$의 밀도 함수.</li>
+<li>$\Omega(\cdot)$: $\theta$에 대한 사전 분포.</li>
+</ul>
+<h4 id="2-neural-bayes-estimator-nbe-최적화-문제">2. Neural Bayes Estimator (NBE) 최적화 문제<a hidden class="anchor" aria-hidden="true" href="#2-neural-bayes-estimator-nbe-최적화-문제">#</a></h4>
+<p>신경망 매개변수 $\zeta$를 포함하는 신경망 추정량 $\hat{\theta}(\mathbf{X}, \zeta)$를 훈련하여 베이즈 위험을 근사적으로 최소화합니다.</p>
+<p>$$\zeta^* = \arg \min_{\zeta} R_{\Omega}(\hat{\theta}(\cdot, \zeta))$$</p>
+<p>Monte Carlo 근사화를 통한 경험적 위험(Empirical Risk)은 다음과 같습니다 (Eq. 3):</p>
+<p>$$R_{\Omega}(\hat{\theta}(\cdot, \zeta)) \approx \frac{1}{K} \sum_{\theta \in \Theta} \frac{1}{J} \sum_{\mathbf{X} \in \mathcal{X}_{\theta}} L(\theta, \hat{\theta}(\mathbf{X}, \zeta)) \quad (3)$$</p>
+<p>여기서 $K$는 사전 분포 $\Omega(\cdot)$에서 샘플링된 매개변수 수, $J$는 각 $\theta$에 대해 시뮬레이션된 데이터셋 수, $\mathcal{X}_{\theta}$는 $\theta$에서 생성된 $J$개의 데이터셋 집합입니다.</p>
+<h4 id="3-deepsets-아키텍처-수식">3. DeepSets 아키텍처 수식<a hidden class="anchor" aria-hidden="true" href="#3-deepsets-아키텍처-수식">#</a></h4>
+<p>순열 불변성을 강제하는 신경망 추정량 $\hat{\theta}(\mathbf{X}; \zeta)$는 다음과 같이 정의됩니다 (Eq. 4):</p>
+<p>$$\hat{\theta}(\mathbf{X}; \zeta) = \phi \left( T(\mathbf{X}; \zeta_{\Lambda}); \zeta_{\phi} \right)$$
+$$T(\mathbf{X}; \zeta_{\Lambda}) = a \left( \left{ \Lambda(\tilde{X}<em>i; \zeta</em>{\Lambda}) \right}_{i=1}^{n-1} \right) \quad (4)$$</p>
+<p>여기서:</p>
+<ul>
+<li>$\phi$와 $\Lambda$: 각각 Inference Network와 Summary Network (심층 신경망).</li>
+<li>$a(\cdot)$: 순열 불변 함수 (본 연구에서는 평균).</li>
+<li>$\tilde{X}_i$: Lévy 프로세스의 $i$번째 증분.</li>
+</ul>
+<h4 id="4-손실-함수-loss-function">4. 손실 함수 (Loss Function)<a hidden class="anchor" aria-hidden="true" href="#4-손실-함수-loss-function">#</a></h4>
+<p>본 연구에서 최종적으로 선택된 손실 함수는 **평균 제곱 로그 오차(Mean Squared Logarithmic Error, MSLE)**입니다 (Page 20).</p>
+<p>$$L(\theta, \hat{\theta}) = \frac{1}{P} \sum_{p=1}^{P} (\log(1 + \theta_p) - \log(1 + \hat{\theta}_p))^2$$
+(여기서 $P$는 매개변수의 총 개수이며, $\theta_p$와 $\hat{\theta}_p$는 $p$번째 참값과 추정값입니다. MSLE는 특히 양수 값 매개변수(예: 분산, 강도)에 대해 0 근처의 작은 값에 민감하게 반응하도록 합니다.)</p>
+<h3 id="vanilla-u-net-비교">Vanilla U-Net 비교<a hidden class="anchor" aria-hidden="true" href="#vanilla-u-net-비교">#</a></h3>
+<p>이 논문에서 사용된 DeepSets 기반 NBE 아키텍처는 이미지 분할에 사용되는 <strong>Vanilla U-Net</strong>과는 근본적으로 다릅니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">특징</th>
+<th style="text-align:left">DeepSets 기반 NBE</th>
+<th style="text-align:left">Vanilla U-Net</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>주요 목적</strong></td>
+<td style="text-align:left">시계열 데이터의 매개변수 점 추정</td>
+<td style="text-align:left">이미지 분할 (픽셀 단위 분류)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>핵심 구조</strong></td>
+<td style="text-align:left">Summary Network ($\Lambda$) + 집계 함수 ($a$) + Inference Network ($\phi$)</td>
+<td style="text-align:left">인코더(Downsampling) + 디코더(Upsampling) + 스킵 연결</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>불변성</strong></td>
+<td style="text-align:left"><strong>순열 불변성(Permutation Invariance)</strong> 활용 (입력 순서 무관)</td>
+<td style="text-align:left">공간적 계층 구조 및 지역적 특징 추출</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>입력/출력</strong></td>
+<td style="text-align:left">입력: Lévy 증분 벡터 $\mathbf{X}$. 출력: 매개변수 벡터 $\hat{\theta}$ (점 추정치)</td>
+<td style="text-align:left">입력: 이미지. 출력: 분할 마스크 (입력과 동일한 해상도)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>추가/수정 모듈</strong></td>
+<td style="text-align:left">Lévy 증분의 순열 불변성을 활용하는 **Summary Network ($\Lambda$)와 평균 집계 함수 ($a$)**가 핵심적인 추가 모듈임.</td>
+<td style="text-align:left">해당 없음. DeepSets는 U-Net의 인코더-디코더 구조를 사용하지 않음.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-태그-제안-tags-suggestion">4. 태그 제안 (Tags Suggestion)<a hidden class="anchor" aria-hidden="true" href="#4-태그-제안-tags-suggestion">#</a></h2>
+<ol>
+<li>Lévy Processes (Lévy 프로세스)</li>
+<li>Neural Bayes Estimation (신경망 베이즈 추정)</li>
+<li>Likelihood-Free Inference (우도-자유 추론)</li>
+<li>Amortized Inference (상각된 추론)</li>
+<li>DeepSets Architecture (DeepSets 아키텍처)</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/auto-generated/">Auto-Generated</a></li>
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/draft/">Draft</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://hanwo-ol.github.io/Unet_master/posts/neural-networks-for-tamed-milstein-approximation-of-sdes-with-additive-symmetric-jump-noise-driven-by-a-poisson-random-measure/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Neural Networks for Tamed Milstein Approximation of SDEs with Additive Symmetric Jump Noise Driven by a Poisson Random Measure</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Fast Likelihood-Free Parameter Estimation for Lévy Processes on twitter"
+        href="https://twitter.com/intent/tweet/?text=Fast%20Likelihood-Free%20Parameter%20Estimation%20for%20L%c3%a9vy%20Processes&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2ffast-likelihood-free-parameter-estimation-for-lvy-processes%2f&amp;hashtags=Auto-Generated%2cDraft">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Fast Likelihood-Free Parameter Estimation for Lévy Processes on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2ffast-likelihood-free-parameter-estimation-for-lvy-processes%2f&amp;title=Fast%20Likelihood-Free%20Parameter%20Estimation%20for%20L%c3%a9vy%20Processes&amp;summary=Fast%20Likelihood-Free%20Parameter%20Estimation%20for%20L%c3%a9vy%20Processes&amp;source=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2ffast-likelihood-free-parameter-estimation-for-lvy-processes%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Fast Likelihood-Free Parameter Estimation for Lévy Processes on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2ffast-likelihood-free-parameter-estimation-for-lvy-processes%2f&title=Fast%20Likelihood-Free%20Parameter%20Estimation%20for%20L%c3%a9vy%20Processes">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Fast Likelihood-Free Parameter Estimation for Lévy Processes on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2ffast-likelihood-free-parameter-estimation-for-lvy-processes%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Fast Likelihood-Free Parameter Estimation for Lévy Processes on whatsapp"
+        href="https://api.whatsapp.com/send?text=Fast%20Likelihood-Free%20Parameter%20Estimation%20for%20L%c3%a9vy%20Processes%20-%20https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2ffast-likelihood-free-parameter-estimation-for-lvy-processes%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Fast Likelihood-Free Parameter Estimation for Lévy Processes on telegram"
+        href="https://telegram.me/share/url?text=Fast%20Likelihood-Free%20Parameter%20Estimation%20for%20L%c3%a9vy%20Processes&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2ffast-likelihood-free-parameter-estimation-for-lvy-processes%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://hanwo-ol.github.io/Unet_master/">Research Agent Knowledge Base</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
