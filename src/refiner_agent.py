@@ -136,14 +136,44 @@ def main():
         # User constraint: "fill placeholders". We can check if placeholders exist.
         content = post.content
         if "Placeholder: Analyze" not in content:
-            # Already processed? Check if we need to auto-publish
+            # Already processed? Check if we need to auto-publish or fix tags
+            needs_save = False
+            
             if post.get('draft'):
                 print(f"Auto-publishing existing draft: {md_file}")
                 post['draft'] = False
+                needs_save = True
+
+            # Fix Tags if "Auto-Generated" is present
+            current_tags = post.get('tags', [])
+            if "Auto-Generated" in current_tags or "Draft" in current_tags:
+                print(f"Fixing tags for: {md_file}")
+                import re
+                # Try to find the tag section in EXISTING content
+                tag_section = re.search(r"## 4\. 태그 제안 \(Tags Suggestion\)\s+([\s\S]+)$", content)
+                if tag_section:
+                    tags_text = tag_section.group(1)
+                    extracted_tags = re.findall(r"\d+\.\s*(.+)", tags_text)
+                    if extracted_tags:
+                        clean_tags = [t.strip() for t in extracted_tags]
+                        post['tags'] = clean_tags
+                        print(f" -> Updated Tags: {clean_tags}")
+                        needs_save = True
+                
+                # Also clean duplicate PDF headers while we are at it
+                if "## PDF Download" in content:
+                    new_clean_content = re.sub(r"(## PDF Download\s*){2,}", "## PDF Download\n", content)
+                    if new_clean_content != content:
+                        post.content = new_clean_content
+                        print(" -> Cleaned duplicate PDF header")
+                        needs_save = True
+
+            if needs_save:
                 with open(md_file, 'wb') as f:
                     frontmatter.dump(post, f)
-            else:
-                print(f"Skipping {md_file} (Already processed & published)")
+                continue
+            
+            print(f"Skipping {md_file} (Already processed & up-to-date)")
             continue
 
         print(f"Processing Draft: {md_file}")
@@ -180,6 +210,24 @@ def main():
             
             post.content = new_content
             post.content = new_content
+            
+            # 1. Parse Tags from Content
+            import re
+            tag_section = re.search(r"## 4\. 태그 제안 \(Tags Suggestion\)\s+([\s\S]+)$", new_content)
+            if tag_section:
+                tags_text = tag_section.group(1)
+                # Assume numbered list "1. TagName"
+                extracted_tags = re.findall(r"\d+\.\s*(.+)", tags_text)
+                if extracted_tags:
+                    # Clean tags
+                    clean_tags = [t.strip() for t in extracted_tags]
+                    post['tags'] = clean_tags
+                    print(f"Extracted Tags: {clean_tags}")
+            
+            # 2. Clean duplicate PDF Download Headers
+            # Replace multiple occurrences of "## PDF Download" with single
+            post.content = re.sub(r"(## PDF Download\s*){2,}", "## PDF Download\n", post.content)
+
             # Auto-publish per user request
             post['draft'] = False
             # User said: "be precise".
