@@ -1,8 +1,8 @@
 # Research Agent Configuration
 
 search:
-  # Test 1: GAN (2025 only)
-  query: '(abs:"GAN" OR abs:"Generative Adversarial Network") AND submittedDate:[202501010000 TO 202512312359]'
+  # Test 2: Levy Process with Deep Learning
+  query: '(all:"Levy process" OR all:"Lévy process") AND (all:"deep learning" OR all:"neural network")'
   max_results: 3
   sort_by: "submitted_date" # options: submitted_date, relevance, last_updated_date
   sort_order: "descending" # options: descending, ascending
