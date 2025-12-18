@@ -1,0 +1,24 @@
+# Research Agent Configuration
+
+search:
+  query: '(abs:"U-Net" OR abs:"Unet") AND (all:"image segmentation" OR all:"spatiotemporal")'
+  max_results: 10
+  sort_by: "submitted_date" # options: submitted_date, relevance, last_updated_date
+  sort_order: "descending" # options: descending, ascending
+
+refiner:
+  model_name: "models/gemini-flash-latest"
+  temperature: 0.2
+  top_p: 0.95
+  max_output_tokens: 8192
+
+paths:
+  data_dir: "data/papers"
+  history_file: "data/history.json"
+  hugo_bin: "bin/hugo.exe"
+  public_dir: "public"
+
+publisher:
+  branch: "gh-pages"
+  remote: "origin"
+  source_branch: "main"
