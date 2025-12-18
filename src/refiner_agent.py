@@ -136,7 +136,14 @@ def main():
         # User constraint: "fill placeholders". We can check if placeholders exist.
         content = post.content
         if "Placeholder: Analyze" not in content:
-            print(f"Skipping {md_file} (Already processed?)")
+            # Already processed? Check if we need to auto-publish
+            if post.get('draft'):
+                print(f"Auto-publishing existing draft: {md_file}")
+                post['draft'] = False
+                with open(md_file, 'wb') as f:
+                    frontmatter.dump(post, f)
+            else:
+                print(f"Skipping {md_file} (Already processed & published)")
             continue
 
         print(f"Processing Draft: {md_file}")
@@ -172,8 +179,9 @@ def main():
                 new_content = content + "\n\n" + analysis_text
             
             post.content = new_content
-            # Update draft status? User didn't explicitly say to untag draft, but implied "Refiner".
-            # I will keep draft=true for manual review as per standard flow, or maybe just leave it provided the user reviews.
+            post.content = new_content
+            # Auto-publish per user request
+            post['draft'] = False
             # User said: "be precise".
             
             # Save

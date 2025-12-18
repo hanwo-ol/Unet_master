@@ -3,7 +3,7 @@ categories:
 - Literature Review
 - U-Net
 date: 2025-12-08
-draft: true
+draft: false
 params:
   arxiv_id: 2512.07224v1
   arxiv_link: http://arxiv.org/abs/2512.07224v1
