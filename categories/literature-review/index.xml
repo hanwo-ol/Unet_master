@@ -6,7 +6,34 @@
     <description>Recent content in Literature Review on Research Agent Knowledge Base</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-kr</language>
-    <lastBuildDate>Sat, 13 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/categories/literature-review/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 17 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/categories/literature-review/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Can AI Generate more Comprehensive Test Scenarios? Review on Automated Driving Systems Test Scenario Generation Methods</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/can-ai-generate-more-comprehensive-test-scenarios-review-on-automated-driving-systems-test-scenario-generation-methods/</link>
+      <pubDate>Wed, 17 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/can-ai-generate-more-comprehensive-test-scenarios-review-on-automated-driving-systems-test-scenario-generation-methods/</guid>
+      <description>Abstract Ensuring the safety and reliability of Automated Driving Systems (ADS) remains a critical challenge, as traditional verification methods such as large-scale on-road testing are prohibitively costly and time-consuming.To address this,scenario-based testing has emerged as a scalable and efficient alternative,yet existing surveys provide only partial coverage of recent methodological and technological advances.This review systematically analyzes 31 primary studies,and 10 surveys identified through a comprehensive search spanning 2015~2025;however,the in-depth methodological synthesis and comparative evaluation focus primarily on recent frameworks(2023~2025),reflecting the surge of Artificial Intelligent(AI)-assisted and multimodal approaches in this period.</description>
+    </item>
+    
+    <item>
+      <title>Exciton radiative lifetimes in hexagonal diamond Ge and Si$_x$Ge$_{1-x}$ alloys</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/exciton-radiative-lifetimes-in-hexagonal-diamond-ge-and-sixge1-x-alloys/</link>
+      <pubDate>Wed, 17 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/exciton-radiative-lifetimes-in-hexagonal-diamond-ge-and-sixge1-x-alloys/</guid>
+      <description>Abstract Recent reports of strong room-temperature photoluminescence in hexagonal diamond (2H) germanium stand in marked contrast to theoretical predictions of very weak band-edge optical transitions. Here we address radiative emission in 2H-Ge and related materials through a comprehensive investigation of their excitonic properties and radiative lifetimes, performing Bethe-Salpeter calculations on pristine and uniaxially strained 2H-Ge, 2H-Si$x$Ge${1-x}$ alloys with $x=\frac{1}{6},,\frac{1}{4},,\frac{1}{2}$, and wurtzite GaN as a reference. Pristine 2H-Ge features sizable exciton binding energies ($\sim!</description>
+    </item>
+    
+    <item>
+      <title>Fabrication of (In,Ga)N pseudo-substrates by a three-step growth protocol without ex-situ processing</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/fabrication-of-ingan-pseudo-substrates-by-a-three-step-growth-protocol-without-ex-situ-processing/</link>
+      <pubDate>Wed, 17 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/fabrication-of-ingan-pseudo-substrates-by-a-three-step-growth-protocol-without-ex-situ-processing/</guid>
+      <description>Abstract We fabricate (In,Ga)N pseudo-substrates with a total thickness of ~1 um grown on GaN templates using plasma-assisted molecular beam epitaxy. In a three-step process, we change growth conditions from N-rich to metal-rich in order to sequentially form a roughened GaN layer, relaxed (In,Ga)N nanostructures, and a coalesced, smooth (In,Ga)N layer. Samples are analyzed by scanning electron and atomic force microscopy, X-ray diffraction, as well as photo- and cathodoluminescence spectroscopy. Compared to a reference layer grown directly on GaN, the pseudo-substrate exhibits a higher In content (~0.</description>
+    </item>
+    
     <item>
       <title>MeltwaterBench: Deep learning for spatiotemporal downscaling of surface meltwater</title>
       <link>https://hanwo-ol.github.io/Unet_master/posts/meltwaterbench-deep-learning-for-spatiotemporal-downscaling-of-surface-meltwater/</link>
