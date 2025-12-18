@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Lean Unet: A Compact Model for Image Segmentation | Research Agent Knowledge Base</title>
+<meta name="keywords" content="Auto-Generated, Draft">
+<meta name="description" content="Abstract Unet and its variations have been standard in semantic image segmentation, especially for computer assisted radiology. Current Unet architectures iteratively downsample spatial resolution while increasing channel dimensions to preserve information content. Such a structure demands a large memory footprint, limiting training batch sizes and increasing inference latency. Channel pruning compresses Unet architecture without accuracy loss, but requires lengthy optimization and may not generalize across tasks and datasets. By investigating Unet pruning, we hypothesize that the final structure is the crucial factor, not the channel selection strategy of pruning.">
+<meta name="author" content="">
+<link rel="canonical" href="https://hanwo-ol.github.io/Unet_master/posts/lean-unet-a-compact-model-for-image-segmentation/">
+<link crossorigin="anonymous" href="/Unet_master/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="sha256-YqolQneX&#43;O/YcwGltpeV3FDfLb55pfugZIzHu42818k=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/Unet_master/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity="sha256-rLVP0yu8GYJCi4hQMX5F0Ha5UBJzClk2Zn5rwhd3aSo="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://hanwo-ol.github.io/Unet_master/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hanwo-ol.github.io/Unet_master/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hanwo-ol.github.io/Unet_master/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hanwo-ol.github.io/Unet_master/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hanwo-ol.github.io/Unet_master/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Lean Unet: A Compact Model for Image Segmentation" />
+<meta property="og:description" content="Abstract Unet and its variations have been standard in semantic image segmentation, especially for computer assisted radiology. Current Unet architectures iteratively downsample spatial resolution while increasing channel dimensions to preserve information content. Such a structure demands a large memory footprint, limiting training batch sizes and increasing inference latency. Channel pruning compresses Unet architecture without accuracy loss, but requires lengthy optimization and may not generalize across tasks and datasets. By investigating Unet pruning, we hypothesize that the final structure is the crucial factor, not the channel selection strategy of pruning." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hanwo-ol.github.io/Unet_master/posts/lean-unet-a-compact-model-for-image-segmentation/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-12-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-12-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Lean Unet: A Compact Model for Image Segmentation"/>
+<meta name="twitter:description" content="Abstract Unet and its variations have been standard in semantic image segmentation, especially for computer assisted radiology. Current Unet architectures iteratively downsample spatial resolution while increasing channel dimensions to preserve information content. Such a structure demands a large memory footprint, limiting training batch sizes and increasing inference latency. Channel pruning compresses Unet architecture without accuracy loss, but requires lengthy optimization and may not generalize across tasks and datasets. By investigating Unet pruning, we hypothesize that the final structure is the crucial factor, not the channel selection strategy of pruning."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Lean Unet: A Compact Model for Image Segmentation",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/lean-unet-a-compact-model-for-image-segmentation/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Lean Unet: A Compact Model for Image Segmentation",
+  "name": "Lean Unet: A Compact Model for Image Segmentation",
+  "description": "Abstract Unet and its variations have been standard in semantic image segmentation, especially for computer assisted radiology. Current Unet architectures iteratively downsample spatial resolution while increasing channel dimensions to preserve information content. Such a structure demands a large memory footprint, limiting training batch sizes and increasing inference latency. Channel pruning compresses Unet architecture without accuracy loss, but requires lengthy optimization and may not generalize across tasks and datasets. By investigating Unet pruning, we hypothesize that the final structure is the crucial factor, not the channel selection strategy of pruning.",
+  "keywords": [
+    "Auto-Generated", "Draft"
+  ],
+  "articleBody": "Abstract Unet and its variations have been standard in semantic image segmentation, especially for computer assisted radiology. Current Unet architectures iteratively downsample spatial resolution while increasing channel dimensions to preserve information content. Such a structure demands a large memory footprint, limiting training batch sizes and increasing inference latency. Channel pruning compresses Unet architecture without accuracy loss, but requires lengthy optimization and may not generalize across tasks and datasets. By investigating Unet pruning, we hypothesize that the final structure is the crucial factor, not the channel selection strategy of pruning. Based on our observations, we propose a lean Unet architecture (LUnet) with a compact, flat hierarchy where channels are not doubled as resolution is halved. We evaluate on a public MRI dataset allowing comparable reporting, as well as on two internal CT datasets. We show that a state-of-the-art pruning solution (STAMP) mainly prunes from the layers with the highest number of channels. Comparatively, simply eliminating a random channel at the pruning-identified layer or at the largest layer achieves similar or better performance. Our proposed LUnet with fixed architectures and over 30 times fewer parameters achieves performance comparable to both conventional Unet counterparts and data-adaptively pruned networks. The proposed lean Unet with constant channel count across layers requires far fewer parameters while achieving performance superior to standard Unet for the same total number of parameters. Skip connections allow Unet bottleneck channels to be largely reduced, unlike standard encoder-decoder architectures requiring increased bottleneck channels for information propagation.\nPDF Download PDF Download Local PDF View | Arxiv Original\n이 문서는 “Lean Unet: A Compact Model for Image Segmentation” 논문을 분석하여 작성된 상세 한국어 리포트입니다.\n1. 요약 (Executive Summary) 본 논문은 의료 영상 분할(Image Segmentation)의 표준 모델인 U-Net의 비효율적인 구조적 문제를 해결하기 위해 ‘Lean Unet (LUnet)‘이라는 새로운 경량 아키텍처를 제안합니다.\n문제 제기: 기존 U-Net 아키텍처는 정보 보존을 위해 다운샘플링 단계마다 채널 수를 두 배로 늘려(channel doubling), 과도한 메모리 사용량, 작은 훈련 배치 크기, 긴 추론 지연 시간을 초래합니다. 가설 및 실험 결과: 저자들은 U-Net 가지치기(Pruning) 실험을 통해, 모델의 성능에 결정적인 영향을 미치는 것은 가지치기 과정에서 선택된 특정 채널이 아니라, **최종적으로 달성된 네트워크 아키텍처(구조)**라는 것을 입증했습니다. 해결책 (LUnet): 이러한 관찰을 바탕으로, LUnet은 U-Net의 인코더-디코더 계층 전반에 걸쳐 채널 수가 일정하게 유지되는(flat hierarchy) 고정된 구조를 가집니다. 이는 복잡한 가지치기 과정이나 데이터 적응형 최적화 없이도 경량 모델을 제공합니다. 주요 성과: LUnet은 기존 U-Net 및 최신 가지치기 솔루션(STAMP)과 비교하여 유사하거나 더 우수한 분할 성능을 달성하면서도, 30배 이상 적은 파라미터를 사용합니다. 이는 U-Net의 스킵 연결(Skip Connections) 덕분에 병목(bottleneck) 및 깊은 계층의 채널 수를 크게 줄일 수 있음을 시사합니다. 2. 7가지 핵심 질문 분석 (Key Analysis) 1) What is new in the work? (기존 연구와의 차별점) 본 연구는 U-Net의 채널 수가 계층별로 일정하게 유지되는 **Lean Unet (LUnet)**이라는 새로운 고정 아키텍처를 제안합니다. 기존 U-Net이 다운샘플링 시 채널을 두 배로 늘리는 관행을 따랐던 것과 달리, LUnet은 이러한 채널 확장 규칙을 제거합니다. 또한, 기존 가지치기 연구가 특정 채널 선택 기준(예: 활성화 크기)에 집중했던 것과 달리, 본 연구는 가지치기의 효과가 최종적으로 얻어진 아키텍처 구조에 있음을 실험적으로 입증했다는 점에서 차별화됩니다.\n2) Why is the work important? (연구의 중요성) LUnet은 복잡하고 데이터 의존적인 가지치기 최적화 과정 없이도, U-Net과 동등하거나 더 나은 성능을 달성하는 매우 효율적이고 경량화된 모델을 제공합니다. 이는 특히 의료 영상 분야와 같이 메모리 제약이 크고 추론 속도가 중요한 환경에서 매우 중요합니다. LUnet은 데이터 독립적인 고정 구조를 가지므로, 과적합(overfitting) 가능성이 낮고, 모델 배포 및 재현성이 높습니다.\n3) What is the literature gap? (기존 연구의 한계점) 기존 U-Net 아키텍처는 깊은 계층에서 정보 손실을 막기 위해 채널 수를 기하급수적으로 증가시키는 설계 관행을 따랐습니다. 이는 필연적으로 방대한 파라미터 수와 메모리 사용량을 야기했습니다. 한편, 가지치기 방법은 모델 크기를 줄였지만, 최적의 서브 네트워크를 찾기 위해 반복적인 훈련, 재초기화, 복잡한 기준(예: STAMP의 활성화 L2-norm)을 필요로 했으며, 그 과정이 비효율적이고 예측 불가능했습니다.\n4) How is the gap filled? (해결 방안) 저자들은 STAMP 가지치기, 무작위 가지치기, 그리고 가장 넓은 블록을 체계적으로 가지치기하는 단순한 방법을 비교했습니다. 이 실험들을 통해, 가지치기의 성공은 특정 채널의 가중치/활성화 값에 의존하기보다는, 채널 수가 깊은 계층에서 크게 줄어든 ‘평평한’ 아키텍처 구조를 달성하는 데 있음을 확인했습니다. 이 통찰을 바탕으로, 채널 수가 모든 계층에서 고정된(예: $N_f=4$ 또는 $N_f=8$) LUnet을 제안하여, 복잡한 가지치기 과정 없이도 경량화된 최적의 구조를 직접 구현했습니다.\n5) What is achieved with the new method? (달성한 성과) LUnet은 기존 U-Net 대비 압도적인 파라미터 효율성을 달성했습니다.\nTable II (HarP 200→70 split) 비교:\n모델 $N_f$ $N_{ch}$ $N_p$ [x1000] Dice [%] 파라미터 감소율 (Unet100% 대비) Unet$_{100%}$ (Baseline) 4 368 354 85.8 ± 0.4 - Pruning (STAMP) @max-Dice (4) 164±5.5 199.5±26.3 $\\le 86.7 \\pm 0.1$ 약 43.6% Lean Unet (LUnet) 8 160 42 86.4 ± 0.0 약 88.2% (33배 이상) Lean Unet (LUnet) 4 80 10.7 85.3 ± 0.8 약 97.0% LUnet ($N_f=8$)은 Baseline Unet ($N_f=4$)보다 33배 이상 적은 파라미터(42K vs 354K)를 사용하면서도 더 높은 Dice 점수(86.4% vs 85.8%)를 달성했습니다. 이는 복잡한 STAMP 가지치기 모델의 최대 성능($\\le 86.7%$)과도 유사한 수준입니다.\n6) What data are used? (사용 데이터셋) 총 세 가지 의료 영상 데이터셋이 사용되었습니다.\n데이터셋 도메인 특성 Modality 이미지 크기 (Voxels) Task (Labels) HarP 공개 데이터셋, 비교 가능성 확보 T1 MRI $64 \\times 64 \\times 64$ 해마(Hippocampus) 분할 SG 내부 데이터셋 CT $128 \\times 128 \\times 128$ 턱밑샘(Submandibular Gland) 분할 TT 내부 데이터셋, 다중 레이블 분할 CT $128 \\times 128 \\times 128$ 기관, 기관 확장, 용골, 기관지 L/R 분할 7) What are the limitations? (저자가 언급한 한계점) 저자들은 STAMP와 같은 가지치기 모델이 보고하는 최대 테스트 Dice 점수($\\le$ 기호로 표시)가 훈련 반복 과정의 노이즈/확률성에 크게 의존하는 편향된 상한값(highly biased upper-bound) 시나리오라는 점을 지적합니다. 이러한 수치는 실제 홀드아웃 데이터에 일반화될 가능성이 낮습니다. 반면, LUnet과 같이 가지치기 없이 훈련된 모델은 훈련 종료 후 가중치가 고정되므로, 보고된 테스트 Dice는 편향되지 않은(unbiased) 값입니다. 또한, 가지치기는 모델 구조 업데이트 및 복구 에포크로 인해 상당한 계산 오버헤드를 수반합니다.\n3. 아키텍처 및 방법론 (Architecture \u0026 Methodology) Figure 분석: 아키텍처 (Figure 2) Figure 2는 일반적인 U-Net 아키텍처와 LUnet 아키텍처의 구조적 차이를 시각적으로 보여줍니다.\n일반 U-Net (Regular Unet):\n채널 확장: 인코더(Encoder)의 각 다운샘플링 단계(Level 1, 2, 3, 4)에서 채널 수($N_f$)가 $2N_f, 4N_f, 8N_f$로 두 배씩 증가합니다. 병목 계층: 가장 깊은 병목(Bottleneck) 계층은 가장 많은 채널($8N_f$)을 가집니다. 파라미터 증가: 깊이가 깊어질수록 채널 수가 기하급수적으로 증가하여 전체 파라미터 수가 크게 늘어납니다. Lean Unet (LUnet):\n평평한 계층 구조 (Flat Hierarchy): LUnet은 U-Net과 동일한 인코더-디코더 구조와 스킵 연결을 유지하지만, **모든 계층(Level 1, 2, 3, 4 및 Bottleneck)**에서 채널 수($N_f$)가 일정하게 유지됩니다. 경량화: 채널 수가 일정하므로, 특히 깊은 계층에서 파라미터 수가 극적으로 감소합니다. Figure 3(b) 및 3(c) 분석 (가지치기 진화): STAMP 가지치기 실험 결과(Figure 3(b))는 가지치기가 주로 채널 수가 가장 많은 **병목(Bottleneck) 및 깊은 계층(Enc 4, Dec 4)**에서 먼저 채널을 제거하여, U-Net 구조가 점진적으로 LUnet과 유사한 ‘평평한’ 구조로 변모함을 보여줍니다. 이는 LUnet 설계의 정당성을 뒷받침합니다.\n수식 상세 1. Dice Similarity Coefficient (DSC) 본 논문에서 분할 성능을 평가하는 주요 지표로 사용된 Dice 유사도 계수입니다. $A$를 예측된 분할 마스크, $B$를 정답 마스크라고 할 때, 수식은 다음과 같습니다.\n$$ \\text{Dice}(A, B) = \\frac{2 |A \\cap B|}{|A| + |B|} $$\n2. STAMP 가지치기 기준 (Pruning Criterion) STAMP [8]는 채널 활성화의 L2-norm을 가지치기 기준으로 사용합니다. 채널 $c$의 활성화 맵을 $A_c$라고 할 때, 가지치기 기준 $P_c$는 다음과 같습니다. 가장 낮은 $P_c$ 값을 가진 채널이 제거됩니다.\n$$ P_c = ||A_c||_2 $$\n3. Input/Output Tensor Shape 본 연구는 3D 의료 영상 분할을 다루므로, 텐서 형태는 3차원 공간을 포함합니다.\nInput Tensor Shape: $I \\in \\mathbb{R}^{D \\times H \\times W \\times C_{in}}$ $D, H, W$: 깊이(Depth), 높이(Height), 너비(Width). (예: HarP $64 \\times 64 \\times 64$, CT $128 \\times 128 \\times 128$) $C_{in}$: 입력 채널 수 (예: 1) Output Tensor Shape: $O \\in \\mathbb{R}^{D \\times H \\times W \\times C_{labels}}$ $C_{labels}$: 분할 레이블 수. Vanilla U-Net 비교 특징 Vanilla U-Net Lean Unet (LUnet) 채널 구조 계층이 깊어질수록 채널 수가 두 배로 증가 ($N_f, 2N_f, 4N_f, 8N_f, \\dots$) 모든 계층에서 채널 수가 일정하게 유지 ($N_f, N_f, N_f, N_f, \\dots$) 파라미터 수 매우 많음 (깊이에 따라 기하급수적 증가) 매우 적음 (Baseline 대비 30배 이상 감소) 정보 보존 전략 채널 확장 및 스킵 연결 스킵 연결에 크게 의존하여 정보 보존 설계 방식 경험적 설계 관행 (채널 확장) 가지치기 실험 기반의 구조적 최적화 추가/수정된 모듈 없음. 기존 U-Net의 채널 확장 규칙을 제거하고, 모든 블록의 채널 수를 고정하는 방식으로 수정됨. 4. 태그 제안 (Tags Suggestion) U-Net Network Compression Channel Pruning Lean Architecture Image Segmentation ",
+  "wordCount" : "1328",
+  "inLanguage": "en",
+  "datePublished": "2025-12-03T00:00:00Z",
+  "dateModified": "2025-12-03T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hanwo-ol.github.io/Unet_master/posts/lean-unet-a-compact-model-for-image-segmentation/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Research Agent Knowledge Base",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hanwo-ol.github.io/Unet_master/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hanwo-ol.github.io/Unet_master/" accesskey="h" title="Research Agent Knowledge Base (Alt + H)">Research Agent Knowledge Base</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/categories/" title="categories">
+                    <span>categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hanwo-ol.github.io/Unet_master/">Home</a>&nbsp;»&nbsp;<a href="https://hanwo-ol.github.io/Unet_master/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Lean Unet: A Compact Model for Image Segmentation
+    </h1>
+    <div class="post-meta">&lt;span title=&#39;2025-12-03 00:00:00 &#43;0000 UTC&#39;&gt;December 3, 2025&lt;/span&gt;&amp;nbsp;·&amp;nbsp;7 min
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="abstract">Abstract<a hidden class="anchor" aria-hidden="true" href="#abstract">#</a></h2>
+<p>Unet and its variations have been standard in semantic image segmentation, especially for computer assisted radiology. Current Unet architectures iteratively downsample spatial resolution while increasing channel dimensions to preserve information content. Such a structure demands a large memory footprint, limiting training batch sizes and increasing inference latency. Channel pruning compresses Unet architecture without accuracy loss, but requires lengthy optimization and may not generalize across tasks and datasets. By investigating Unet pruning, we hypothesize that the final structure is the crucial factor, not the channel selection strategy of pruning. Based on our observations, we propose a lean Unet architecture (LUnet) with a compact, flat hierarchy where channels are not doubled as resolution is halved. We evaluate on a public MRI dataset allowing comparable reporting, as well as on two internal CT datasets. We show that a state-of-the-art pruning solution (STAMP) mainly prunes from the layers with the highest number of channels. Comparatively, simply eliminating a random channel at the pruning-identified layer or at the largest layer achieves similar or better performance. Our proposed LUnet with fixed architectures and over 30 times fewer parameters achieves performance comparable to both conventional Unet counterparts and data-adaptively pruned networks. The proposed lean Unet with constant channel count across layers requires far fewer parameters while achieving performance superior to standard Unet for the same total number of parameters. Skip connections allow Unet bottleneck channels to be largely reduced, unlike standard encoder-decoder architectures requiring increased bottleneck channels for information propagation.</p>
+<h2 id="pdf-download">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download">#</a></h2>
+<h2 id="pdf-download-1">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download-1">#</a></h2>
+<p><a href="//172.22.138.185/Research_pdf/2512.03834v1.pdf">Local PDF View</a> | <a href="http://arxiv.org/abs/2512.03834v1">Arxiv Original</a></p>
+<p>이 문서는 &ldquo;Lean Unet: A Compact Model for Image Segmentation&rdquo; 논문을 분석하여 작성된 상세 한국어 리포트입니다.</p>
+<hr>
+<h2 id="1-요약-executive-summary">1. 요약 (Executive Summary)<a hidden class="anchor" aria-hidden="true" href="#1-요약-executive-summary">#</a></h2>
+<p>본 논문은 의료 영상 분할(Image Segmentation)의 표준 모델인 U-Net의 비효율적인 구조적 문제를 해결하기 위해 &lsquo;Lean Unet (LUnet)&lsquo;이라는 새로운 경량 아키텍처를 제안합니다.</p>
+<ul>
+<li><strong>문제 제기:</strong> 기존 U-Net 아키텍처는 정보 보존을 위해 다운샘플링 단계마다 채널 수를 두 배로 늘려(channel doubling), 과도한 메모리 사용량, 작은 훈련 배치 크기, 긴 추론 지연 시간을 초래합니다.</li>
+<li><strong>가설 및 실험 결과:</strong> 저자들은 U-Net 가지치기(Pruning) 실험을 통해, 모델의 성능에 결정적인 영향을 미치는 것은 가지치기 과정에서 선택된 특정 채널이 아니라, **최종적으로 달성된 네트워크 아키텍처(구조)**라는 것을 입증했습니다.</li>
+<li><strong>해결책 (LUnet):</strong> 이러한 관찰을 바탕으로, LUnet은 U-Net의 인코더-디코더 계층 전반에 걸쳐 채널 수가 일정하게 유지되는(flat hierarchy) 고정된 구조를 가집니다. 이는 복잡한 가지치기 과정이나 데이터 적응형 최적화 없이도 경량 모델을 제공합니다.</li>
+<li><strong>주요 성과:</strong> LUnet은 기존 U-Net 및 최신 가지치기 솔루션(STAMP)과 비교하여 유사하거나 더 우수한 분할 성능을 달성하면서도, <strong>30배 이상 적은 파라미터</strong>를 사용합니다. 이는 U-Net의 스킵 연결(Skip Connections) 덕분에 병목(bottleneck) 및 깊은 계층의 채널 수를 크게 줄일 수 있음을 시사합니다.</li>
+</ul>
+<hr>
+<h2 id="2-7가지-핵심-질문-분석-key-analysis">2. 7가지 핵심 질문 분석 (Key Analysis)<a hidden class="anchor" aria-hidden="true" href="#2-7가지-핵심-질문-분석-key-analysis">#</a></h2>
+<h3 id="1-what-is-new-in-the-work-기존-연구와의-차별점">1) What is new in the work? (기존 연구와의 차별점)<a hidden class="anchor" aria-hidden="true" href="#1-what-is-new-in-the-work-기존-연구와의-차별점">#</a></h3>
+<p>본 연구는 U-Net의 채널 수가 계층별로 일정하게 유지되는 **Lean Unet (LUnet)**이라는 새로운 고정 아키텍처를 제안합니다. 기존 U-Net이 다운샘플링 시 채널을 두 배로 늘리는 관행을 따랐던 것과 달리, LUnet은 이러한 채널 확장 규칙을 제거합니다. 또한, 기존 가지치기 연구가 특정 채널 선택 기준(예: 활성화 크기)에 집중했던 것과 달리, 본 연구는 가지치기의 효과가 <strong>최종적으로 얻어진 아키텍처 구조</strong>에 있음을 실험적으로 입증했다는 점에서 차별화됩니다.</p>
+<h3 id="2-why-is-the-work-important-연구의-중요성">2) Why is the work important? (연구의 중요성)<a hidden class="anchor" aria-hidden="true" href="#2-why-is-the-work-important-연구의-중요성">#</a></h3>
+<p>LUnet은 복잡하고 데이터 의존적인 가지치기 최적화 과정 없이도, U-Net과 동등하거나 더 나은 성능을 달성하는 매우 효율적이고 경량화된 모델을 제공합니다. 이는 특히 의료 영상 분야와 같이 메모리 제약이 크고 추론 속도가 중요한 환경에서 매우 중요합니다. LUnet은 데이터 독립적인 고정 구조를 가지므로, 과적합(overfitting) 가능성이 낮고, 모델 배포 및 재현성이 높습니다.</p>
+<h3 id="3-what-is-the-literature-gap-기존-연구의-한계점">3) What is the literature gap? (기존 연구의 한계점)<a hidden class="anchor" aria-hidden="true" href="#3-what-is-the-literature-gap-기존-연구의-한계점">#</a></h3>
+<p>기존 U-Net 아키텍처는 깊은 계층에서 정보 손실을 막기 위해 채널 수를 기하급수적으로 증가시키는 설계 관행을 따랐습니다. 이는 필연적으로 방대한 파라미터 수와 메모리 사용량을 야기했습니다. 한편, 가지치기 방법은 모델 크기를 줄였지만, 최적의 서브 네트워크를 찾기 위해 반복적인 훈련, 재초기화, 복잡한 기준(예: STAMP의 활성화 L2-norm)을 필요로 했으며, 그 과정이 비효율적이고 예측 불가능했습니다.</p>
+<h3 id="4-how-is-the-gap-filled-해결-방안">4) How is the gap filled? (해결 방안)<a hidden class="anchor" aria-hidden="true" href="#4-how-is-the-gap-filled-해결-방안">#</a></h3>
+<p>저자들은 STAMP 가지치기, 무작위 가지치기, 그리고 가장 넓은 블록을 체계적으로 가지치기하는 단순한 방법을 비교했습니다. 이 실험들을 통해, 가지치기의 성공은 특정 채널의 가중치/활성화 값에 의존하기보다는, <strong>채널 수가 깊은 계층에서 크게 줄어든 &lsquo;평평한&rsquo; 아키텍처 구조</strong>를 달성하는 데 있음을 확인했습니다. 이 통찰을 바탕으로, 채널 수가 모든 계층에서 고정된(예: $N_f=4$ 또는 $N_f=8$) LUnet을 제안하여, 복잡한 가지치기 과정 없이도 경량화된 최적의 구조를 직접 구현했습니다.</p>
+<h3 id="5-what-is-achieved-with-the-new-method-달성한-성과">5) What is achieved with the new method? (달성한 성과)<a hidden class="anchor" aria-hidden="true" href="#5-what-is-achieved-with-the-new-method-달성한-성과">#</a></h3>
+<p>LUnet은 기존 U-Net 대비 압도적인 파라미터 효율성을 달성했습니다.</p>
+<p><strong>Table II (HarP 200→70 split) 비교:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">모델</th>
+<th style="text-align:left">$N_f$</th>
+<th style="text-align:left">$N_{ch}$</th>
+<th style="text-align:left">$N_p$ [x1000]</th>
+<th style="text-align:left">Dice [%]</th>
+<th style="text-align:left">파라미터 감소율 (Unet100% 대비)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Unet$_{100%}$ (Baseline)</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">368</td>
+<td style="text-align:left">354</td>
+<td style="text-align:left">85.8 ± 0.4</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">Pruning (STAMP) @max-Dice</td>
+<td style="text-align:left">(4)</td>
+<td style="text-align:left">164±5.5</td>
+<td style="text-align:left">199.5±26.3</td>
+<td style="text-align:left">$\le 86.7 \pm 0.1$</td>
+<td style="text-align:left">약 43.6%</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Lean Unet (LUnet)</strong></td>
+<td style="text-align:left"><strong>8</strong></td>
+<td style="text-align:left"><strong>160</strong></td>
+<td style="text-align:left"><strong>42</strong></td>
+<td style="text-align:left"><strong>86.4 ± 0.0</strong></td>
+<td style="text-align:left"><strong>약 88.2% (33배 이상)</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Lean Unet (LUnet)</strong></td>
+<td style="text-align:left"><strong>4</strong></td>
+<td style="text-align:left"><strong>80</strong></td>
+<td style="text-align:left"><strong>10.7</strong></td>
+<td style="text-align:left"><strong>85.3 ± 0.8</strong></td>
+<td style="text-align:left"><strong>약 97.0%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>LUnet ($N_f=8$)은 Baseline Unet ($N_f=4$)보다 33배 이상 적은 파라미터(42K vs 354K)를 사용하면서도 더 높은 Dice 점수(86.4% vs 85.8%)를 달성했습니다. 이는 복잡한 STAMP 가지치기 모델의 최대 성능($\le 86.7%$)과도 유사한 수준입니다.</p>
+<h3 id="6-what-data-are-used-사용-데이터셋">6) What data are used? (사용 데이터셋)<a hidden class="anchor" aria-hidden="true" href="#6-what-data-are-used-사용-데이터셋">#</a></h3>
+<p>총 세 가지 의료 영상 데이터셋이 사용되었습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">데이터셋</th>
+<th style="text-align:left">도메인 특성</th>
+<th style="text-align:left">Modality</th>
+<th style="text-align:left">이미지 크기 (Voxels)</th>
+<th style="text-align:left">Task (Labels)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>HarP</strong></td>
+<td style="text-align:left">공개 데이터셋, 비교 가능성 확보</td>
+<td style="text-align:left">T1 MRI</td>
+<td style="text-align:left">$64 \times 64 \times 64$</td>
+<td style="text-align:left">해마(Hippocampus) 분할</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>SG</strong></td>
+<td style="text-align:left">내부 데이터셋</td>
+<td style="text-align:left">CT</td>
+<td style="text-align:left">$128 \times 128 \times 128$</td>
+<td style="text-align:left">턱밑샘(Submandibular Gland) 분할</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>TT</strong></td>
+<td style="text-align:left">내부 데이터셋, 다중 레이블 분할</td>
+<td style="text-align:left">CT</td>
+<td style="text-align:left">$128 \times 128 \times 128$</td>
+<td style="text-align:left">기관, 기관 확장, 용골, 기관지 L/R 분할</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-what-are-the-limitations-저자가-언급한-한계점">7) What are the limitations? (저자가 언급한 한계점)<a hidden class="anchor" aria-hidden="true" href="#7-what-are-the-limitations-저자가-언급한-한계점">#</a></h3>
+<p>저자들은 STAMP와 같은 가지치기 모델이 보고하는 최대 테스트 Dice 점수($\le$ 기호로 표시)가 훈련 반복 과정의 노이즈/확률성에 크게 의존하는 <strong>편향된 상한값(highly biased upper-bound)</strong> 시나리오라는 점을 지적합니다. 이러한 수치는 실제 홀드아웃 데이터에 일반화될 가능성이 낮습니다. 반면, LUnet과 같이 가지치기 없이 훈련된 모델은 훈련 종료 후 가중치가 고정되므로, 보고된 테스트 Dice는 편향되지 않은(unbiased) 값입니다. 또한, 가지치기는 모델 구조 업데이트 및 복구 에포크로 인해 상당한 계산 오버헤드를 수반합니다.</p>
+<hr>
+<h2 id="3-아키텍처-및-방법론-architecture--methodology">3. 아키텍처 및 방법론 (Architecture &amp; Methodology)<a hidden class="anchor" aria-hidden="true" href="#3-아키텍처-및-방법론-architecture--methodology">#</a></h2>
+<h3 id="figure-분석-아키텍처-figure-2">Figure 분석: 아키텍처 (Figure 2)<a hidden class="anchor" aria-hidden="true" href="#figure-분석-아키텍처-figure-2">#</a></h3>
+<p><strong>Figure 2</strong>는 일반적인 U-Net 아키텍처와 LUnet 아키텍처의 구조적 차이를 시각적으로 보여줍니다.</p>
+<p><strong>일반 U-Net (Regular Unet):</strong></p>
+<ul>
+<li><strong>채널 확장:</strong> 인코더(Encoder)의 각 다운샘플링 단계(Level 1, 2, 3, 4)에서 채널 수($N_f$)가 $2N_f, 4N_f, 8N_f$로 두 배씩 증가합니다.</li>
+<li><strong>병목 계층:</strong> 가장 깊은 병목(Bottleneck) 계층은 가장 많은 채널($8N_f$)을 가집니다.</li>
+<li><strong>파라미터 증가:</strong> 깊이가 깊어질수록 채널 수가 기하급수적으로 증가하여 전체 파라미터 수가 크게 늘어납니다.</li>
+</ul>
+<p><strong>Lean Unet (LUnet):</strong></p>
+<ul>
+<li><strong>평평한 계층 구조 (Flat Hierarchy):</strong> LUnet은 U-Net과 동일한 인코더-디코더 구조와 스킵 연결을 유지하지만, **모든 계층(Level 1, 2, 3, 4 및 Bottleneck)**에서 채널 수($N_f$)가 일정하게 유지됩니다.</li>
+<li><strong>경량화:</strong> 채널 수가 일정하므로, 특히 깊은 계층에서 파라미터 수가 극적으로 감소합니다.</li>
+</ul>
+<p><strong>Figure 3(b) 및 3(c) 분석 (가지치기 진화):</strong>
+STAMP 가지치기 실험 결과(Figure 3(b))는 가지치기가 주로 채널 수가 가장 많은 **병목(Bottleneck) 및 깊은 계층(Enc 4, Dec 4)**에서 먼저 채널을 제거하여, U-Net 구조가 점진적으로 LUnet과 유사한 &lsquo;평평한&rsquo; 구조로 변모함을 보여줍니다. 이는 LUnet 설계의 정당성을 뒷받침합니다.</p>
+<h3 id="수식-상세">수식 상세<a hidden class="anchor" aria-hidden="true" href="#수식-상세">#</a></h3>
+<h4 id="1-dice-similarity-coefficient-dsc">1. Dice Similarity Coefficient (DSC)<a hidden class="anchor" aria-hidden="true" href="#1-dice-similarity-coefficient-dsc">#</a></h4>
+<p>본 논문에서 분할 성능을 평가하는 주요 지표로 사용된 Dice 유사도 계수입니다. $A$를 예측된 분할 마스크, $B$를 정답 마스크라고 할 때, 수식은 다음과 같습니다.</p>
+<p>$$ \text{Dice}(A, B) = \frac{2 |A \cap B|}{|A| + |B|} $$</p>
+<h4 id="2-stamp-가지치기-기준-pruning-criterion">2. STAMP 가지치기 기준 (Pruning Criterion)<a hidden class="anchor" aria-hidden="true" href="#2-stamp-가지치기-기준-pruning-criterion">#</a></h4>
+<p>STAMP [8]는 채널 활성화의 L2-norm을 가지치기 기준으로 사용합니다. 채널 $c$의 활성화 맵을 $A_c$라고 할 때, 가지치기 기준 $P_c$는 다음과 같습니다. 가장 낮은 $P_c$ 값을 가진 채널이 제거됩니다.</p>
+<p>$$ P_c = ||A_c||_2 $$</p>
+<h4 id="3-inputoutput-tensor-shape">3. Input/Output Tensor Shape<a hidden class="anchor" aria-hidden="true" href="#3-inputoutput-tensor-shape">#</a></h4>
+<p>본 연구는 3D 의료 영상 분할을 다루므로, 텐서 형태는 3차원 공간을 포함합니다.</p>
+<ul>
+<li><strong>Input Tensor Shape:</strong> $I \in \mathbb{R}^{D \times H \times W \times C_{in}}$
+<ul>
+<li>$D, H, W$: 깊이(Depth), 높이(Height), 너비(Width). (예: HarP $64 \times 64 \times 64$, CT $128 \times 128 \times 128$)</li>
+<li>$C_{in}$: 입력 채널 수 (예: 1)</li>
+</ul>
+</li>
+<li><strong>Output Tensor Shape:</strong> $O \in \mathbb{R}^{D \times H \times W \times C_{labels}}$
+<ul>
+<li>$C_{labels}$: 분할 레이블 수.</li>
+</ul>
+</li>
+</ul>
+<h3 id="vanilla-u-net-비교">Vanilla U-Net 비교<a hidden class="anchor" aria-hidden="true" href="#vanilla-u-net-비교">#</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">특징</th>
+<th style="text-align:left">Vanilla U-Net</th>
+<th style="text-align:left">Lean Unet (LUnet)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>채널 구조</strong></td>
+<td style="text-align:left">계층이 깊어질수록 채널 수가 두 배로 증가 ($N_f, 2N_f, 4N_f, 8N_f, \dots$)</td>
+<td style="text-align:left">모든 계층에서 채널 수가 일정하게 유지 ($N_f, N_f, N_f, N_f, \dots$)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>파라미터 수</strong></td>
+<td style="text-align:left">매우 많음 (깊이에 따라 기하급수적 증가)</td>
+<td style="text-align:left">매우 적음 (Baseline 대비 30배 이상 감소)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>정보 보존 전략</strong></td>
+<td style="text-align:left">채널 확장 및 스킵 연결</td>
+<td style="text-align:left">스킵 연결에 크게 의존하여 정보 보존</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>설계 방식</strong></td>
+<td style="text-align:left">경험적 설계 관행 (채널 확장)</td>
+<td style="text-align:left">가지치기 실험 기반의 구조적 최적화</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>추가/수정된 모듈</strong></td>
+<td style="text-align:left">없음. 기존 U-Net의 채널 확장 규칙을 제거하고, 모든 블록의 채널 수를 고정하는 방식으로 <strong>수정</strong>됨.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-태그-제안-tags-suggestion">4. 태그 제안 (Tags Suggestion)<a hidden class="anchor" aria-hidden="true" href="#4-태그-제안-tags-suggestion">#</a></h2>
+<ol>
+<li>U-Net</li>
+<li>Network Compression</li>
+<li>Channel Pruning</li>
+<li>Lean Architecture</li>
+<li>Image Segmentation</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/auto-generated/">Auto-Generated</a></li>
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/draft/">Draft</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://hanwo-ol.github.io/Unet_master/posts/daunet-a-lightweight-unet-variant-with-deformable-convolutions-and-parameter-free-attention-for-medical-image-segmentation/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>DAUNet: A Lightweight UNet Variant with Deformable Convolutions and Parameter-Free Attention for Medical Image Segmentation</span>
+  </a>
+  <a class="next" href="https://hanwo-ol.github.io/Unet_master/posts/a-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media/">
+    <span class="title">Next »</span>
+    <br>
+    <span>A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Lean Unet: A Compact Model for Image Segmentation on twitter"
+        href="https://twitter.com/intent/tweet/?text=Lean%20Unet%3a%20A%20Compact%20Model%20for%20Image%20Segmentation&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2flean-unet-a-compact-model-for-image-segmentation%2f&amp;hashtags=Auto-Generated%2cDraft">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Lean Unet: A Compact Model for Image Segmentation on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2flean-unet-a-compact-model-for-image-segmentation%2f&amp;title=Lean%20Unet%3a%20A%20Compact%20Model%20for%20Image%20Segmentation&amp;summary=Lean%20Unet%3a%20A%20Compact%20Model%20for%20Image%20Segmentation&amp;source=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2flean-unet-a-compact-model-for-image-segmentation%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Lean Unet: A Compact Model for Image Segmentation on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2flean-unet-a-compact-model-for-image-segmentation%2f&title=Lean%20Unet%3a%20A%20Compact%20Model%20for%20Image%20Segmentation">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Lean Unet: A Compact Model for Image Segmentation on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2flean-unet-a-compact-model-for-image-segmentation%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Lean Unet: A Compact Model for Image Segmentation on whatsapp"
+        href="https://api.whatsapp.com/send?text=Lean%20Unet%3a%20A%20Compact%20Model%20for%20Image%20Segmentation%20-%20https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2flean-unet-a-compact-model-for-image-segmentation%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Lean Unet: A Compact Model for Image Segmentation on telegram"
+        href="https://telegram.me/share/url?text=Lean%20Unet%3a%20A%20Compact%20Model%20for%20Image%20Segmentation&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2flean-unet-a-compact-model-for-image-segmentation%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://hanwo-ol.github.io/Unet_master/">Research Agent Knowledge Base</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

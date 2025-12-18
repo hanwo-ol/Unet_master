@@ -5,6 +5,25 @@
     <link>https://hanwo-ol.github.io/Unet_master/categories/</link>
     <description>Recent content in Categories on Research Agent Knowledge Base</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>ko-kr</language><atom:link href="https://hanwo-ol.github.io/Unet_master/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>ko-kr</language>
+    <lastBuildDate>Sat, 13 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Literature Review</title>
+      <link>https://hanwo-ol.github.io/Unet_master/categories/literature-review/</link>
+      <pubDate>Sat, 13 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/categories/literature-review/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>U-Net</title>
+      <link>https://hanwo-ol.github.io/Unet_master/categories/u-net/</link>
+      <pubDate>Sat, 13 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/categories/u-net/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

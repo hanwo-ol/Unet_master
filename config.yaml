@@ -1,8 +1,9 @@
 # Research Agent Configuration
 
 search:
-  query: '(abs:"U-Net" OR abs:"Unet") AND (all:"image segmentation" OR all:"spatiotemporal")'
-  max_results: 10
+  # Test 1: GAN (2025 only)
+  query: '(abs:"GAN" OR abs:"Generative Adversarial Network") AND submittedDate:[202501010000 TO 202512312359]'
+  max_results: 3
   sort_by: "submitted_date" # options: submitted_date, relevance, last_updated_date
   sort_order: "descending" # options: descending, ascending
 

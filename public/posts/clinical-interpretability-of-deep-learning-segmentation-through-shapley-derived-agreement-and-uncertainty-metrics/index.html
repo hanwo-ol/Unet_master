@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics | Research Agent Knowledge Base</title>
+<meta name="keywords" content="Auto-Generated, Draft">
+<meta name="description" content="Abstract Segmentation is the identification of anatomical regions of interest, such as organs, tissue, and lesions, serving as a fundamental task in computer-aided diagnosis in medical imaging. Although deep learning models have achieved remarkable performance in medical image segmentation, the need for explainability remains critical for ensuring their acceptance and integration in clinical practice, despite the growing research attention in this area. Our approach explored the use of contrast-level Shapley values, a systematic perturbation of model inputs to assess feature importance.">
+<meta name="author" content="">
+<link rel="canonical" href="https://hanwo-ol.github.io/Unet_master/posts/clinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics/">
+<link crossorigin="anonymous" href="/Unet_master/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="sha256-YqolQneX&#43;O/YcwGltpeV3FDfLb55pfugZIzHu42818k=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/Unet_master/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity="sha256-rLVP0yu8GYJCi4hQMX5F0Ha5UBJzClk2Zn5rwhd3aSo="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://hanwo-ol.github.io/Unet_master/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hanwo-ol.github.io/Unet_master/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hanwo-ol.github.io/Unet_master/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hanwo-ol.github.io/Unet_master/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hanwo-ol.github.io/Unet_master/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics" />
+<meta property="og:description" content="Abstract Segmentation is the identification of anatomical regions of interest, such as organs, tissue, and lesions, serving as a fundamental task in computer-aided diagnosis in medical imaging. Although deep learning models have achieved remarkable performance in medical image segmentation, the need for explainability remains critical for ensuring their acceptance and integration in clinical practice, despite the growing research attention in this area. Our approach explored the use of contrast-level Shapley values, a systematic perturbation of model inputs to assess feature importance." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hanwo-ol.github.io/Unet_master/posts/clinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-12-08T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-12-08T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics"/>
+<meta name="twitter:description" content="Abstract Segmentation is the identification of anatomical regions of interest, such as organs, tissue, and lesions, serving as a fundamental task in computer-aided diagnosis in medical imaging. Although deep learning models have achieved remarkable performance in medical image segmentation, the need for explainability remains critical for ensuring their acceptance and integration in clinical practice, despite the growing research attention in this area. Our approach explored the use of contrast-level Shapley values, a systematic perturbation of model inputs to assess feature importance."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/clinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics",
+  "name": "Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics",
+  "description": "Abstract Segmentation is the identification of anatomical regions of interest, such as organs, tissue, and lesions, serving as a fundamental task in computer-aided diagnosis in medical imaging. Although deep learning models have achieved remarkable performance in medical image segmentation, the need for explainability remains critical for ensuring their acceptance and integration in clinical practice, despite the growing research attention in this area. Our approach explored the use of contrast-level Shapley values, a systematic perturbation of model inputs to assess feature importance.",
+  "keywords": [
+    "Auto-Generated", "Draft"
+  ],
+  "articleBody": "Abstract Segmentation is the identification of anatomical regions of interest, such as organs, tissue, and lesions, serving as a fundamental task in computer-aided diagnosis in medical imaging. Although deep learning models have achieved remarkable performance in medical image segmentation, the need for explainability remains critical for ensuring their acceptance and integration in clinical practice, despite the growing research attention in this area. Our approach explored the use of contrast-level Shapley values, a systematic perturbation of model inputs to assess feature importance. While other studies have investigated gradient-based techniques through identifying influential regions in imaging inputs, Shapley values offer a broader, clinically aligned approach, explaining how model performance is fairly attributed to certain imaging contrasts over others. Using the BraTS 2024 dataset, we generated rankings for Shapley values for four MRI contrasts across four model architectures. Two metrics were proposed from the Shapley ranking: agreement between model and ``clinician\" imaging ranking, and uncertainty quantified through Shapley ranking variance across cross-validation folds. Higher-performing cases (Dice \\textgreater0.6) showed significantly greater agreement with clinical rankings. Increased Shapley ranking variance correlated with decreased performance (U-Net: $r=-0.581$). These metrics provide clinically interpretable proxies for model reliability, helping clinicians better understand state-of-the-art segmentation models.\nPDF Download PDF Download Local PDF View | Arxiv Original\nResearch Agent - Draft Refiner Module 리포트 논문 제목: CLINICAL INTERPRETABILITY OF DEEP LEARNING SEGMENTATION THROUGH SHAPLEY-DERIVED AGREEMENT AND UNCERTAINTY METRICS (Shapley 기반 합의 및 불확실성 메트릭을 통한 딥러닝 분할의 임상적 해석 가능성)\n1. 요약 (Executive Summary) 연구 목표: 의료 영상 분할 분야에서 딥러닝 모델의 임상적 수용을 높이기 위해 모델 결정의 해석 가능성(Explainability)을 향상시키는 데 중점을 둡니다. 핵심 방법론: 모델 입력(MRI 대비)의 체계적인 교란을 통해 특징 중요도를 평가하는 대비 수준(Contrast-level) Shapley 값을 활용합니다. 이는 기존의 픽셀 기반 방법보다 임상적으로 정렬된 설명을 제공합니다. 제안된 메트릭: Shapley 값 순위(Ranking)를 기반으로 두 가지 새로운 임상 해석 가능 메트릭을 제안했습니다. 합의(Agreement): 모델의 대비 순위와 임상 프로토콜 순위 간의 일치도. 불확실성(Uncertainty): 교차 검증 폴드(cross-validation folds) 간 Shapley 순위 분산. 주요 결과 (합의): 성능이 높은 사례(Dice \u003e 0.6)는 임상 순위와 유의미하게 더 큰 합의를 보였습니다. 주요 결과 (불확실성): Shapley 순위 분산이 증가할수록 성능이 감소하는 경향이 나타났습니다 (예: U-Net에서 $r = -0.581$). 결론: 제안된 메트릭은 모델 신뢰도에 대한 임상적으로 해석 가능한 대리 지표를 제공하여, 최신 분할 모델에 대한 임상의의 이해를 돕습니다. 2. 7가지 핵심 질문 분석 (Key Analysis) 1) What is new in the work? (기존 연구와의 차별점) 이 연구는 기존의 Grad-CAM과 같은 그래디언트 기반 시각화 기법이나 픽셀 수준의 Shapley 분석에서 벗어나, 대비 수준(Contrast-level) Shapley 값을 사용하여 다중 대비 MRI 분할 모델의 결정을 설명합니다. 가장 큰 차별점은 이 Shapley 값을 단순히 설명하는 데 그치지 않고, 임상적 의사 결정 과정에 직접적으로 연결되는 두 가지 정량적 메트릭(합의 및 불확실성)을 도출하여 모델의 신뢰도를 평가했다는 점입니다.\n2) Why is the work important? (연구의 중요성) 이 연구는 딥러닝 모델이 의료 영상 분할에서 높은 성능을 달성했음에도 불구하고 임상 현장에서 ‘블랙 박스’로 남아있는 문제를 해결하는 데 중요합니다. 모델이 특정 MRI 대비(T1c, T2f 등)를 어떻게 우선순위로 두는지에 대한 정량적이고 해석 가능한 설명을 제공함으로써, 임상의가 모델의 추론 과정을 이해하고 예측의 일관성을 신뢰할 수 있도록 돕습니다. 이는 의료 AI의 임상 통합 및 수용을 촉진하는 데 필수적입니다.\n3) What is the literature gap? (기존 연구의 한계점) 기존의 설명 가능 AI(XAI) 연구들은 주로 픽셀 수준의 중요도를 시각화하는 데 초점을 맞추었으며, 이는 임상적 해석을 위해 임계값 설정이 필요하여 해석이 복잡해지는 한계가 있었습니다. 또한, 기존 Shapley 연구들은 모델의 성능 기여도를 정량화했지만, 그 결과가 임상 프로토콜이나 진단 불확실성(예: 임상의 간 의견 불일치)과 어떻게 연관되는지에 대한 직접적인 연결 고리가 부족했습니다.\n4) How is the gap filled? (해결 방안) 연구진은 Shapley 값을 1부터 4까지의 순위로 변환하여 이 간극을 메웠습니다.\n합의: 모델이 생성한 Shapley 순위를 임상 표준 프로토콜 순위($R_K$)와 비교하기 위해 **정규화된 스피어만 풋룰 거리(Normalized Spearman Footrule Distance, NSF)**를 사용했습니다. NSF 값이 높을수록 모델의 대비 우선순위가 임상적 지침과 일치함을 의미합니다. 불확실성: 5-겹 교차 검증(five-fold cross-validation) 폴드 전반에 걸쳐 Shapley 순위의 **분산($V$)**을 계산하여 모델의 예측 일관성 및 불확실성을 정량화했습니다. 5) What is achieved with the new method? (달성한 성과) 제안된 메트릭은 모델 성능과 신뢰도 간의 강력한 상관관계를 입증했습니다.\n합의 성과 (Figure 2 분석): U-Net 모델의 경우, Dice 점수 0.6 이상 그룹은 Dice 점수 0.5 미만 그룹에 비해 임상 표준 순위와의 합의(NSF)가 유의미하게 더 높았습니다 ($p \u003c 0.001$). 이는 성능이 좋은 모델일수록 임상적 상식과 일치하는 방식으로 대비를 활용함을 보여줍니다. 불확실성 성과 (Figure 3 분석): Shapley 순위 분산($V$)이 증가할수록 평균 Dice 점수가 감소하는 음의 상관관계가 모든 모델에서 관찰되었습니다. U-Net 모델에서 가장 강한 상관관계: $r = -0.581$ (95% CI: $[-0.607, -0.553]$). Seg-Resnet 모델에서 가장 강한 상관관계: $r = -0.604$ (95% CI: $[-0.636, -0.569]$). 이는 모델의 불확실성이 높을수록 분할 성능이 저하될 가능성이 높다는 것을 정량적으로 입증합니다. 6) What data are used? (사용 데이터셋 - 도메인 특성 포함) 데이터셋: Brain Tumor Segmentation (BraTS) Challenge 2024 GOAT challenge. 도메인 특성: 뇌종양 분할(Glioma segmentation)을 위한 의료 영상 데이터. 구성: 총 1351명의 환자 데이터. 각 환자는 네 가지 MRI 대비(T1c, T1n, T2f, T2w)를 포함하는 다중 채널 입력으로 구성됩니다. Ground Truth: 괴사성 코어(necrotic core), 부종(edema), 조영 증강 종양(enhancing tumor)의 세 가지 종양 하위 영역 주석을 포함합니다. 7) What are the limitations? (저자가 언급한 한계점) 저자들은 다음과 같은 한계점을 언급했습니다.\n임상의 합의 부족: Shapley 순위 합의 분석을 위해 숙련된 방사선 전문의로부터 직접적인 합의를 얻지 못하고, 대신 의대생 주석자 합의와 논문 기반의 임상 표준을 사용했습니다. 향후 더 강력한 임상 비교가 필요합니다. 불확실성의 주관성: 모델 결정의 불확실성 개념은 주관적이며 다양한 방식으로 접근될 수 있습니다 (예: Monte Carlo 드롭아웃을 사용하여 예측 불확실성을 정량화하는 방법). 3. 아키텍처 및 방법론 (Architecture \u0026 Methodology) Figure 분석: 메인 아키텍처 및 흐름 (Figure 1) Figure 1은 새로운 아키텍처 구조가 아닌, 제안된 설명 가능성 메트릭 도출 과정을 시각적으로 요약합니다.\n입력 (Multi-contrast MRI): T1c, T1n, T2f, T2w 네 가지 MRI 대비 영상이 딥러닝 모델의 입력으로 사용됩니다. Shapley 값 계산: 각 대비 영상에 대해 Shapley 값이 계산됩니다. 이 값은 해당 대비가 모델의 성능(Dice Score)에 기여하는 정도를 정량화합니다. Shapley 순위 변환: 계산된 Shapley 값은 순위(1: 가장 중요, 4: 가장 덜 중요)로 변환됩니다 (예: T1n=1, T2f=2). 메트릭 도출: 이 Shapley 순위를 기반으로 두 가지 임상 해석 가능 메트릭이 도출됩니다. 합의 (Agreement): 모델 순위와 임상 프로토콜 순위 간의 일치도. 불확실성 (Uncertainty): 교차 검증 폴드 간 모델 순위의 변동성. 최종 목표: 임상의가 모델의 의사 결정 및 성능을 이해하도록 돕습니다. 수식 상세 (Loss Function, Input/Output Tensor Shape, 주요 모듈의 수식) Input/Output Tensor Shape:\n입력 ($I$): 4채널 3D-MRI 영상. $$I \\in \\mathbb{R}^{N \\times D \\times W \\times H}$$ 여기서 $N=4$는 MRI 대비 채널 수(T1c, T1n, T2f, T2w)이며, $D, W, H$는 깊이, 너비, 높이입니다. 출력 ($\\hat{Y}$): 종양 레이블 예측. $$\\hat{Y} = \\omega(I)$$ 여기서 $\\omega$는 딥러닝 모델(U-Net, Seg-Resnet 등)을 나타냅니다. 평가 메트릭: Dice 유사도 계수 ($D$). 1. 대비 수준 Shapley 값 ($\\Phi_i(D)$)\n특정 대비 $i$가 Dice 점수 $D$에 기여하는 정도를 계산합니다. $N$은 전체 대비 집합, $n_i$는 $i$번째 대비, $S$는 $n_i$를 포함하지 않는 $N$의 부분 집합입니다.\n$$\\Phi_i(D) = \\sum_{S \\subseteq N \\setminus {n_i}} \\frac{|S|!(|N| - |S| - 1)!}{|N|!} (D(S \\cup {n_i}) - D(S))$$\n2. 정규화된 스피어만 풋룰 거리 (Normalized Spearman Footrule Distance, NSF)\n모델의 Shapley 순위 $R_{\\Phi_i}(D)$와 임상 표준 순위 $R_{K_i}$ 간의 합의를 정량화합니다. $|N|=4$이며, $D_{\\text{max}}=8$입니다. NSF는 0 (완전 불일치)부터 1 (완전 일치) 사이의 값을 가집니다.\n$$NSF = 1 - \\left(1/D_{\\text{max}}\\right) \\sum_{i=1}^{|N|} |R_{\\Phi_i}(D) - R_{K_i}|$$\n3. Shapley 순위 폴드 간 분산 ($v$)\n모델의 불확실성을 정량화하기 위해 5개 폴드($K=5$)에 걸친 Shapley 순위의 분산을 계산합니다.\n$$v = (1/|N|) \\sum_{i=1}^{|N|} \\text{Var}(R_i)$$\n4. 표준 분산 공식 ($\\text{Var}(R_i)$)\n$R_i$는 $i$번째 대비의 5개 폴드 순위 벡터이며, $\\bar{r}_i$는 평균 순위입니다.\n$$\\text{Var}(R_i) = \\frac{1}{(K-1)} \\sum_{k=1}^{K} (r_{\\Phi_i}(D)_k - \\bar{r}_i)^2$$\nVanilla U-Net 비교: 추가/수정된 모듈 이 논문의 핵심은 새로운 아키텍처를 제안하는 것이 아니라, 기존의 딥러닝 분할 모델(U-Net, Seg-Resnet, UNETR, Swin-UNETR)에 새로운 설명 가능성 프레임워크를 적용하는 것입니다.\nU-Net 구조 자체의 변경: 논문에서 U-Net의 인코더/디코더 블록이나 스킵 연결(skip connection) 등 내부 구조에 대한 구체적인 수정 사항은 언급되지 않았습니다. U-Net은 4가지 MRI 대비를 입력으로 받는 표준적인 다중 채널 분할 모델로 사용되었습니다. 추가된 모듈/프레임워크: 모델의 출력(Dice Score)을 분석하기 위해 대비 수준 Shapley 값 계산 모듈이 후처리 단계에 추가되었습니다. 이 모듈은 모델의 성능을 설명하고, 그 결과를 기반으로 NSF (합의) 및 분산 $V$ (불확실성) 메트릭을 도출합니다. 4. 태그 제안 (Tags Suggestion) Deep learning Explainable AI (XAI) Shapley value Medical Segmentation Uncertainty estimation ",
+  "wordCount" : "1297",
+  "inLanguage": "en",
+  "datePublished": "2025-12-08T00:00:00Z",
+  "dateModified": "2025-12-08T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hanwo-ol.github.io/Unet_master/posts/clinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Research Agent Knowledge Base",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hanwo-ol.github.io/Unet_master/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hanwo-ol.github.io/Unet_master/" accesskey="h" title="Research Agent Knowledge Base (Alt + H)">Research Agent Knowledge Base</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/categories/" title="categories">
+                    <span>categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hanwo-ol.github.io/Unet_master/">Home</a>&nbsp;»&nbsp;<a href="https://hanwo-ol.github.io/Unet_master/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics
+    </h1>
+    <div class="post-meta">&lt;span title=&#39;2025-12-08 00:00:00 &#43;0000 UTC&#39;&gt;December 8, 2025&lt;/span&gt;&amp;nbsp;·&amp;nbsp;7 min
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="abstract">Abstract<a hidden class="anchor" aria-hidden="true" href="#abstract">#</a></h2>
+<p>Segmentation is the identification of anatomical regions of interest, such as organs, tissue, and lesions, serving as a fundamental task in computer-aided diagnosis in medical imaging. Although deep learning models have achieved remarkable performance in medical image segmentation, the need for explainability remains critical for ensuring their acceptance and integration in clinical practice, despite the growing research attention in this area. Our approach explored the use of contrast-level Shapley values, a systematic perturbation of model inputs to assess feature importance. While other studies have investigated gradient-based techniques through identifying influential regions in imaging inputs, Shapley values offer a broader, clinically aligned approach, explaining how model performance is fairly attributed to certain imaging contrasts over others. Using the BraTS 2024 dataset, we generated rankings for Shapley values for four MRI contrasts across four model architectures. Two metrics were proposed from the Shapley ranking: agreement between model and ``clinician&quot; imaging ranking, and uncertainty quantified through Shapley ranking variance across cross-validation folds. Higher-performing cases (Dice \textgreater0.6) showed significantly greater agreement with clinical rankings. Increased Shapley ranking variance correlated with decreased performance (U-Net: $r=-0.581$). These metrics provide clinically interpretable proxies for model reliability, helping clinicians better understand state-of-the-art segmentation models.</p>
+<h2 id="pdf-download">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download">#</a></h2>
+<h2 id="pdf-download-1">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download-1">#</a></h2>
+<p><a href="//172.22.138.185/Research_pdf/2512.07224v1.pdf">Local PDF View</a> | <a href="http://arxiv.org/abs/2512.07224v1">Arxiv Original</a></p>
+<h2 id="research-agent---draft-refiner-module-리포트">Research Agent - Draft Refiner Module 리포트<a hidden class="anchor" aria-hidden="true" href="#research-agent---draft-refiner-module-리포트">#</a></h2>
+<p><strong>논문 제목:</strong> CLINICAL INTERPRETABILITY OF DEEP LEARNING SEGMENTATION THROUGH SHAPLEY-DERIVED AGREEMENT AND UNCERTAINTY METRICS
+(Shapley 기반 합의 및 불확실성 메트릭을 통한 딥러닝 분할의 임상적 해석 가능성)</p>
+<hr>
+<h3 id="1-요약-executive-summary">1. 요약 (Executive Summary)<a hidden class="anchor" aria-hidden="true" href="#1-요약-executive-summary">#</a></h3>
+<ul>
+<li><strong>연구 목표:</strong> 의료 영상 분할 분야에서 딥러닝 모델의 임상적 수용을 높이기 위해 모델 결정의 해석 가능성(Explainability)을 향상시키는 데 중점을 둡니다.</li>
+<li><strong>핵심 방법론:</strong> 모델 입력(MRI 대비)의 체계적인 교란을 통해 특징 중요도를 평가하는 <strong>대비 수준(Contrast-level) Shapley 값</strong>을 활용합니다. 이는 기존의 픽셀 기반 방법보다 임상적으로 정렬된 설명을 제공합니다.</li>
+<li><strong>제안된 메트릭:</strong> Shapley 값 순위(Ranking)를 기반으로 두 가지 새로운 임상 해석 가능 메트릭을 제안했습니다.
+<ol>
+<li><strong>합의(Agreement):</strong> 모델의 대비 순위와 임상 프로토콜 순위 간의 일치도.</li>
+<li><strong>불확실성(Uncertainty):</strong> 교차 검증 폴드(cross-validation folds) 간 Shapley 순위 분산.</li>
+</ol>
+</li>
+<li><strong>주요 결과 (합의):</strong> 성능이 높은 사례(Dice &gt; 0.6)는 임상 순위와 유의미하게 더 큰 합의를 보였습니다.</li>
+<li><strong>주요 결과 (불확실성):</strong> Shapley 순위 분산이 증가할수록 성능이 감소하는 경향이 나타났습니다 (예: U-Net에서 $r = -0.581$).</li>
+<li><strong>결론:</strong> 제안된 메트릭은 모델 신뢰도에 대한 임상적으로 해석 가능한 대리 지표를 제공하여, 최신 분할 모델에 대한 임상의의 이해를 돕습니다.</li>
+</ul>
+<hr>
+<h3 id="2-7가지-핵심-질문-분석-key-analysis">2. 7가지 핵심 질문 분석 (Key Analysis)<a hidden class="anchor" aria-hidden="true" href="#2-7가지-핵심-질문-분석-key-analysis">#</a></h3>
+<h4 id="1-what-is-new-in-the-work-기존-연구와의-차별점">1) What is new in the work? (기존 연구와의 차별점)<a hidden class="anchor" aria-hidden="true" href="#1-what-is-new-in-the-work-기존-연구와의-차별점">#</a></h4>
+<p>이 연구는 기존의 Grad-CAM과 같은 그래디언트 기반 시각화 기법이나 픽셀 수준의 Shapley 분석에서 벗어나, <strong>대비 수준(Contrast-level) Shapley 값</strong>을 사용하여 다중 대비 MRI 분할 모델의 결정을 설명합니다. 가장 큰 차별점은 이 Shapley 값을 단순히 설명하는 데 그치지 않고, 임상적 의사 결정 과정에 직접적으로 연결되는 두 가지 정량적 메트릭(합의 및 불확실성)을 도출하여 모델의 신뢰도를 평가했다는 점입니다.</p>
+<h4 id="2-why-is-the-work-important-연구의-중요성">2) Why is the work important? (연구의 중요성)<a hidden class="anchor" aria-hidden="true" href="#2-why-is-the-work-important-연구의-중요성">#</a></h4>
+<p>이 연구는 딥러닝 모델이 의료 영상 분할에서 높은 성능을 달성했음에도 불구하고 임상 현장에서 &lsquo;블랙 박스&rsquo;로 남아있는 문제를 해결하는 데 중요합니다. 모델이 특정 MRI 대비(T1c, T2f 등)를 어떻게 우선순위로 두는지에 대한 정량적이고 해석 가능한 설명을 제공함으로써, 임상의가 모델의 추론 과정을 이해하고 예측의 일관성을 신뢰할 수 있도록 돕습니다. 이는 의료 AI의 임상 통합 및 수용을 촉진하는 데 필수적입니다.</p>
+<h4 id="3-what-is-the-literature-gap-기존-연구의-한계점">3) What is the literature gap? (기존 연구의 한계점)<a hidden class="anchor" aria-hidden="true" href="#3-what-is-the-literature-gap-기존-연구의-한계점">#</a></h4>
+<p>기존의 설명 가능 AI(XAI) 연구들은 주로 픽셀 수준의 중요도를 시각화하는 데 초점을 맞추었으며, 이는 임상적 해석을 위해 임계값 설정이 필요하여 해석이 복잡해지는 한계가 있었습니다. 또한, 기존 Shapley 연구들은 모델의 성능 기여도를 정량화했지만, 그 결과가 임상 프로토콜이나 진단 불확실성(예: 임상의 간 의견 불일치)과 어떻게 연관되는지에 대한 직접적인 연결 고리가 부족했습니다.</p>
+<h4 id="4-how-is-the-gap-filled-해결-방안">4) How is the gap filled? (해결 방안)<a hidden class="anchor" aria-hidden="true" href="#4-how-is-the-gap-filled-해결-방안">#</a></h4>
+<p>연구진은 Shapley 값을 1부터 4까지의 순위로 변환하여 이 간극을 메웠습니다.</p>
+<ol>
+<li><strong>합의:</strong> 모델이 생성한 Shapley 순위를 임상 표준 프로토콜 순위($R_K$)와 비교하기 위해 **정규화된 스피어만 풋룰 거리(Normalized Spearman Footrule Distance, NSF)**를 사용했습니다. NSF 값이 높을수록 모델의 대비 우선순위가 임상적 지침과 일치함을 의미합니다.</li>
+<li><strong>불확실성:</strong> 5-겹 교차 검증(five-fold cross-validation) 폴드 전반에 걸쳐 Shapley 순위의 **분산($V$)**을 계산하여 모델의 예측 일관성 및 불확실성을 정량화했습니다.</li>
+</ol>
+<h4 id="5-what-is-achieved-with-the-new-method-달성한-성과">5) What is achieved with the new method? (달성한 성과)<a hidden class="anchor" aria-hidden="true" href="#5-what-is-achieved-with-the-new-method-달성한-성과">#</a></h4>
+<p>제안된 메트릭은 모델 성능과 신뢰도 간의 강력한 상관관계를 입증했습니다.</p>
+<ul>
+<li><strong>합의 성과 (Figure 2 분석):</strong> U-Net 모델의 경우, Dice 점수 0.6 이상 그룹은 Dice 점수 0.5 미만 그룹에 비해 임상 표준 순위와의 합의(NSF)가 <strong>유의미하게 더 높았습니다</strong> ($p &lt; 0.001$). 이는 성능이 좋은 모델일수록 임상적 상식과 일치하는 방식으로 대비를 활용함을 보여줍니다.</li>
+<li><strong>불확실성 성과 (Figure 3 분석):</strong> Shapley 순위 분산($V$)이 증가할수록 평균 Dice 점수가 감소하는 <strong>음의 상관관계</strong>가 모든 모델에서 관찰되었습니다.
+<ul>
+<li>U-Net 모델에서 가장 강한 상관관계: $r = -0.581$ (95% CI: $[-0.607, -0.553]$).</li>
+<li>Seg-Resnet 모델에서 가장 강한 상관관계: $r = -0.604$ (95% CI: $[-0.636, -0.569]$).</li>
+<li>이는 모델의 불확실성이 높을수록 분할 성능이 저하될 가능성이 높다는 것을 정량적으로 입증합니다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="6-what-data-are-used-사용-데이터셋---도메인-특성-포함">6) What data are used? (사용 데이터셋 - 도메인 특성 포함)<a hidden class="anchor" aria-hidden="true" href="#6-what-data-are-used-사용-데이터셋---도메인-특성-포함">#</a></h4>
+<ul>
+<li><strong>데이터셋:</strong> Brain Tumor Segmentation (BraTS) Challenge 2024 GOAT challenge.</li>
+<li><strong>도메인 특성:</strong> 뇌종양 분할(Glioma segmentation)을 위한 의료 영상 데이터.</li>
+<li><strong>구성:</strong> 총 1351명의 환자 데이터. 각 환자는 네 가지 MRI 대비(T1c, T1n, T2f, T2w)를 포함하는 다중 채널 입력으로 구성됩니다.</li>
+<li><strong>Ground Truth:</strong> 괴사성 코어(necrotic core), 부종(edema), 조영 증강 종양(enhancing tumor)의 세 가지 종양 하위 영역 주석을 포함합니다.</li>
+</ul>
+<h4 id="7-what-are-the-limitations-저자가-언급한-한계점">7) What are the limitations? (저자가 언급한 한계점)<a hidden class="anchor" aria-hidden="true" href="#7-what-are-the-limitations-저자가-언급한-한계점">#</a></h4>
+<p>저자들은 다음과 같은 한계점을 언급했습니다.</p>
+<ol>
+<li><strong>임상의 합의 부족:</strong> Shapley 순위 합의 분석을 위해 숙련된 방사선 전문의로부터 직접적인 합의를 얻지 못하고, 대신 의대생 주석자 합의와 논문 기반의 임상 표준을 사용했습니다. 향후 더 강력한 임상 비교가 필요합니다.</li>
+<li><strong>불확실성의 주관성:</strong> 모델 결정의 불확실성 개념은 주관적이며 다양한 방식으로 접근될 수 있습니다 (예: Monte Carlo 드롭아웃을 사용하여 예측 불확실성을 정량화하는 방법).</li>
+</ol>
+<hr>
+<h3 id="3-아키텍처-및-방법론-architecture--methodology">3. 아키텍처 및 방법론 (Architecture &amp; Methodology)<a hidden class="anchor" aria-hidden="true" href="#3-아키텍처-및-방법론-architecture--methodology">#</a></h3>
+<h4 id="figure-분석-메인-아키텍처-및-흐름-figure-1">Figure 분석: 메인 아키텍처 및 흐름 (Figure 1)<a hidden class="anchor" aria-hidden="true" href="#figure-분석-메인-아키텍처-및-흐름-figure-1">#</a></h4>
+<p>Figure 1은 새로운 아키텍처 구조가 아닌, 제안된 <strong>설명 가능성 메트릭 도출 과정</strong>을 시각적으로 요약합니다.</p>
+<ol>
+<li><strong>입력 (Multi-contrast MRI):</strong> T1c, T1n, T2f, T2w 네 가지 MRI 대비 영상이 딥러닝 모델의 입력으로 사용됩니다.</li>
+<li><strong>Shapley 값 계산:</strong> 각 대비 영상에 대해 Shapley 값이 계산됩니다. 이 값은 해당 대비가 모델의 성능(Dice Score)에 기여하는 정도를 정량화합니다.</li>
+<li><strong>Shapley 순위 변환:</strong> 계산된 Shapley 값은 순위(1: 가장 중요, 4: 가장 덜 중요)로 변환됩니다 (예: T1n=1, T2f=2).</li>
+<li><strong>메트릭 도출:</strong> 이 Shapley 순위를 기반으로 두 가지 임상 해석 가능 메트릭이 도출됩니다.
+<ul>
+<li><strong>합의 (Agreement):</strong> 모델 순위와 임상 프로토콜 순위 간의 일치도.</li>
+<li><strong>불확실성 (Uncertainty):</strong> 교차 검증 폴드 간 모델 순위의 변동성.</li>
+</ul>
+</li>
+<li><strong>최종 목표:</strong> 임상의가 모델의 의사 결정 및 성능을 이해하도록 돕습니다.</li>
+</ol>
+<h4 id="수식-상세-loss-function-inputoutput-tensor-shape-주요-모듈의-수식">수식 상세 (Loss Function, Input/Output Tensor Shape, 주요 모듈의 수식)<a hidden class="anchor" aria-hidden="true" href="#수식-상세-loss-function-inputoutput-tensor-shape-주요-모듈의-수식">#</a></h4>
+<p><strong>Input/Output Tensor Shape:</strong></p>
+<ul>
+<li><strong>입력 ($I$):</strong> 4채널 3D-MRI 영상.
+$$I \in \mathbb{R}^{N \times D \times W \times H}$$
+<em>여기서 $N=4$는 MRI 대비 채널 수(T1c, T1n, T2f, T2w)이며, $D, W, H$는 깊이, 너비, 높이입니다.</em></li>
+<li><strong>출력 ($\hat{Y}$):</strong> 종양 레이블 예측.
+$$\hat{Y} = \omega(I)$$
+<em>여기서 $\omega$는 딥러닝 모델(U-Net, Seg-Resnet 등)을 나타냅니다.</em></li>
+<li><strong>평가 메트릭:</strong> Dice 유사도 계수 ($D$).</li>
+</ul>
+<p><strong>1. 대비 수준 Shapley 값 ($\Phi_i(D)$)</strong></p>
+<p>특정 대비 $i$가 Dice 점수 $D$에 기여하는 정도를 계산합니다. $N$은 전체 대비 집합, $n_i$는 $i$번째 대비, $S$는 $n_i$를 포함하지 않는 $N$의 부분 집합입니다.</p>
+<p>$$\Phi_i(D) = \sum_{S \subseteq N \setminus {n_i}} \frac{|S|!(|N| - |S| - 1)!}{|N|!} (D(S \cup {n_i}) - D(S))$$</p>
+<p><strong>2. 정규화된 스피어만 풋룰 거리 (Normalized Spearman Footrule Distance, NSF)</strong></p>
+<p>모델의 Shapley 순위 $R_{\Phi_i}(D)$와 임상 표준 순위 $R_{K_i}$ 간의 합의를 정량화합니다. $|N|=4$이며, $D_{\text{max}}=8$입니다. NSF는 0 (완전 불일치)부터 1 (완전 일치) 사이의 값을 가집니다.</p>
+<p>$$NSF = 1 - \left(1/D_{\text{max}}\right) \sum_{i=1}^{|N|} |R_{\Phi_i}(D) - R_{K_i}|$$</p>
+<p><strong>3. Shapley 순위 폴드 간 분산 ($v$)</strong></p>
+<p>모델의 불확실성을 정량화하기 위해 5개 폴드($K=5$)에 걸친 Shapley 순위의 분산을 계산합니다.</p>
+<p>$$v = (1/|N|) \sum_{i=1}^{|N|} \text{Var}(R_i)$$</p>
+<p><strong>4. 표준 분산 공식 ($\text{Var}(R_i)$)</strong></p>
+<p>$R_i$는 $i$번째 대비의 5개 폴드 순위 벡터이며, $\bar{r}_i$는 평균 순위입니다.</p>
+<p>$$\text{Var}(R_i) = \frac{1}{(K-1)} \sum_{k=1}^{K} (r_{\Phi_i}(D)_k - \bar{r}_i)^2$$</p>
+<h4 id="vanilla-u-net-비교-추가수정된-모듈">Vanilla U-Net 비교: 추가/수정된 모듈<a hidden class="anchor" aria-hidden="true" href="#vanilla-u-net-비교-추가수정된-모듈">#</a></h4>
+<p>이 논문의 핵심은 새로운 아키텍처를 제안하는 것이 아니라, 기존의 딥러닝 분할 모델(U-Net, Seg-Resnet, UNETR, Swin-UNETR)에 <strong>새로운 설명 가능성 프레임워크</strong>를 적용하는 것입니다.</p>
+<ul>
+<li><strong>U-Net 구조 자체의 변경:</strong> 논문에서 U-Net의 인코더/디코더 블록이나 스킵 연결(skip connection) 등 내부 구조에 대한 구체적인 수정 사항은 언급되지 않았습니다. U-Net은 4가지 MRI 대비를 입력으로 받는 표준적인 다중 채널 분할 모델로 사용되었습니다.</li>
+<li><strong>추가된 모듈/프레임워크:</strong> 모델의 출력(Dice Score)을 분석하기 위해 <strong>대비 수준 Shapley 값 계산 모듈</strong>이 후처리 단계에 추가되었습니다. 이 모듈은 모델의 성능을 설명하고, 그 결과를 기반으로 NSF (합의) 및 분산 $V$ (불확실성) 메트릭을 도출합니다.</li>
+</ul>
+<hr>
+<h3 id="4-태그-제안-tags-suggestion">4. 태그 제안 (Tags Suggestion)<a hidden class="anchor" aria-hidden="true" href="#4-태그-제안-tags-suggestion">#</a></h3>
+<ol>
+<li>Deep learning</li>
+<li>Explainable AI (XAI)</li>
+<li>Shapley value</li>
+<li>Medical Segmentation</li>
+<li>Uncertainty estimation</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/auto-generated/">Auto-Generated</a></li>
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/draft/">Draft</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://hanwo-ol.github.io/Unet_master/posts/accelerated-rotation-invariant-convolution-for-uav-image-segmentation/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Accelerated Rotation-Invariant Convolution for UAV Image Segmentation</span>
+  </a>
+  <a class="next" href="https://hanwo-ol.github.io/Unet_master/posts/robust-variational-model-based-tailored-unet-leveraging-edge-detector-and-mean-curvature-for-improved-image-segmentation/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Robust Variational Model Based Tailored UNet: Leveraging Edge Detector and Mean Curvature for Improved Image Segmentation</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics on twitter"
+        href="https://twitter.com/intent/tweet/?text=Clinical%20Interpretability%20of%20Deep%20Learning%20Segmentation%20Through%20Shapley-Derived%20Agreement%20and%20Uncertainty%20Metrics&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fclinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics%2f&amp;hashtags=Auto-Generated%2cDraft">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fclinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics%2f&amp;title=Clinical%20Interpretability%20of%20Deep%20Learning%20Segmentation%20Through%20Shapley-Derived%20Agreement%20and%20Uncertainty%20Metrics&amp;summary=Clinical%20Interpretability%20of%20Deep%20Learning%20Segmentation%20Through%20Shapley-Derived%20Agreement%20and%20Uncertainty%20Metrics&amp;source=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fclinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fclinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics%2f&title=Clinical%20Interpretability%20of%20Deep%20Learning%20Segmentation%20Through%20Shapley-Derived%20Agreement%20and%20Uncertainty%20Metrics">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fclinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics on whatsapp"
+        href="https://api.whatsapp.com/send?text=Clinical%20Interpretability%20of%20Deep%20Learning%20Segmentation%20Through%20Shapley-Derived%20Agreement%20and%20Uncertainty%20Metrics%20-%20https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fclinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics on telegram"
+        href="https://telegram.me/share/url?text=Clinical%20Interpretability%20of%20Deep%20Learning%20Segmentation%20Through%20Shapley-Derived%20Agreement%20and%20Uncertainty%20Metrics&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fclinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://hanwo-ol.github.io/Unet_master/">Research Agent Knowledge Base</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
