@@ -32,6 +32,7 @@ def main():
     print(">>> Building Hugo site...")
     # Check if executable exists or use system path
     if os.path.exists(hugo_bin):
+        hugo_bin = os.path.normpath(hugo_bin)
         build_cmd = f"{hugo_bin} --destination {public_dir}"
     else:
         build_cmd = f"hugo --destination {public_dir}"
