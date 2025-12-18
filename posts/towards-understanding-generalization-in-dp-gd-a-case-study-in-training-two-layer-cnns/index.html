@@ -29,11 +29,26 @@
 
     </style>
 </noscript>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasYbI1F/F" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYwHR5IXS0n1q35dx72xvRIe8+y/k6PrmJeCA1pNEk1e" crossorigin="anonymous"
-    onload="renderMathInElement(document.body);"></script>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasYbI1F/F" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+    crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYwHR5IXS0n1q35dx72xvRIe8+y/k6PrmJeCA1pNEk1e"
+    crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });
+    });
+</script>
 <meta property="og:title" content="Towards Understanding Generalization in DP-GD: A Case Study in Training Two-Layer CNNs" />
 <meta property="og:description" content="Abstract Modern deep learning techniques focus on extracting intricate information from data to achieve accurate predictions. However, the training datasets may be crowdsourced and include sensitive information, such as personal contact details, financial data, and medical records. As a result, there is a growing emphasis on developing privacy-preserving training algorithms for neural networks that maintain good performance while preserving privacy. In this paper, we investigate the generalization and privacy performances of the differentially private gradient descent (DP-GD) algorithm, which is a private variant of the gradient descent (GD) by incorporating additional noise into the gradients during each iteration." />
 <meta property="og:type" content="article" />
