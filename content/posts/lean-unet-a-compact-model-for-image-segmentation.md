@@ -9,15 +9,17 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.03834v1
   pdf_path: //172.22.138.185/Research_pdf/2512.03834v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- U-Net
+- Network Compression
+- Channel Pruning
+- Lean Architecture
+- Image Segmentation
 title: 'Lean Unet: A Compact Model for Image Segmentation'
 ---
 
 ## Abstract
 Unet and its variations have been standard in semantic image segmentation, especially for computer assisted radiology. Current Unet architectures iteratively downsample spatial resolution while increasing channel dimensions to preserve information content. Such a structure demands a large memory footprint, limiting training batch sizes and increasing inference latency. Channel pruning compresses Unet architecture without accuracy loss, but requires lengthy optimization and may not generalize across tasks and datasets. By investigating Unet pruning, we hypothesize that the final structure is the crucial factor, not the channel selection strategy of pruning. Based on our observations, we propose a lean Unet architecture (LUnet) with a compact, flat hierarchy where channels are not doubled as resolution is halved. We evaluate on a public MRI dataset allowing comparable reporting, as well as on two internal CT datasets. We show that a state-of-the-art pruning solution (STAMP) mainly prunes from the layers with the highest number of channels. Comparatively, simply eliminating a random channel at the pruning-identified layer or at the largest layer achieves similar or better performance. Our proposed LUnet with fixed architectures and over 30 times fewer parameters achieves performance comparable to both conventional Unet counterparts and data-adaptively pruned networks. The proposed lean Unet with constant channel count across layers requires far fewer parameters while achieving performance superior to standard Unet for the same total number of parameters. Skip connections allow Unet bottleneck channels to be largely reduced, unlike standard encoder-decoder architectures requiring increased bottleneck channels for information propagation.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.03834v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.03834v1)
 

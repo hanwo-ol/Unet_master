@@ -9,15 +9,17 @@ params:
   arxiv_link: http://arxiv.org/abs/2511.18850v1
   pdf_path: //172.22.138.185/Research_pdf/2511.18850v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Quantitative Finance (정량적 금융)
+- Large Language Models (LLM)
+- Evolutionary Algorithm (진화 알고리즘)
+- Alpha Mining (알파 마이닝)
+- Multi-Agent System (다중 에이전트 시스템)
 title: Cognitive Alpha Mining via LLM-Driven Code-Based Evolution
 ---
 
 ## Abstract
 Discovering effective predictive signals, or ``alphas,'' from financial data with high dimensionality and extremely low signal-to-noise ratio remains a difficult open problem. Despite progress in deep learning, genetic programming, and, more recently, large language model (LLM)--based factor generation, existing approaches still explore only a narrow region of the vast alpha search space. Neural models tend to produce opaque and fragile patterns, while symbolic or formula-based methods often yield redundant or economically ungrounded expressions that generalize poorly. Although different in form, these paradigms share a key limitation: none can conduct broad, structured, and human-like exploration that balances logical consistency with creative leaps. To address this gap, we introduce the Cognitive Alpha Mining Framework (CogAlpha), which combines code-level alpha representation with LLM-driven reasoning and evolutionary search. Treating LLMs as adaptive cognitive agents, our framework iteratively refines, mutates, and recombines alpha candidates through multi-stage prompts and financial feedback. This synergistic design enables deeper thinking, richer structural diversity, and economically interpretable alpha discovery, while greatly expanding the effective search space. Experiments on A-share equities demonstrate that CogAlpha consistently discovers alphas with superior predictive accuracy, robustness, and generalization over existing methods. Our results highlight the promise of aligning evolutionary optimization with LLM-based reasoning for automated and explainable alpha discovery. All source code will be released.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2511.18850v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2511.18850v1)
 

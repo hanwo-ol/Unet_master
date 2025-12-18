@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2511.22270v1
   pdf_path: //172.22.138.185/Research_pdf/2511.22270v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Differential Privacy (DP)
+- Generalization
+- DP-GD (Differentially Private Gradient Descent)
+- Implicit Regularization
+- Convolutional Neural Networks (CNNs)
 title: 'Towards Understanding Generalization in DP-GD: A Case Study in Training Two-Layer
   CNNs'
 ---
@@ -18,7 +21,6 @@ title: 'Towards Understanding Generalization in DP-GD: A Case Study in Training 
 ## Abstract
 Modern deep learning techniques focus on extracting intricate information from data to achieve accurate predictions. However, the training datasets may be crowdsourced and include sensitive information, such as personal contact details, financial data, and medical records. As a result, there is a growing emphasis on developing privacy-preserving training algorithms for neural networks that maintain good performance while preserving privacy. In this paper, we investigate the generalization and privacy performances of the differentially private gradient descent (DP-GD) algorithm, which is a private variant of the gradient descent (GD) by incorporating additional noise into the gradients during each iteration. Moreover, we identify a concrete learning task where DP-GD can achieve superior generalization performance compared to GD in training two-layer Huberized ReLU convolutional neural networks (CNNs). Specifically, we demonstrate that, under mild conditions, a small signal-to-noise ratio can result in GD producing training models with poor test accuracy, whereas DP-GD can yield training models with good test accuracy and privacy guarantees if the signal-to-noise ratio is not too small. This indicates that DP-GD has the potential to enhance model performance while ensuring privacy protection in certain learning tasks. Numerical simulations are further conducted to support our theoretical results.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2511.22270v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2511.22270v1)
 

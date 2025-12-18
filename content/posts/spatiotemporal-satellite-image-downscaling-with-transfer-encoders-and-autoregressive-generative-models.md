@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.05139v1
   pdf_path: //172.22.138.185/Research_pdf/2512.05139v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Spatiotemporal Downscaling (시공간 다운스케일링)
+- Transfer Learning (전이 학습)
+- Diffusion Models (확산 모델)
+- Aerosol Optical Depth (AOD)
+- U-Net Architecture (U-Net 아키텍처)
 title: Spatiotemporal Satellite Image Downscaling with Transfer Encoders and Autoregressive
   Generative Models
 ---
@@ -18,7 +21,6 @@ title: Spatiotemporal Satellite Image Downscaling with Transfer Encoders and Aut
 ## Abstract
 We present a transfer-learning generative downscaling framework to reconstruct fine resolution satellite images from coarse scale inputs. Our approach combines a lightweight U-Net transfer encoder with a diffusion-based generative model. The simpler U-Net is first pretrained on a long time series of coarse resolution data to learn spatiotemporal representations; its encoder is then frozen and transferred to a larger downscaling model as physically meaningful latent features. Our application uses NASA's MERRA-2 reanalysis as the low resolution source domain (50 km) and the GEOS-5 Nature Run (G5NR) as the high resolution target (7 km). Our study area included a large area in Asia, which was made computationally tractable by splitting into two subregions and four seasons. We conducted domain similarity analysis using Wasserstein distances confirmed minimal distributional shift between MERRA-2 and G5NR, validating the safety of parameter frozen transfer. Across seasonal regional splits, our model achieved excellent performance (R2 = 0.65 to 0.94), outperforming comparison models including deterministic U-Nets, variational autoencoders, and prior transfer learning baselines. Out of data evaluations using semivariograms, ACF/PACF, and lag-based RMSE/R2 demonstrated that the predicted downscaled images preserved physically consistent spatial variability and temporal autocorrelation, enabling stable autoregressive reconstruction beyond the G5NR record. These results show that transfer enhanced diffusion models provide a robust and physically coherent solution for downscaling a long time series of coarse resolution images with limited training periods. This advancement has significant implications for improving environmental exposure assessment and long term environmental monitoring.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.05139v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.05139v1)
 

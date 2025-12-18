@@ -9,15 +9,17 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.00065v1
   pdf_path: //172.22.138.185/Research_pdf/2512.00065v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- '**Disaster Assessment (재난 평가)**'
+- '**Bitemporal Analysis (이시점 분석)**'
+- '**Semantic Segmentation (의미론적 분할)**'
+- '**SE-ResNeXt (SE-ResNeXt)**'
+- '**Damage Classification (피해 분류)**'
 title: 'Satellite to Street : Disaster Impact Estimator'
 ---
 
 ## Abstract
 Accurate post-disaster damage assessment is of high importance for prioritizing emergency response; however, manual interpretation of satellite imagery is slow, subjective, and hard to scale. While deep-learning models for image segmentation, such as U-Net-based baselines and change-detection models, are useful baselines, they often struggle with subtle structural variations and severe class imbalance, yielding poor detection of highly damaged regions. The present work proposes a deep-learning framework that jointly processes pre- and post-disaster satellite images to obtain fine-grained pixel-level damage maps: Satellite-to-Street: Disaster Impact Estimator. The model uses a modified dual-input U-Net architecture with enhanced feature fusion to capture both the local structural changes as well as the broader contextual cues. Class-aware weighted loss functions are integrated in order to handle the dominance of undamaged pixels in real disaster datasets, thus enhancing sensitivity toward major and destroyed categories. Experimentation on publicly available disaster datasets shows improved localization and classification of structural damage when compared to traditional segmentation and baseline change-detection models. The resulting damage maps provide a rapid and consistent assessment mechanism to support and not replace expert decision-making, thus allowing more efficient, data-driven disaster management.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.00065v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.00065v1)
 

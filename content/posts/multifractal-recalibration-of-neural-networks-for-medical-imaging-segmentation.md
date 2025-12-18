@@ -9,15 +9,17 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.02198v1
   pdf_path: //172.22.138.185/Research_pdf/2512.02198v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Multifractal Recalibration
+- Channel Attention
+- Medical Image Segmentation
+- Fractal Geometry
+- U-Net
 title: Multifractal Recalibration of Neural Networks for Medical Imaging Segmentation
 ---
 
 ## Abstract
 Multifractal analysis has revealed regularities in many self-seeding phenomena, yet its use in modern deep learning remains limited. Existing end-to-end multifractal methods rely on heavy pooling or strong feature-space decimation, which constrain tasks such as semantic segmentation. Motivated by these limitations, we introduce two inductive priors: Monofractal and Multifractal Recalibration. These methods leverage relationships between the probability mass of the exponents and the multifractal spectrum to form statistical descriptions of encoder embeddings, implemented as channel-attention functions in convolutional networks.   Using a U-Net-based framework, we show that multifractal recalibration yields substantial gains over a baseline equipped with other channel-attention mechanisms that also use higher-order statistics. Given the proven ability of multifractal analysis to capture pathological regularities, we validate our approach on three public medical-imaging datasets: ISIC18 (dermoscopy), Kvasir-SEG (endoscopy), and BUSI (ultrasound).   Our empirical analysis also provides insights into the behavior of these attention layers. We find that excitation responses do not become increasingly specialized with encoder depth in U-Net architectures due to skip connections, and that their effectiveness may relate to global statistics of instance variability.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.02198v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.02198v1)
 

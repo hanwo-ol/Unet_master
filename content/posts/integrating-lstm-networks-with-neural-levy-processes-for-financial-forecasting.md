@@ -9,15 +9,17 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.07860v1
   pdf_path: //172.22.138.185/Research_pdf/2512.07860v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Financial Forecasting (금융 예측)
+- LSTM Networks
+- Lévy Processes
+- Jump Diffusion Models (점프 확산 모델)
+- Neural Network Calibration (신경망 보정)
 title: Integrating LSTM Networks with Neural Levy Processes for Financial Forecasting
 ---
 
 ## Abstract
 This paper investigates an optimal integration of deep learning with financial models for robust asset price forecasting. Specifically, we developed a hybrid framework combining a Long Short-Term Memory (LSTM) network with the Merton-Lévy jump-diffusion model. To optimise this framework, we employed the Grey Wolf Optimizer (GWO) for the LSTM hyperparameter tuning, and we explored three calibration methods for the Merton-Levy model parameters: Artificial Neural Networks (ANNs), the Marine Predators Algorithm (MPA), and the PyTorch-based TorchSDE library. To evaluate the predictive performance of our hybrid model, we compared it against several benchmark models, including a standard LSTM and an LSTM combined with the Fractional Heston model. This evaluation used three real-world financial datasets: Brent oil prices, the STOXX 600 index, and the IT40 index. Performance was assessed using standard metrics, including Mean Squared Error (MSE), Mean Absolute Error(MAE), Mean Squared Percentage Error (MSPE), and the coefficient of determination (R2). Our experimental results demonstrate that the hybrid model, combining a GWO-optimized LSTM network with the Levy-Merton Jump-Diffusion model calibrated using an ANN, outperformed the base LSTM model and all other models developed in this study.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.07860v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.07860v1)
 

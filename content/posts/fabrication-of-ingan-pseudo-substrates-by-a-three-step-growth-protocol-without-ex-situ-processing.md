@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.15565v1
   pdf_path: //172.22.138.185/Research_pdf/2512.15565v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- (In,Ga)N Pseudo-substrate
+- Red Micro-LEDs
+- Plasma-Assisted Molecular Beam Epitaxy (PAMBE)
+- Strain Relaxation
+- In-situ Growth Protocol
 title: Fabrication of (In,Ga)N pseudo-substrates by a three-step growth protocol without
   ex-situ processing
 ---
@@ -18,7 +21,6 @@ title: Fabrication of (In,Ga)N pseudo-substrates by a three-step growth protocol
 ## Abstract
 We fabricate (In,Ga)N pseudo-substrates with a total thickness of ~1 um grown on GaN templates using plasma-assisted molecular beam epitaxy. In a three-step process, we change growth conditions from N-rich to metal-rich in order to sequentially form a roughened GaN layer, relaxed (In,Ga)N nanostructures, and a coalesced, smooth (In,Ga)N layer. Samples are analyzed by scanning electron and atomic force microscopy, X-ray diffraction, as well as photo- and cathodoluminescence spectroscopy. Compared to a reference layer grown directly on GaN, the pseudo-substrate exhibits a higher In content (~0.3), strain relaxation degree (~80%), narrower photoluminescence linewidth, and larger area fraction of bright regions in cathodoluminescence maps, showing the benefits of the three-step growth protocol. This straightforward approach does not necessitate any ex-situ processing and could enable the scalable fabrication of (In,Ga)N pseudo-substrates for high-efficiency red-emitting (In,Ga)N devices.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.15565v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.15565v1)
 

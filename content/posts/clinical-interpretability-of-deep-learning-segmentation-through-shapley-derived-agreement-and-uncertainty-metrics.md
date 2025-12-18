@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.07224v1
   pdf_path: //172.22.138.185/Research_pdf/2512.07224v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Deep learning
+- Explainable AI (XAI)
+- Shapley value
+- Medical Segmentation
+- Uncertainty estimation
 title: Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived
   Agreement and Uncertainty Metrics
 ---
@@ -18,7 +21,6 @@ title: Clinical Interpretability of Deep Learning Segmentation Through Shapley-D
 ## Abstract
 Segmentation is the identification of anatomical regions of interest, such as organs, tissue, and lesions, serving as a fundamental task in computer-aided diagnosis in medical imaging. Although deep learning models have achieved remarkable performance in medical image segmentation, the need for explainability remains critical for ensuring their acceptance and integration in clinical practice, despite the growing research attention in this area. Our approach explored the use of contrast-level Shapley values, a systematic perturbation of model inputs to assess feature importance. While other studies have investigated gradient-based techniques through identifying influential regions in imaging inputs, Shapley values offer a broader, clinically aligned approach, explaining how model performance is fairly attributed to certain imaging contrasts over others. Using the BraTS 2024 dataset, we generated rankings for Shapley values for four MRI contrasts across four model architectures. Two metrics were proposed from the Shapley ranking: agreement between model and ``clinician" imaging ranking, and uncertainty quantified through Shapley ranking variance across cross-validation folds. Higher-performing cases (Dice \textgreater0.6) showed significantly greater agreement with clinical rankings. Increased Shapley ranking variance correlated with decreased performance (U-Net: $r=-0.581$). These metrics provide clinically interpretable proxies for model reliability, helping clinicians better understand state-of-the-art segmentation models.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.07224v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.07224v1)
 

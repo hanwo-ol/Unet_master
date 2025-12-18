@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.15422v1
   pdf_path: //172.22.138.185/Research_pdf/2512.15422v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Automated Driving Systems (ADS)
+- Scenario-Based Testing (SBT)
+- Multimodal AI
+- Scenario Generation
+- Evaluation Metrics (AII, RAS, OCS)
 title: Can AI Generate more Comprehensive Test Scenarios? Review on Automated Driving
   Systems Test Scenario Generation Methods
 ---
@@ -18,7 +21,6 @@ title: Can AI Generate more Comprehensive Test Scenarios? Review on Automated Dr
 ## Abstract
 Ensuring the safety and reliability of Automated Driving Systems (ADS) remains a critical challenge, as traditional verification methods such as large-scale on-road testing are prohibitively costly and time-consuming.To address this,scenario-based testing has emerged as a scalable and efficient alternative,yet existing surveys provide only partial coverage of recent methodological and technological advances.This review systematically analyzes 31 primary studies,and 10 surveys identified through a comprehensive search spanning 2015~2025;however,the in-depth methodological synthesis and comparative evaluation focus primarily on recent frameworks(2023~2025),reflecting the surge of Artificial Intelligent(AI)-assisted and multimodal approaches in this period.Traditional approaches rely on expert knowledge,ontologies,and naturalistic driving or accident data,while recent developments leverage generative models,including large language models,generative adversarial networks,diffusion models,and reinforcement learning frameworks,to synthesize diverse and safety-critical scenarios.Our synthesis identifies three persistent gaps:the absence of standardized evaluation metrics,limited integration of ethical and human factors,and insufficient coverage of multimodal and Operational Design Domain (ODD)-specific scenarios.To address these challenges,this review contributes a refined taxonomy that incorporates multimodal extensions,an ethical and safety checklist for responsible scenario design,and an ODD coverage map with a scenario-difficulty schema to enable transparent benchmarking.Collectively,these contributions provide methodological clarity for researchers and practical guidance for industry,supporting reproducible evaluation and accelerating the safe deployment of higher-level ADS.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.15422v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.15422v1)
 

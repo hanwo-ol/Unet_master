@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.07051v1
   pdf_path: //172.22.138.185/Research_pdf/2512.07051v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Deformable Convolutions (변형 가능 컨볼루션)
+- Parameter-Free Attention (매개변수 없는 어텐션)
+- Lightweight UNet (경량 U-Net)
+- Medical Image Segmentation (의료 영상 분할)
+- Real-Time Deployment (실시간 배포)
 title: 'DAUNet: A Lightweight UNet Variant with Deformable Convolutions and Parameter-Free
   Attention for Medical Image Segmentation'
 ---
@@ -18,7 +21,6 @@ title: 'DAUNet: A Lightweight UNet Variant with Deformable Convolutions and Para
 ## Abstract
 Medical image segmentation plays a pivotal role in automated diagnostic and treatment planning systems. In this work, we present DAUNet, a novel lightweight UNet variant that integrates Deformable V2 Convolutions and Parameter-Free Attention (SimAM) to improve spatial adaptability and context-aware feature fusion without increasing model complexity. DAUNet's bottleneck employs dynamic deformable kernels to handle geometric variations, while the decoder and skip pathways are enhanced using SimAM attention modules for saliency-aware refinement. Extensive evaluations on two challenging datasets, FH-PS-AoP (fetal head and pubic symphysis ultrasound) and FUMPE (CT-based pulmonary embolism detection), demonstrate that DAUNet outperforms state-of-the-art models in Dice score, HD95, and ASD, while maintaining superior parameter efficiency. Ablation studies highlight the individual contributions of deformable convolutions and SimAM attention. DAUNet's robustness to missing context and low-contrast regions establishes its suitability for deployment in real-time and resource-constrained clinical environments.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.07051v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.07051v1)
 

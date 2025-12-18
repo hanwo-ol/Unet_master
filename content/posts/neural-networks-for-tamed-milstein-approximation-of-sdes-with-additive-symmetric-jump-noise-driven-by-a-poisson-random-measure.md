@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2507.04417v2
   pdf_path: //172.22.138.185/Research_pdf/2507.04417v2.pdf
 tags:
-- Auto-Generated
-- Draft
+- Stochastic Differential Equations (SDEs)
+- Lévy Processes / Jump Diffusion Models
+- Tamed Milstein Scheme
+- Neural Networks (NN) / Non-parametric Estimation
+- Conditional Moments Inference
 title: Neural Networks for Tamed Milstein Approximation of SDEs with Additive Symmetric
   Jump Noise Driven by a Poisson Random Measure
 ---
@@ -18,7 +21,6 @@ title: Neural Networks for Tamed Milstein Approximation of SDEs with Additive Sy
 ## Abstract
 This work aims to estimate the drift and diffusion functions in stochastic differential equations (SDEs) driven by a particular class of Lévy processes with finite jump intensity, using neural networks. We propose a framework that integrates the Tamed-Milstein scheme with neural networks employed as non-parametric function approximators. Estimation is carried out in a non-parametric fashion for the drift function $f: \mathbb{Z} \to \mathbb{R}$, the diffusion coefficient $g: \mathbb{Z} \to \mathbb{R}$. The model of interest is given by \[ dX(t) = ξ+ f(X(t))\, dt + g(X(t))\, dW_t + γ\int_{\mathbb{Z}} z\, N(dt,dz), \] where $W_t$ is a standard Brownian motion, and $N(dt,dz)$ is a Poisson random measure on $(\mathbb{R}_{+} \times \mathbb{Z}$, $\mathcal{B} (\mathbb{R}_{+}) \otimes \mathcal{Z}$, $λ( Λ\otimes v))$, with $λ, γ> 0$, $Λ$ being the Lebesgue measure on $\mathbb{R}_{+}$, and $v$ a finite measure on the measurable space $(\mathbb{Z}, \mathcal{Z})$. Neural networks are used as non-parametric function approximators, enabling the modeling of complex nonlinear dynamics without assuming restrictive functional forms. The proposed methodology constitutes a flexible alternative for inference in systems with state-dependent noise and discontinuities driven by Lévy processes.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2507.04417v2.pdf) | [Arxiv Original](http://arxiv.org/abs/2507.04417v2)
 

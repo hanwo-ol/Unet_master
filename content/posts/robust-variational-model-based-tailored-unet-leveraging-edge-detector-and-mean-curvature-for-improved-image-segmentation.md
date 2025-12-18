@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.07590v1
   pdf_path: //172.22.138.185/Research_pdf/2512.07590v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Image Segmentation
+- Variational Model
+- UNet Hybrid Architecture
+- Cahn-Hilliard Equation
+- Mean Curvature
 title: 'Robust Variational Model Based Tailored UNet: Leveraging Edge Detector and
   Mean Curvature for Improved Image Segmentation'
 ---
@@ -18,7 +21,6 @@ title: 'Robust Variational Model Based Tailored UNet: Leveraging Edge Detector a
 ## Abstract
 To address the challenge of segmenting noisy images with blurred or fragmented boundaries, this paper presents a robust version of Variational Model Based Tailored UNet (VM_TUNet), a hybrid framework that integrates variational methods with deep learning. The proposed approach incorporates physical priors, an edge detector and a mean curvature term, into a modified Cahn-Hilliard equation, aiming to combine the interpretability and boundary-smoothing advantages of variational partial differential equations (PDEs) with the strong representational ability of deep neural networks. The architecture consists of two collaborative modules: an F module, which conducts efficient frequency domain preprocessing to alleviate poor local minima, and a T module, which ensures accurate and stable local computations, backed by a stability estimate. Extensive experiments on three benchmark datasets indicate that the proposed method achieves a balanced trade-off between performance and computational efficiency, which yields competitive quantitative results and improved visual quality compared to pure convolutional neural network (CNN) based models, while achieving performance close to that of transformer-based method with reasonable computational expense.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.07590v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.07590v1)
 

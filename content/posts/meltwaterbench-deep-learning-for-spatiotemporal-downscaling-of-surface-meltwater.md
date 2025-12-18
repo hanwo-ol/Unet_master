@@ -9,15 +9,17 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.12142v1
   pdf_path: //172.22.138.185/Research_pdf/2512.12142v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Deep Learning
+- Spatiotemporal Downscaling
+- Surface Meltwater
+- Greenland Ice Sheet
+- Benchmark Dataset
 title: 'MeltwaterBench: Deep learning for spatiotemporal downscaling of surface meltwater'
 ---
 
 ## Abstract
 The Greenland ice sheet is melting at an accelerated rate due to processes that are not fully understood and hard to measure. The distribution of surface meltwater can help understand these processes and is observable through remote sensing, but current maps of meltwater face a trade-off: They are either high-resolution in time or space, but not both. We develop a deep learning model that creates gridded surface meltwater maps at daily 100m resolution by fusing data streams from remote sensing observations and physics-based models. In particular, we spatiotemporally downscale regional climate model (RCM) outputs using synthetic aperture radar (SAR), passive microwave (PMW), and a digital elevation model (DEM) over the Helheim Glacier in Eastern Greenland from 2017-2023. Using SAR-derived meltwater as "ground truth", we show that a deep learning-based method that fuses all data streams is over 10 percentage points more accurate over our study area than existing non deep learning-based approaches that only rely on a regional climate model (83% vs. 95% Acc.) or passive microwave observations (72% vs. 95% Acc.). Alternatively, creating a gridded product through a running window calculation with SAR data underestimates extreme melt events, but also achieves notable accuracy (90%) and does not rely on deep learning. We evaluate standard deep learning methods (UNet and DeepLabv3+), and publish our spatiotemporally aligned dataset as a benchmark, MeltwaterBench, for intercomparisons with more complex data-driven downscaling methods. The code and data are available at $\href{https://github.com/blutjens/hrmelt}{github.com/blutjens/hrmelt}$.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.12142v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.12142v1)
 

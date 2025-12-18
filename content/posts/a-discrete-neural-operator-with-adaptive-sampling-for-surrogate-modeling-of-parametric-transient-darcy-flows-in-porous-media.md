@@ -9,8 +9,11 @@ params:
   arxiv_link: http://arxiv.org/abs/2512.03113v1
   pdf_path: //172.22.138.185/Research_pdf/2512.03113v1.pdf
 tags:
-- Auto-Generated
-- Draft
+- Discrete Neural Operator
+- Adaptive Sampling
+- Surrogate Modeling
+- Darcy Flow
+- Operator Learning
 title: A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of
   Parametric Transient Darcy Flows in Porous Media
 ---
@@ -18,7 +21,6 @@ title: A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling 
 ## Abstract
 This study proposes a new discrete neural operator for surrogate modeling of transient Darcy flow fields in heterogeneous porous media with random parameters. The new method integrates temporal encoding, operator learning and UNet to approximate the mapping between vector spaces of random parameter and spatiotemporal flow fields. The new discrete neural operator can achieve higher prediction accuracy than the SOTA attention-residual-UNet structure. Derived from the finite volume method, the transmissibility matrices rather than permeability is adopted as the inputs of surrogates to enhance the prediction accuracy further. To increase sampling efficiency, a generative latent space adaptive sampling method is developed employing the Gaussian mixture model for density estimation of generalization error. Validation is conducted on test cases of 2D/3D single- and two-phase Darcy flow field prediction. Results reveal consistent enhancement in prediction accuracy given limited training set.
 
-## PDF Download
 ## PDF Download
 [Local PDF View](//172.22.138.185/Research_pdf/2512.03113v1.pdf) | [Arxiv Original](http://arxiv.org/abs/2512.03113v1)
 
