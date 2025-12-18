@@ -1,7 +1,7 @@
 baseURL: "https://hanwo-ol.github.io/Unet_master/"
 languageCode: "ko-kr"
 title: "Research Agent Knowledge Base"
-theme: "PaperMod"
+theme: "ananke"
 
 params:
   defaultTheme: light
