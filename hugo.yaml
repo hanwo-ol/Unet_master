@@ -1,0 +1,23 @@
+baseURL: "https://hanwo-ol.github.io/Unet_master/"
+languageCode: "ko-kr"
+title: "Research Agent Knowledge Base"
+theme: "PaperMod"
+
+params:
+  defaultTheme: light
+  ShowReadingTime: true
+  ShowShareButtons: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  
+menu:
+  main:
+    - identifier: categories
+      name: categories
+      url: /categories/
+      weight: 10
+    - identifier: tags
+      name: tags
+      url: /tags/
+      weight: 20
