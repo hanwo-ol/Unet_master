@@ -29,11 +29,26 @@
 
     </style>
 </noscript>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasYbI1F/F" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYwHR5IXS0n1q35dx72xvRIe8+y/k6PrmJeCA1pNEk1e" crossorigin="anonymous"
-    onload="renderMathInElement(document.body);"></script>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasYbI1F/F" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8"
+    crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    integrity="sha384-+VBxd3r6XgURycqtZ117nYwHR5IXS0n1q35dx72xvRIe8+y/k6PrmJeCA1pNEk1e"
+    crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ]
+        });
+    });
+</script>
 <meta property="og:title" content="Multifractal Recalibration of Neural Networks for Medical Imaging Segmentation" />
 <meta property="og:description" content="Abstract Multifractal analysis has revealed regularities in many self-seeding phenomena, yet its use in modern deep learning remains limited. Existing end-to-end multifractal methods rely on heavy pooling or strong feature-space decimation, which constrain tasks such as semantic segmentation. Motivated by these limitations, we introduce two inductive priors: Monofractal and Multifractal Recalibration. These methods leverage relationships between the probability mass of the exponents and the multifractal spectrum to form statistical descriptions of encoder embeddings, implemented as channel-attention functions in convolutional networks." />
 <meta property="og:type" content="article" />
