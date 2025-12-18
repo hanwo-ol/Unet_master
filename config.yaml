@@ -1,8 +1,8 @@
 # Research Agent Configuration
 
 search:
-  # Test 2: Levy Process with Deep Learning
-  query: '(all:"Levy process" OR all:"Lévy process") AND (all:"deep learning" OR all:"neural network")'
+  # Test 3: Financial Data Prediction
+  query: '(all:"financial data" OR all:"stock market") AND (all:"prediction" OR all:"forecasting") AND (all:"deep learning" OR all:"transformer")'
   max_results: 3
   sort_by: "submitted_date" # options: submitted_date, relevance, last_updated_date
   sort_order: "descending" # options: descending, ascending
