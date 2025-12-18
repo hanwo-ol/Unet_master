@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Accelerated Rotation-Invariant Convolution for UAV Image Segmentation | Research Agent Knowledge Base</title>
+<meta name="keywords" content="Auto-Generated, Draft">
+<meta name="description" content="Abstract Rotation invariance is essential for precise, object-level segmentation in UAV aerial imagery, where targets can have arbitrary orientations and exhibit fine-scale details. Conventional segmentation architectures like U-Net rely on convolution operators that are not rotation-invariant, leading to degraded segmentation accuracy across varying viewpoints. Rotation invariance can be achieved by expanding the filter bank across multiple orientations; however, this will significantly increase computational cost and memory traffic. In this paper, we introduce a GPU-optimized rotation-invariant convolution framework that eliminates the traditional data-lowering (im2col) step required for matrix-multiplication-based convolution.">
+<meta name="author" content="">
+<link rel="canonical" href="https://hanwo-ol.github.io/Unet_master/posts/accelerated-rotation-invariant-convolution-for-uav-image-segmentation/">
+<link crossorigin="anonymous" href="/Unet_master/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="sha256-YqolQneX&#43;O/YcwGltpeV3FDfLb55pfugZIzHu42818k=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/Unet_master/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity="sha256-rLVP0yu8GYJCi4hQMX5F0Ha5UBJzClk2Zn5rwhd3aSo="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://hanwo-ol.github.io/Unet_master/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hanwo-ol.github.io/Unet_master/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hanwo-ol.github.io/Unet_master/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hanwo-ol.github.io/Unet_master/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hanwo-ol.github.io/Unet_master/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Accelerated Rotation-Invariant Convolution for UAV Image Segmentation" />
+<meta property="og:description" content="Abstract Rotation invariance is essential for precise, object-level segmentation in UAV aerial imagery, where targets can have arbitrary orientations and exhibit fine-scale details. Conventional segmentation architectures like U-Net rely on convolution operators that are not rotation-invariant, leading to degraded segmentation accuracy across varying viewpoints. Rotation invariance can be achieved by expanding the filter bank across multiple orientations; however, this will significantly increase computational cost and memory traffic. In this paper, we introduce a GPU-optimized rotation-invariant convolution framework that eliminates the traditional data-lowering (im2col) step required for matrix-multiplication-based convolution." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hanwo-ol.github.io/Unet_master/posts/accelerated-rotation-invariant-convolution-for-uav-image-segmentation/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-12-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-12-09T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Accelerated Rotation-Invariant Convolution for UAV Image Segmentation"/>
+<meta name="twitter:description" content="Abstract Rotation invariance is essential for precise, object-level segmentation in UAV aerial imagery, where targets can have arbitrary orientations and exhibit fine-scale details. Conventional segmentation architectures like U-Net rely on convolution operators that are not rotation-invariant, leading to degraded segmentation accuracy across varying viewpoints. Rotation invariance can be achieved by expanding the filter bank across multiple orientations; however, this will significantly increase computational cost and memory traffic. In this paper, we introduce a GPU-optimized rotation-invariant convolution framework that eliminates the traditional data-lowering (im2col) step required for matrix-multiplication-based convolution."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Accelerated Rotation-Invariant Convolution for UAV Image Segmentation",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/accelerated-rotation-invariant-convolution-for-uav-image-segmentation/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Accelerated Rotation-Invariant Convolution for UAV Image Segmentation",
+  "name": "Accelerated Rotation-Invariant Convolution for UAV Image Segmentation",
+  "description": "Abstract Rotation invariance is essential for precise, object-level segmentation in UAV aerial imagery, where targets can have arbitrary orientations and exhibit fine-scale details. Conventional segmentation architectures like U-Net rely on convolution operators that are not rotation-invariant, leading to degraded segmentation accuracy across varying viewpoints. Rotation invariance can be achieved by expanding the filter bank across multiple orientations; however, this will significantly increase computational cost and memory traffic. In this paper, we introduce a GPU-optimized rotation-invariant convolution framework that eliminates the traditional data-lowering (im2col) step required for matrix-multiplication-based convolution.",
+  "keywords": [
+    "Auto-Generated", "Draft"
+  ],
+  "articleBody": "Abstract Rotation invariance is essential for precise, object-level segmentation in UAV aerial imagery, where targets can have arbitrary orientations and exhibit fine-scale details. Conventional segmentation architectures like U-Net rely on convolution operators that are not rotation-invariant, leading to degraded segmentation accuracy across varying viewpoints. Rotation invariance can be achieved by expanding the filter bank across multiple orientations; however, this will significantly increase computational cost and memory traffic. In this paper, we introduce a GPU-optimized rotation-invariant convolution framework that eliminates the traditional data-lowering (im2col) step required for matrix-multiplication-based convolution. By exploiting structured data sharing among symmetrically rotated filters, our method achieves multi-orientation convolution with greatly reduced memory traffic and computational redundancy. We further generalize the approach to accelerate convolution with arbitrary (non-symmetric) rotation angles. Across extensive benchmarks, the proposed convolution achieves 20–55% faster training and 15–45% lower energy consumption than CUDNN, while maintaining accuracy comparable to state-of-the-art rotation-invariant methods. In the eight-orientation setting, our approach achieves up to 45% speedup and 41% energy savings on 256(\\times)256 inputs, and 32% speedup and 23% lower energy usage on 1024(\\times)1024 inputs. Integrated into a U-Net segmentation model, the framework yields up to 6% improvement in accuracy over the non-rotation-aware baseline. These results demonstrate that the proposed method provides an effective and highly efficient alternative to existing rotation-invariant CNN frameworks.\nPDF Download PDF Download Local PDF View | Arxiv Original\n이 논문은 UAV(무인 항공기) 이미지 분할을 위한 회전 불변 컨볼루션(Rotation-Invariant Convolution)의 효율성을 GPU 환경에서 극대화하는 새로운 프레임워크를 제안합니다.\n1. 요약 (Executive Summary) 본 논문은 UAV 항공 이미지 분할에서 객체의 임의의 방향성(arbitrary orientation)으로 인해 발생하는 정확도 저하 문제를 해결하기 위해 회전 불변 컨볼루션을 가속화하는 방법을 제시합니다.\n문제 정의: 기존의 U-Net과 같은 심층 학습 분할 아키텍처는 회전 불변성이 부족하여 다양한 시점에서 캡처된 UAV 이미지의 분할 정확도가 저하됩니다. 기존 방법의 한계: 회전 불변성을 달성하기 위해 필터 뱅크를 여러 방향으로 확장하는 기존 방법(예: G-convolution)은 계산 비용과 메모리 요구 사항을 크게 증가시킵니다. 특히 행렬 곱셈 기반 컨볼루션에 필요한 데이터 복제 단계(im2col)가 비효율성을 심화시킵니다. 제안된 해결책 (Scatter-based Convolution): 전통적인 데이터 로어링(im2col) 단계를 제거하고 대칭적으로 회전된 필터 간의 구조화된 데이터 공유를 활용하는 GPU 최적화된 스캐터(scatter) 기반 컨볼루션 프레임워크를 도입합니다. 주요 성과: 비회전 인식(non rotation aware) 기준선 대비 분할 정확도를 최대 5.7% 향상시켰습니다. cuDNN 기반 구현 대비 20~57% 더 빠른 학습 속도와 15~45% 낮은 에너지 소비를 달성했습니다. 스캐터 기반 설계의 효율성 덕분에 기존 방법으로는 불가능했던 16개 방향 컨볼루션 및 풀링을 실용적으로 구현하여 추가적인 정확도 향상을 얻었습니다. 2. 7가지 핵심 질문 분석 (Key Analysis) 1) What is new in the work? (기존 연구와의 차별점) 본 연구는 회전 불변 컨볼루션을 구현하는 데 있어 기존의 행렬 곱셈 기반 접근 방식(gather-style, im2col 사용) 대신 스캐터(scatter) 기반 컨볼루션 프레임워크를 GPU에 최적화하여 도입했다는 점이 새롭습니다. 이 스캐터 매핑은 데이터 로어링(im2col) 단계를 완전히 제거하여 메모리 트래픽과 계산 중복성을 줄입니다. 특히, 대칭적으로 회전된 필터들($0^\\circ, 90^\\circ, 180^\\circ, 270^\\circ$) 간에 중간 곱셈 결과를 재사용(reuse)함으로써, 각 대칭 그룹당 한 번의 곱셈만 수행하고 그 결과를 여러 출력 위치에 분산(scatter)시킵니다. 이는 기존 G-convolution이 각 회전 필터마다 독립적인 계산을 수행해야 했던 한계를 극복합니다.\n2) Why is the work important? (연구의 중요성) 이 연구는 UAV 및 원격 감지 이미지 분할 분야에서 회전 불변성을 달성하는 데 필수적인 계산 효율성을 제공합니다. 기존 회전 불변 방법들은 방향성 해상도(orientation resolution)를 높일수록 기하급수적으로 증가하는 계산량과 메모리 오버헤드 때문에 고해상도 이미지에 적용하기 어려웠습니다. 본 논문에서 제안된 스캐터 기반 접근 방식은 계산 중복성과 메모리 오버헤드를 줄여, 실제 GPU 메모리 제약 조건 내에서 8개 또는 16개와 같은 미세한 방향 샘플링을 실용적으로 가능하게 합니다. 이는 정확도와 효율성 사이의 유리한 균형점을 제시하며, 현대 CNN을 위한 실용적인 드롭인(drop-in) 업그레이드를 제공합니다.\n3) What is the literature gap? (기존 연구의 한계점) 기존 연구의 주요 한계는 계산 효율성과 확장성입니다. G-convolution과 같은 회전 등변(equivariant) 컨볼루션은 회전된 필터마다 독립적인 계산을 수행해야 하므로, 2D 공간에서 $4$배, 3D 공간에서 최대 $24$배까지 계산 오버헤드가 증가합니다. 또한, GPU에서 컨볼루션을 행렬 곱셈으로 구현하기 위해 필수적인 im2col 방식은 입력 데이터를 $K_h \\times K_w$ 배만큼 복제하여 메모리 트래픽과 계산량을 증가시킵니다. 이러한 비효율성 때문에, 방향성 해상도를 높여 정확도를 향상시키려는 시도는 GPU 메모리 제약으로 인해 실현 불가능했습니다.\n4) How is the gap filled? (해결 방안) 이러한 한계는 스캐터 기반 컨볼루션을 통해 해결됩니다. 스캐터 컨볼루션은 입력 픽셀이 필터 가중치와 곱해진 후 결과가 해당 출력 위치로 분산되는 방식으로, im2col과 같은 데이터 로어링 단계를 우회합니다. 특히 대칭 회전($p4$ 그룹)의 경우, 동일한 입력-가중치 곱셈 결과가 네 개의 회전된 컨볼루션 모두에서 다른 출력 위치에 나타난다는 점을 활용하여, 곱셈을 한 번만 수행하고 그 결과를 네 방향의 출력 맵에 재사용합니다. 이로써 곱셈 횟수는 방향의 수에 관계없이 일정하게 유지되며, 계산은 주로 덧셈 연산에 의해 지배됩니다. 또한, 임의의 회전 각도에 대해서는 Steerable Filter와 대칭 매핑을 결합하여 보간(interpolation) 없이 회전 등변성을 달성하고, 필요한 고유 곱셈 횟수를 75%까지 줄입니다.\n5) What is achieved with the new method? (달성한 성과 - 여기서 Table의 수치를 인용할 것) 제안된 스캐터 기반 컨볼루션은 기존 방법 대비 압도적인 효율성을 보였습니다.\n데이터셋 해상도 방향 수 방법 Training Time (s) Energy (kWh) Test Accuracy (%) Plant 256x256 4 cuDNN 20234.6 0.943 75.64 Plant 256x256 4 Scatter 10962.6 0.581 75.61 Drone 256x256 4 cuDNN 7713.1 0.3570 91.88 Drone 256x256 4 Scatter 4109.6 0.2175 91.88 Plant 1024x1024 8 cuDNN 100269.79 6.8162 75.86 Plant 1024x1024 8 Scatter 65703.51 5.3363 75.82 주요 성과 요약:\n4-방향 대칭 회전 (Table III, IV): 256 해상도에서 Plant 데이터셋의 학습 시간을 cuDNN 대비 약 45.9% (20234.6s $\\to$ 10962.6s) 단축했으며, Drone 데이터셋에서는 약 46.7% (7713.1s $\\to$ 4109.6s) 단축했습니다. 정확도는 기존 SOTA 방법(E2CNN, ORN)과 동등하거나 우수했습니다. 8-방향 대칭 회전 (Table V, VI): 1024 해상도에서 Plant 데이터셋의 학습 시간을 cuDNN 대비 약 34.5% (100269.79s $\\to$ 65703.51s) 단축했으며, 에너지 소비를 약 21.7% 절감했습니다. 16-방향 대칭 회전 (Table VII, VIII): 기존 방법으로는 비실용적이었던 16-방향 컨볼루션을 구현하여, 256 해상도 Drone 데이터셋에서 94.39%의 높은 정확도를 달성했습니다. 6) What data are used? (사용 데이터셋 - 도메인 특성 포함) In-farm Plant Segmentation Dataset:\n도메인 특성: 고해상도 UAV 이미지(GSD 0.15 cm/pixel)로 획득한 혼합 종 목초지(mixed-species pastures) 데이터셋입니다. 식물 종(클로버 잎, 잔디, 잡초 등)을 분할하는 것이 목표이며, 잎과 캐노피 구조가 임의의 방향으로 나타나기 때문에 회전 불변성이 필수적입니다. 규모: 1000개 샘플 (학습 800, 검증 100, 테스트 100). Semantic Segmentation Drone Dataset:\n도메인 특성: 공개된 데이터셋으로, 도시 주거 지역의 고해상도 나디르 뷰(nadir-view) 이미지(고도 5m~30m)를 포함합니다. 24개 객체 범주에 대한 픽셀 수준의 의미론적 레이블이 지정되어 있습니다. 규모: 400개 이미지 (학습 340, 검증 32, 테스트 28). 7) What are the limitations? (저자가 언급한 한계점) 저자는 제안된 스캐터 기반 컨볼루션이 모든 시나리오에서 cuDNN보다 우수하지는 않다고 언급합니다 (Appendix A 및 Conclusion).\n고해상도 초기 레이어에서의 성능: 공간 해상도가 매우 높고 채널 깊이가 얕은 네트워크의 첫 번째 또는 두 번째 인코더 레이어에서는 cuDNN이 여전히 선호될 수 있습니다. 최적 성능 조건: 스캐터 커널의 성능 이점은 공간 풋프린트가 적당하거나($\\le 32 \\times 32$) 채널-필터 곱이 작은($\\sim 16K$ 미만) 중간-깊은 레이어에서 가장 두드러집니다. 이는 커널 실행 지연 시간(kernel-launch latency)과 전역 메모리 트래픽이 컨볼루션 비용을 지배하는 영역입니다. 3. 아키텍처 및 방법론 (Architecture \u0026 Methodology) Figure 분석: U-Net 아키텍처 (Figure 9) 제안된 방법은 기존 U-Net 아키텍처를 기반으로 하며, 특히 인코더 경로의 기본 컨볼루션 블록을 회전 불변 컨볼루션 블록으로 대체했습니다.\nU-Net 구조의 흐름:\n입력: $256 \\times 256 \\times 3$ (RGB 이미지). 인코더 경로 (Downsampling): 각 인코더 단계는 회전 불변 컨볼루션 $3 \\times 3$ + 표준 컨볼루션 $3 \\times 3$ + BN + ReLU로 구성된 블록으로 시작합니다. 이후 **Maxpool $2 \\times 2$**를 통해 공간 해상도를 절반으로 줄이고 채널 깊이를 두 배로 늘립니다 (예: $256 \\times 256 \\times 64 \\to 128 \\times 128 \\times 128$). 바틀넥 (Bottleneck): 가장 깊은 레이어($16 \\times 16 \\times 1024$)에서 동일한 회전 불변 컨볼루션 블록이 적용됩니다. 디코더 경로 (Upsampling): Up Sample을 통해 해상도를 두 배로 늘립니다. 인코더의 해당 해상도 피처 맵을 Skip Connection을 통해 연결(Concatenation)합니다. 이후 **Conv $1 \\times 1$**을 포함한 표준 컨볼루션 블록이 적용되어 채널 수를 줄이고 피처를 융합합니다. 출력: 최종적으로 분할 마스크($256 \\times 256 \\times C_{out}$)를 생성합니다. 핵심 변경 사항: U-Net의 첫 번째 컨볼루션 블록을 제안된 회전 불변 컨볼루션으로 대체하여 회전 인식 피처 추출을 가능하게 합니다. 이 회전 불변 블록은 성능과 차원 폭발을 균형 있게 맞추기 위해, 첫 번째 컨볼루션에만 회전 불변 컨볼루션을 적용하고 두 번째 컨볼루션에는 표준 컨볼루션을 사용합니다.\n수식 상세 1. 표준 컨볼루션 출력 (Standard Convolution Output, Eq. 1) 입력 텐서 $X \\in \\mathbb{R}^{C_{in} \\times H \\times W}$와 필터 $W \\in \\mathbb{R}^{C_{out} \\times C_{in} \\times K_h \\times K_w}$에 대한 유효(valid) 컨볼루션의 출력 $Y_{c_o, h, w}$는 다음과 같습니다.\n$$Y_{c_o, h, w} = \\sum_{c_i=0}^{C_{in}-1} \\sum_{i=0}^{K_h-1} \\sum_{j=0}^{K_w-1} W_{c_o, c_i, i, j} X_{c_i, h+i, w+j}$$\n여기서 출력 공간 크기는 $H’ = H - K_h + 1$, $W’ = W - K_w + 1$ 입니다.\n2. 스캐터 기반 컨볼루션 (Convolution with Scatter Operation, Eq. 4) $C_{in}$ 입력 채널과 $C_{out}$ 출력 채널에 대한 스캐터 기반 컨볼루션은 다음과 같이 표현됩니다.\n$$Y_{c_o, i-m+[K_h/2], j-n+[K_w/2]} += \\sum_{c_i=0}^{C_{in}-1} X_{c_i, h, w} W_{c_o, c_i, m, n}$$\n이 수식에서 $\\sum_{c_i=0}^{C_{in}-1} X_{c_i, h, w} W_{c_o, c_i, m, n}$ 항은 채널별 곱셈 및 누적(accumulation)을 나타내며, 이 결과는 특정 출력 위치 $(i-m+[K_h/2], j-n+[K_w/2])$에 더해집니다. 이 방식은 데이터 복제 없이 행렬 곱셈을 사용하여 채널별 곱셈 및 합산을 수행합니다.\n3. 대칭 회전 등변 컨볼루션 (Symmetric Rotation Equivariant Convolution, Eq. 8) $p4$ 그룹(4개의 대칭 회전 $r \\in {0, 1, 2, 3}$)에 대해 스캐터 기반 컨볼루션을 적용할 때, 회전된 커널 좌표 $(m’, n’) = R_r(m, n)$를 사용하여 다음과 같이 표현됩니다.\n$$Y_{c_o, i-m’+[K_h/2], j-n’+[K_w/2]} += \\sum_{c_i=0}^{C_{in}-1} X_{c_i, h, w} W_{c_o, c_i, m, n}$$\n핵심은 채널별 곱셈 및 누적 항 $\\sum X W$이 한 번만 계산되고, 각 회전 $r$에 대해 커널 좌표 $(m, n)$가 회전된 좌표 $(m’, n’)$로 변환됨에 따라 다른 출력 위치에 분산된다는 점입니다.\n4. 임의 회전 스티어러블 필터 (Arbitrary Rotation Steerable Filter, Eq. 17) 임의의 회전 각도 $\\theta$에 대한 스티어러블 필터 $\\psi_\\theta(x, y)$는 두 개의 학습된 기저 필터 $f_x$와 $f_y$의 선형 조합으로 구성됩니다.\n$$\\psi_\\theta(x, y) = \\sin(\\theta) \\cdot f_x(x, y) + \\cos(\\theta) \\cdot f_y(x, y)$$\n5. 전체 손실 함수 (Total Loss Function, Eq. 18) 학습된 기저 필터가 스티어러블 동작을 보이도록 장려하기 위해 표준 교차 엔트로피 손실 $\\mathcal{L}_{CE}$에 두 가지 정규화 손실이 추가됩니다.\n$$\\mathcal{L}{total} = \\mathcal{L}{CE} + \\lambda_{mag} \\mathcal{L}{mag} + \\lambda{orth} \\mathcal{L}_{orth}$$\n크기 일치 손실 (Magnitude-matching Loss, Eq. 19): 두 기저 필터 $f_x$와 $f_y$의 평탄화된 커널 가중치 $w_b^{(x)}$와 $w_b^{(y)}$가 유사한 에너지 레벨을 유지하도록 장려합니다. $$\\mathcal{L}{mag} = \\frac{1}{B} \\sum{b=1}^{B} \\left( \\left| w_b^{(x)} \\right|_2^2 - \\left| w_b^{(y)} \\right|_2^2 \\right)^2$$ 직교성 손실 (Orthogonality Loss, Eq. 20): 두 방향 기저 간의 상관관계를 억제하여 회전 독립성을 촉진합니다. $$\\mathcal{L}{orth} = \\frac{1}{B} \\sum{b=1}^{B} \\left( \\frac{\\langle w_b^{(x)}, w_b^{(y)} \\rangle}{| w_b^{(x)} |_2 | w_b^{(y)} |_2 + \\epsilon} \\right)^2$$ Vanilla U-Net 비교 특징 Vanilla U-Net 제안된 U-Net (Scatter-based) 핵심 컨볼루션 표준 컨볼루션 (Gather-style) 스캐터 기반 회전 불변 컨볼루션 회전 불변성 없음 (회전 민감) 회전 등변성 + 방향 풀링(Max/Avg)을 통해 달성 데이터 처리 im2col을 통한 데이터 로어링 및 복제 스캐터 연산을 통해 데이터 로어링 제거 계산 효율성 (대칭 회전) 각 회전 필터마다 독립적인 계산 수행 중간 곱셈 결과를 재사용하여 곱셈 횟수 4배 감소 주요 추가 모듈 없음 Rotation-Invariant Conv Block (Steerable Filter, Scatter Operation, Orientation Pooling) 손실 함수 $\\mathcal{L}_{CE}$ $\\mathcal{L}{CE} + \\mathcal{L}{mag} + \\mathcal{L}_{orth}$ (정규화 항 추가) 4. 태그 제안 (Tags Suggestion) Rotation Invariance UAV Image Segmentation Scatter Convolution GPU Optimization Rotation Equivariance ",
+  "wordCount" : "1752",
+  "inLanguage": "en",
+  "datePublished": "2025-12-09T00:00:00Z",
+  "dateModified": "2025-12-09T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hanwo-ol.github.io/Unet_master/posts/accelerated-rotation-invariant-convolution-for-uav-image-segmentation/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Research Agent Knowledge Base",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hanwo-ol.github.io/Unet_master/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hanwo-ol.github.io/Unet_master/" accesskey="h" title="Research Agent Knowledge Base (Alt + H)">Research Agent Knowledge Base</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/categories/" title="categories">
+                    <span>categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hanwo-ol.github.io/Unet_master/">Home</a>&nbsp;»&nbsp;<a href="https://hanwo-ol.github.io/Unet_master/posts/">Posts</a></div>
+    <h1 class="post-title">
+      Accelerated Rotation-Invariant Convolution for UAV Image Segmentation
+    </h1>
+    <div class="post-meta">&lt;span title=&#39;2025-12-09 00:00:00 &#43;0000 UTC&#39;&gt;December 9, 2025&lt;/span&gt;&amp;nbsp;·&amp;nbsp;9 min
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="abstract">Abstract<a hidden class="anchor" aria-hidden="true" href="#abstract">#</a></h2>
+<p>Rotation invariance is essential for precise, object-level segmentation in UAV aerial imagery, where targets can have arbitrary orientations and exhibit fine-scale details. Conventional segmentation architectures like U-Net rely on convolution operators that are not rotation-invariant, leading to degraded segmentation accuracy across varying viewpoints. Rotation invariance can be achieved by expanding the filter bank across multiple orientations; however, this will significantly increase computational cost and memory traffic. In this paper, we introduce a GPU-optimized rotation-invariant convolution framework that eliminates the traditional data-lowering (im2col) step required for matrix-multiplication-based convolution. By exploiting structured data sharing among symmetrically rotated filters, our method achieves multi-orientation convolution with greatly reduced memory traffic and computational redundancy. We further generalize the approach to accelerate convolution with arbitrary (non-symmetric) rotation angles.   Across extensive benchmarks, the proposed convolution achieves 20&ndash;55% faster training and 15&ndash;45% lower energy consumption than CUDNN, while maintaining accuracy comparable to state-of-the-art rotation-invariant methods. In the eight-orientation setting, our approach achieves up to 45% speedup and 41% energy savings on 256(\times)256 inputs, and 32% speedup and 23% lower energy usage on 1024(\times)1024 inputs. Integrated into a U-Net segmentation model, the framework yields up to 6% improvement in accuracy over the non-rotation-aware baseline. These results demonstrate that the proposed method provides an effective and highly efficient alternative to existing rotation-invariant CNN frameworks.</p>
+<h2 id="pdf-download">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download">#</a></h2>
+<h2 id="pdf-download-1">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download-1">#</a></h2>
+<p><a href="//172.22.138.185/Research_pdf/2512.08888v2.pdf">Local PDF View</a> | <a href="http://arxiv.org/abs/2512.08888v2">Arxiv Original</a></p>
+<p>이 논문은 UAV(무인 항공기) 이미지 분할을 위한 회전 불변 컨볼루션(Rotation-Invariant Convolution)의 효율성을 GPU 환경에서 극대화하는 새로운 프레임워크를 제안합니다.</p>
+<hr>
+<h2 id="1-요약-executive-summary">1. 요약 (Executive Summary)<a hidden class="anchor" aria-hidden="true" href="#1-요약-executive-summary">#</a></h2>
+<p>본 논문은 UAV 항공 이미지 분할에서 객체의 임의의 방향성(arbitrary orientation)으로 인해 발생하는 정확도 저하 문제를 해결하기 위해 회전 불변 컨볼루션을 가속화하는 방법을 제시합니다.</p>
+<ul>
+<li><strong>문제 정의:</strong> 기존의 U-Net과 같은 심층 학습 분할 아키텍처는 회전 불변성이 부족하여 다양한 시점에서 캡처된 UAV 이미지의 분할 정확도가 저하됩니다.</li>
+<li><strong>기존 방법의 한계:</strong> 회전 불변성을 달성하기 위해 필터 뱅크를 여러 방향으로 확장하는 기존 방법(예: G-convolution)은 계산 비용과 메모리 요구 사항을 크게 증가시킵니다. 특히 행렬 곱셈 기반 컨볼루션에 필요한 데이터 복제 단계(im2col)가 비효율성을 심화시킵니다.</li>
+<li><strong>제안된 해결책 (Scatter-based Convolution):</strong> 전통적인 데이터 로어링(im2col) 단계를 제거하고 대칭적으로 회전된 필터 간의 구조화된 데이터 공유를 활용하는 GPU 최적화된 스캐터(scatter) 기반 컨볼루션 프레임워크를 도입합니다.</li>
+<li><strong>주요 성과:</strong>
+<ul>
+<li>비회전 인식(non rotation aware) 기준선 대비 분할 정확도를 최대 <strong>5.7%</strong> 향상시켰습니다.</li>
+<li>cuDNN 기반 구현 대비 <strong>20~57%</strong> 더 빠른 학습 속도와 <strong>15~45%</strong> 낮은 에너지 소비를 달성했습니다.</li>
+<li>스캐터 기반 설계의 효율성 덕분에 기존 방법으로는 불가능했던 <strong>16개 방향</strong> 컨볼루션 및 풀링을 실용적으로 구현하여 추가적인 정확도 향상을 얻었습니다.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-7가지-핵심-질문-분석-key-analysis">2. 7가지 핵심 질문 분석 (Key Analysis)<a hidden class="anchor" aria-hidden="true" href="#2-7가지-핵심-질문-분석-key-analysis">#</a></h2>
+<h3 id="1-what-is-new-in-the-work-기존-연구와의-차별점">1) What is new in the work? (기존 연구와의 차별점)<a hidden class="anchor" aria-hidden="true" href="#1-what-is-new-in-the-work-기존-연구와의-차별점">#</a></h3>
+<p>본 연구는 회전 불변 컨볼루션을 구현하는 데 있어 기존의 행렬 곱셈 기반 접근 방식(gather-style, im2col 사용) 대신 <strong>스캐터(scatter) 기반</strong> 컨볼루션 프레임워크를 GPU에 최적화하여 도입했다는 점이 새롭습니다. 이 스캐터 매핑은 데이터 로어링(im2col) 단계를 완전히 제거하여 메모리 트래픽과 계산 중복성을 줄입니다. 특히, 대칭적으로 회전된 필터들($0^\circ, 90^\circ, 180^\circ, 270^\circ$) 간에 중간 곱셈 결과를 재사용(reuse)함으로써, 각 대칭 그룹당 한 번의 곱셈만 수행하고 그 결과를 여러 출력 위치에 분산(scatter)시킵니다. 이는 기존 G-convolution이 각 회전 필터마다 독립적인 계산을 수행해야 했던 한계를 극복합니다.</p>
+<h3 id="2-why-is-the-work-important-연구의-중요성">2) Why is the work important? (연구의 중요성)<a hidden class="anchor" aria-hidden="true" href="#2-why-is-the-work-important-연구의-중요성">#</a></h3>
+<p>이 연구는 UAV 및 원격 감지 이미지 분할 분야에서 회전 불변성을 달성하는 데 필수적인 계산 효율성을 제공합니다. 기존 회전 불변 방법들은 방향성 해상도(orientation resolution)를 높일수록 기하급수적으로 증가하는 계산량과 메모리 오버헤드 때문에 고해상도 이미지에 적용하기 어려웠습니다. 본 논문에서 제안된 스캐터 기반 접근 방식은 계산 중복성과 메모리 오버헤드를 줄여, <strong>실제 GPU 메모리 제약 조건 내에서</strong> 8개 또는 16개와 같은 미세한 방향 샘플링을 실용적으로 가능하게 합니다. 이는 정확도와 효율성 사이의 유리한 균형점을 제시하며, 현대 CNN을 위한 실용적인 드롭인(drop-in) 업그레이드를 제공합니다.</p>
+<h3 id="3-what-is-the-literature-gap-기존-연구의-한계점">3) What is the literature gap? (기존 연구의 한계점)<a hidden class="anchor" aria-hidden="true" href="#3-what-is-the-literature-gap-기존-연구의-한계점">#</a></h3>
+<p>기존 연구의 주요 한계는 <strong>계산 효율성</strong>과 <strong>확장성</strong>입니다. G-convolution과 같은 회전 등변(equivariant) 컨볼루션은 회전된 필터마다 독립적인 계산을 수행해야 하므로, 2D 공간에서 $4$배, 3D 공간에서 최대 $24$배까지 계산 오버헤드가 증가합니다. 또한, GPU에서 컨볼루션을 행렬 곱셈으로 구현하기 위해 필수적인 <code>im2col</code> 방식은 입력 데이터를 $K_h \times K_w$ 배만큼 복제하여 메모리 트래픽과 계산량을 증가시킵니다. 이러한 비효율성 때문에, 방향성 해상도를 높여 정확도를 향상시키려는 시도는 GPU 메모리 제약으로 인해 실현 불가능했습니다.</p>
+<h3 id="4-how-is-the-gap-filled-해결-방안">4) How is the gap filled? (해결 방안)<a hidden class="anchor" aria-hidden="true" href="#4-how-is-the-gap-filled-해결-방안">#</a></h3>
+<p>이러한 한계는 <strong>스캐터 기반 컨볼루션</strong>을 통해 해결됩니다. 스캐터 컨볼루션은 입력 픽셀이 필터 가중치와 곱해진 후 결과가 해당 출력 위치로 분산되는 방식으로, <code>im2col</code>과 같은 데이터 로어링 단계를 우회합니다. 특히 대칭 회전($p4$ 그룹)의 경우, 동일한 입력-가중치 곱셈 결과가 네 개의 회전된 컨볼루션 모두에서 다른 출력 위치에 나타난다는 점을 활용하여, 곱셈을 한 번만 수행하고 그 결과를 네 방향의 출력 맵에 재사용합니다. 이로써 곱셈 횟수는 방향의 수에 관계없이 일정하게 유지되며, 계산은 주로 덧셈 연산에 의해 지배됩니다. 또한, 임의의 회전 각도에 대해서는 <strong>Steerable Filter</strong>와 대칭 매핑을 결합하여 보간(interpolation) 없이 회전 등변성을 달성하고, 필요한 고유 곱셈 횟수를 75%까지 줄입니다.</p>
+<h3 id="5-what-is-achieved-with-the-new-method-달성한-성과---여기서-table의-수치를-인용할-것">5) What is achieved with the new method? (달성한 성과 - <em>여기서 Table의 수치를 인용할 것</em>)<a hidden class="anchor" aria-hidden="true" href="#5-what-is-achieved-with-the-new-method-달성한-성과---여기서-table의-수치를-인용할-것">#</a></h3>
+<p>제안된 스캐터 기반 컨볼루션은 기존 방법 대비 압도적인 효율성을 보였습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">데이터셋</th>
+<th style="text-align:left">해상도</th>
+<th style="text-align:left">방향 수</th>
+<th style="text-align:left">방법</th>
+<th style="text-align:left">Training Time (s)</th>
+<th style="text-align:left">Energy (kWh)</th>
+<th style="text-align:left">Test Accuracy (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Plant</td>
+<td style="text-align:left">256x256</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">cuDNN</td>
+<td style="text-align:left">20234.6</td>
+<td style="text-align:left">0.943</td>
+<td style="text-align:left">75.64</td>
+</tr>
+<tr>
+<td style="text-align:left">Plant</td>
+<td style="text-align:left">256x256</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>Scatter</strong></td>
+<td style="text-align:left"><strong>10962.6</strong></td>
+<td style="text-align:left"><strong>0.581</strong></td>
+<td style="text-align:left">75.61</td>
+</tr>
+<tr>
+<td style="text-align:left">Drone</td>
+<td style="text-align:left">256x256</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">cuDNN</td>
+<td style="text-align:left">7713.1</td>
+<td style="text-align:left">0.3570</td>
+<td style="text-align:left">91.88</td>
+</tr>
+<tr>
+<td style="text-align:left">Drone</td>
+<td style="text-align:left">256x256</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>Scatter</strong></td>
+<td style="text-align:left"><strong>4109.6</strong></td>
+<td style="text-align:left"><strong>0.2175</strong></td>
+<td style="text-align:left">91.88</td>
+</tr>
+<tr>
+<td style="text-align:left">Plant</td>
+<td style="text-align:left">1024x1024</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">cuDNN</td>
+<td style="text-align:left">100269.79</td>
+<td style="text-align:left">6.8162</td>
+<td style="text-align:left">75.86</td>
+</tr>
+<tr>
+<td style="text-align:left">Plant</td>
+<td style="text-align:left">1024x1024</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>Scatter</strong></td>
+<td style="text-align:left"><strong>65703.51</strong></td>
+<td style="text-align:left"><strong>5.3363</strong></td>
+<td style="text-align:left"><strong>75.82</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>주요 성과 요약:</strong></p>
+<ul>
+<li><strong>4-방향 대칭 회전 (Table III, IV):</strong> 256 해상도에서 Plant 데이터셋의 학습 시간을 cuDNN 대비 약 <strong>45.9%</strong> (20234.6s $\to$ 10962.6s) 단축했으며, Drone 데이터셋에서는 약 <strong>46.7%</strong> (7713.1s $\to$ 4109.6s) 단축했습니다. 정확도는 기존 SOTA 방법(E2CNN, ORN)과 동등하거나 우수했습니다.</li>
+<li><strong>8-방향 대칭 회전 (Table V, VI):</strong> 1024 해상도에서 Plant 데이터셋의 학습 시간을 cuDNN 대비 약 <strong>34.5%</strong> (100269.79s $\to$ 65703.51s) 단축했으며, 에너지 소비를 약 <strong>21.7%</strong> 절감했습니다.</li>
+<li><strong>16-방향 대칭 회전 (Table VII, VIII):</strong> 기존 방법으로는 비실용적이었던 16-방향 컨볼루션을 구현하여, 256 해상도 Drone 데이터셋에서 94.39%의 높은 정확도를 달성했습니다.</li>
+</ul>
+<h3 id="6-what-data-are-used-사용-데이터셋---도메인-특성-포함">6) What data are used? (사용 데이터셋 - 도메인 특성 포함)<a hidden class="anchor" aria-hidden="true" href="#6-what-data-are-used-사용-데이터셋---도메인-특성-포함">#</a></h3>
+<ol>
+<li>
+<p><strong>In-farm Plant Segmentation Dataset:</strong></p>
+<ul>
+<li><strong>도메인 특성:</strong> 고해상도 UAV 이미지(GSD 0.15 cm/pixel)로 획득한 혼합 종 목초지(mixed-species pastures) 데이터셋입니다. 식물 종(클로버 잎, 잔디, 잡초 등)을 분할하는 것이 목표이며, 잎과 캐노피 구조가 임의의 방향으로 나타나기 때문에 회전 불변성이 필수적입니다.</li>
+<li><strong>규모:</strong> 1000개 샘플 (학습 800, 검증 100, 테스트 100).</li>
+</ul>
+</li>
+<li>
+<p><strong>Semantic Segmentation Drone Dataset:</strong></p>
+<ul>
+<li><strong>도메인 특성:</strong> 공개된 데이터셋으로, 도시 주거 지역의 고해상도 나디르 뷰(nadir-view) 이미지(고도 5m~30m)를 포함합니다. 24개 객체 범주에 대한 픽셀 수준의 의미론적 레이블이 지정되어 있습니다.</li>
+<li><strong>규모:</strong> 400개 이미지 (학습 340, 검증 32, 테스트 28).</li>
+</ul>
+</li>
+</ol>
+<h3 id="7-what-are-the-limitations-저자가-언급한-한계점">7) What are the limitations? (저자가 언급한 한계점)<a hidden class="anchor" aria-hidden="true" href="#7-what-are-the-limitations-저자가-언급한-한계점">#</a></h3>
+<p>저자는 제안된 스캐터 기반 컨볼루션이 모든 시나리오에서 cuDNN보다 우수하지는 않다고 언급합니다 (Appendix A 및 Conclusion).</p>
+<ul>
+<li><strong>고해상도 초기 레이어에서의 성능:</strong> 공간 해상도가 매우 높고 채널 깊이가 얕은 네트워크의 <strong>첫 번째 또는 두 번째 인코더 레이어</strong>에서는 cuDNN이 여전히 선호될 수 있습니다.</li>
+<li><strong>최적 성능 조건:</strong> 스캐터 커널의 성능 이점은 공간 풋프린트가 적당하거나($\le 32 \times 32$) 채널-필터 곱이 작은($\sim 16K$ 미만) 중간-깊은 레이어에서 가장 두드러집니다. 이는 커널 실행 지연 시간(kernel-launch latency)과 전역 메모리 트래픽이 컨볼루션 비용을 지배하는 영역입니다.</li>
+</ul>
+<hr>
+<h2 id="3-아키텍처-및-방법론-architecture--methodology">3. 아키텍처 및 방법론 (Architecture &amp; Methodology)<a hidden class="anchor" aria-hidden="true" href="#3-아키텍처-및-방법론-architecture--methodology">#</a></h2>
+<h3 id="figure-분석-u-net-아키텍처-figure-9">Figure 분석: U-Net 아키텍처 (Figure 9)<a hidden class="anchor" aria-hidden="true" href="#figure-분석-u-net-아키텍처-figure-9">#</a></h3>
+<p>제안된 방법은 기존 U-Net 아키텍처를 기반으로 하며, 특히 인코더 경로의 기본 컨볼루션 블록을 회전 불변 컨볼루션 블록으로 대체했습니다.</p>
+<p><strong>U-Net 구조의 흐름:</strong></p>
+<ol>
+<li><strong>입력:</strong> $256 \times 256 \times 3$ (RGB 이미지).</li>
+<li><strong>인코더 경로 (Downsampling):</strong>
+<ul>
+<li>각 인코더 단계는 <strong>회전 불변 컨볼루션 $3 \times 3$ + 표준 컨볼루션 $3 \times 3$ + BN + ReLU</strong>로 구성된 블록으로 시작합니다.</li>
+<li>이후 **Maxpool $2 \times 2$**를 통해 공간 해상도를 절반으로 줄이고 채널 깊이를 두 배로 늘립니다 (예: $256 \times 256 \times 64 \to 128 \times 128 \times 128$).</li>
+</ul>
+</li>
+<li><strong>바틀넥 (Bottleneck):</strong> 가장 깊은 레이어($16 \times 16 \times 1024$)에서 동일한 회전 불변 컨볼루션 블록이 적용됩니다.</li>
+<li><strong>디코더 경로 (Upsampling):</strong>
+<ul>
+<li><strong>Up Sample</strong>을 통해 해상도를 두 배로 늘립니다.</li>
+<li>인코더의 해당 해상도 피처 맵을 <strong>Skip Connection</strong>을 통해 연결(Concatenation)합니다.</li>
+<li>이후 **Conv $1 \times 1$**을 포함한 표준 컨볼루션 블록이 적용되어 채널 수를 줄이고 피처를 융합합니다.</li>
+</ul>
+</li>
+<li><strong>출력:</strong> 최종적으로 분할 마스크($256 \times 256 \times C_{out}$)를 생성합니다.</li>
+</ol>
+<p><strong>핵심 변경 사항:</strong> U-Net의 첫 번째 컨볼루션 블록을 제안된 <strong>회전 불변 컨볼루션</strong>으로 대체하여 회전 인식 피처 추출을 가능하게 합니다. 이 회전 불변 블록은 성능과 차원 폭발을 균형 있게 맞추기 위해, 첫 번째 컨볼루션에만 회전 불변 컨볼루션을 적용하고 두 번째 컨볼루션에는 표준 컨볼루션을 사용합니다.</p>
+<h3 id="수식-상세">수식 상세<a hidden class="anchor" aria-hidden="true" href="#수식-상세">#</a></h3>
+<h4 id="1-표준-컨볼루션-출력-standard-convolution-output-eq-1">1. 표준 컨볼루션 출력 (Standard Convolution Output, Eq. 1)<a hidden class="anchor" aria-hidden="true" href="#1-표준-컨볼루션-출력-standard-convolution-output-eq-1">#</a></h4>
+<p>입력 텐서 $X \in \mathbb{R}^{C_{in} \times H \times W}$와 필터 $W \in \mathbb{R}^{C_{out} \times C_{in} \times K_h \times K_w}$에 대한 유효(valid) 컨볼루션의 출력 $Y_{c_o, h, w}$는 다음과 같습니다.</p>
+<p>$$Y_{c_o, h, w} = \sum_{c_i=0}^{C_{in}-1} \sum_{i=0}^{K_h-1} \sum_{j=0}^{K_w-1} W_{c_o, c_i, i, j} X_{c_i, h+i, w+j}$$</p>
+<p>여기서 출력 공간 크기는 $H&rsquo; = H - K_h + 1$, $W&rsquo; = W - K_w + 1$ 입니다.</p>
+<h4 id="2-스캐터-기반-컨볼루션-convolution-with-scatter-operation-eq-4">2. 스캐터 기반 컨볼루션 (Convolution with Scatter Operation, Eq. 4)<a hidden class="anchor" aria-hidden="true" href="#2-스캐터-기반-컨볼루션-convolution-with-scatter-operation-eq-4">#</a></h4>
+<p>$C_{in}$ 입력 채널과 $C_{out}$ 출력 채널에 대한 스캐터 기반 컨볼루션은 다음과 같이 표현됩니다.</p>
+<p>$$Y_{c_o, i-m+[K_h/2], j-n+[K_w/2]} += \sum_{c_i=0}^{C_{in}-1} X_{c_i, h, w} W_{c_o, c_i, m, n}$$</p>
+<p>이 수식에서 $\sum_{c_i=0}^{C_{in}-1} X_{c_i, h, w} W_{c_o, c_i, m, n}$ 항은 채널별 곱셈 및 누적(accumulation)을 나타내며, 이 결과는 특정 출력 위치 $(i-m+[K_h/2], j-n+[K_w/2])$에 더해집니다. 이 방식은 데이터 복제 없이 행렬 곱셈을 사용하여 채널별 곱셈 및 합산을 수행합니다.</p>
+<h4 id="3-대칭-회전-등변-컨볼루션-symmetric-rotation-equivariant-convolution-eq-8">3. 대칭 회전 등변 컨볼루션 (Symmetric Rotation Equivariant Convolution, Eq. 8)<a hidden class="anchor" aria-hidden="true" href="#3-대칭-회전-등변-컨볼루션-symmetric-rotation-equivariant-convolution-eq-8">#</a></h4>
+<p>$p4$ 그룹(4개의 대칭 회전 $r \in {0, 1, 2, 3}$)에 대해 스캐터 기반 컨볼루션을 적용할 때, 회전된 커널 좌표 $(m&rsquo;, n&rsquo;) = R_r(m, n)$를 사용하여 다음과 같이 표현됩니다.</p>
+<p>$$Y_{c_o, i-m&rsquo;+[K_h/2], j-n&rsquo;+[K_w/2]} += \sum_{c_i=0}^{C_{in}-1} X_{c_i, h, w} W_{c_o, c_i, m, n}$$</p>
+<p>핵심은 채널별 곱셈 및 누적 항 $\sum X W$이 <strong>한 번만 계산</strong>되고, 각 회전 $r$에 대해 커널 좌표 $(m, n)$가 회전된 좌표 $(m&rsquo;, n&rsquo;)$로 변환됨에 따라 <strong>다른 출력 위치</strong>에 분산된다는 점입니다.</p>
+<h4 id="4-임의-회전-스티어러블-필터-arbitrary-rotation-steerable-filter-eq-17">4. 임의 회전 스티어러블 필터 (Arbitrary Rotation Steerable Filter, Eq. 17)<a hidden class="anchor" aria-hidden="true" href="#4-임의-회전-스티어러블-필터-arbitrary-rotation-steerable-filter-eq-17">#</a></h4>
+<p>임의의 회전 각도 $\theta$에 대한 스티어러블 필터 $\psi_\theta(x, y)$는 두 개의 학습된 기저 필터 $f_x$와 $f_y$의 선형 조합으로 구성됩니다.</p>
+<p>$$\psi_\theta(x, y) = \sin(\theta) \cdot f_x(x, y) + \cos(\theta) \cdot f_y(x, y)$$</p>
+<h4 id="5-전체-손실-함수-total-loss-function-eq-18">5. 전체 손실 함수 (Total Loss Function, Eq. 18)<a hidden class="anchor" aria-hidden="true" href="#5-전체-손실-함수-total-loss-function-eq-18">#</a></h4>
+<p>학습된 기저 필터가 스티어러블 동작을 보이도록 장려하기 위해 표준 교차 엔트로피 손실 $\mathcal{L}_{CE}$에 두 가지 정규화 손실이 추가됩니다.</p>
+<p>$$\mathcal{L}<em>{total} = \mathcal{L}</em>{CE} + \lambda_{mag} \mathcal{L}<em>{mag} + \lambda</em>{orth} \mathcal{L}_{orth}$$</p>
+<ul>
+<li><strong>크기 일치 손실 (Magnitude-matching Loss, Eq. 19):</strong> 두 기저 필터 $f_x$와 $f_y$의 평탄화된 커널 가중치 $w_b^{(x)}$와 $w_b^{(y)}$가 유사한 에너지 레벨을 유지하도록 장려합니다.
+$$\mathcal{L}<em>{mag} = \frac{1}{B} \sum</em>{b=1}^{B} \left( \left| w_b^{(x)} \right|_2^2 - \left| w_b^{(y)} \right|_2^2 \right)^2$$</li>
+<li><strong>직교성 손실 (Orthogonality Loss, Eq. 20):</strong> 두 방향 기저 간의 상관관계를 억제하여 회전 독립성을 촉진합니다.
+$$\mathcal{L}<em>{orth} = \frac{1}{B} \sum</em>{b=1}^{B} \left( \frac{\langle w_b^{(x)}, w_b^{(y)} \rangle}{| w_b^{(x)} |_2 | w_b^{(y)} |_2 + \epsilon} \right)^2$$</li>
+</ul>
+<h3 id="vanilla-u-net-비교">Vanilla U-Net 비교<a hidden class="anchor" aria-hidden="true" href="#vanilla-u-net-비교">#</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">특징</th>
+<th style="text-align:left">Vanilla U-Net</th>
+<th style="text-align:left">제안된 U-Net (Scatter-based)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>핵심 컨볼루션</strong></td>
+<td style="text-align:left">표준 컨볼루션 (Gather-style)</td>
+<td style="text-align:left">스캐터 기반 회전 불변 컨볼루션</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>회전 불변성</strong></td>
+<td style="text-align:left">없음 (회전 민감)</td>
+<td style="text-align:left">회전 등변성 + 방향 풀링(Max/Avg)을 통해 달성</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>데이터 처리</strong></td>
+<td style="text-align:left">im2col을 통한 데이터 로어링 및 복제</td>
+<td style="text-align:left">스캐터 연산을 통해 데이터 로어링 제거</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>계산 효율성 (대칭 회전)</strong></td>
+<td style="text-align:left">각 회전 필터마다 독립적인 계산 수행</td>
+<td style="text-align:left">중간 곱셈 결과를 재사용하여 곱셈 횟수 4배 감소</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>주요 추가 모듈</strong></td>
+<td style="text-align:left">없음</td>
+<td style="text-align:left"><strong>Rotation-Invariant Conv Block</strong> (Steerable Filter, Scatter Operation, Orientation Pooling)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>손실 함수</strong></td>
+<td style="text-align:left">$\mathcal{L}_{CE}$</td>
+<td style="text-align:left">$\mathcal{L}<em>{CE} + \mathcal{L}</em>{mag} + \mathcal{L}_{orth}$ (정규화 항 추가)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-태그-제안-tags-suggestion">4. 태그 제안 (Tags Suggestion)<a hidden class="anchor" aria-hidden="true" href="#4-태그-제안-tags-suggestion">#</a></h2>
+<ol>
+<li>Rotation Invariance</li>
+<li>UAV Image Segmentation</li>
+<li>Scatter Convolution</li>
+<li>GPU Optimization</li>
+<li>Rotation Equivariance</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/auto-generated/">Auto-Generated</a></li>
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/draft/">Draft</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://hanwo-ol.github.io/Unet_master/posts/meltwaterbench-deep-learning-for-spatiotemporal-downscaling-of-surface-meltwater/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>MeltwaterBench: Deep learning for spatiotemporal downscaling of surface meltwater</span>
+  </a>
+  <a class="next" href="https://hanwo-ol.github.io/Unet_master/posts/clinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Clinical Interpretability of Deep Learning Segmentation Through Shapley-Derived Agreement and Uncertainty Metrics</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Accelerated Rotation-Invariant Convolution for UAV Image Segmentation on twitter"
+        href="https://twitter.com/intent/tweet/?text=Accelerated%20Rotation-Invariant%20Convolution%20for%20UAV%20Image%20Segmentation&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2faccelerated-rotation-invariant-convolution-for-uav-image-segmentation%2f&amp;hashtags=Auto-Generated%2cDraft">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Accelerated Rotation-Invariant Convolution for UAV Image Segmentation on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2faccelerated-rotation-invariant-convolution-for-uav-image-segmentation%2f&amp;title=Accelerated%20Rotation-Invariant%20Convolution%20for%20UAV%20Image%20Segmentation&amp;summary=Accelerated%20Rotation-Invariant%20Convolution%20for%20UAV%20Image%20Segmentation&amp;source=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2faccelerated-rotation-invariant-convolution-for-uav-image-segmentation%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Accelerated Rotation-Invariant Convolution for UAV Image Segmentation on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2faccelerated-rotation-invariant-convolution-for-uav-image-segmentation%2f&title=Accelerated%20Rotation-Invariant%20Convolution%20for%20UAV%20Image%20Segmentation">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Accelerated Rotation-Invariant Convolution for UAV Image Segmentation on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2faccelerated-rotation-invariant-convolution-for-uav-image-segmentation%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Accelerated Rotation-Invariant Convolution for UAV Image Segmentation on whatsapp"
+        href="https://api.whatsapp.com/send?text=Accelerated%20Rotation-Invariant%20Convolution%20for%20UAV%20Image%20Segmentation%20-%20https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2faccelerated-rotation-invariant-convolution-for-uav-image-segmentation%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share Accelerated Rotation-Invariant Convolution for UAV Image Segmentation on telegram"
+        href="https://telegram.me/share/url?text=Accelerated%20Rotation-Invariant%20Convolution%20for%20UAV%20Image%20Segmentation&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2faccelerated-rotation-invariant-convolution-for-uav-image-segmentation%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://hanwo-ol.github.io/Unet_master/">Research Agent Knowledge Base</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

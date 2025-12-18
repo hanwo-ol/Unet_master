@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media | Research Agent Knowledge Base</title>
+<meta name="keywords" content="Auto-Generated, Draft">
+<meta name="description" content="Abstract This study proposes a new discrete neural operator for surrogate modeling of transient Darcy flow fields in heterogeneous porous media with random parameters. The new method integrates temporal encoding, operator learning and UNet to approximate the mapping between vector spaces of random parameter and spatiotemporal flow fields. The new discrete neural operator can achieve higher prediction accuracy than the SOTA attention-residual-UNet structure. Derived from the finite volume method, the transmissibility matrices rather than permeability is adopted as the inputs of surrogates to enhance the prediction accuracy further.">
+<meta name="author" content="">
+<link rel="canonical" href="https://hanwo-ol.github.io/Unet_master/posts/a-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media/">
+<link crossorigin="anonymous" href="/Unet_master/assets/css/stylesheet.62aa25427797f8efd87301a5b69795dc50df2dbe79a5fba0648cc7bb8dbcd7c9.css" integrity="sha256-YqolQneX&#43;O/YcwGltpeV3FDfLb55pfugZIzHu42818k=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/Unet_master/assets/js/highlight.acb54fd32bbc1982428b8850317e45d076b95012730a5936667e6bc21777692a.js" integrity="sha256-rLVP0yu8GYJCi4hQMX5F0Ha5UBJzClk2Zn5rwhd3aSo="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://hanwo-ol.github.io/Unet_master/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://hanwo-ol.github.io/Unet_master/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://hanwo-ol.github.io/Unet_master/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://hanwo-ol.github.io/Unet_master/apple-touch-icon.png">
+<link rel="mask-icon" href="https://hanwo-ol.github.io/Unet_master/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media" />
+<meta property="og:description" content="Abstract This study proposes a new discrete neural operator for surrogate modeling of transient Darcy flow fields in heterogeneous porous media with random parameters. The new method integrates temporal encoding, operator learning and UNet to approximate the mapping between vector spaces of random parameter and spatiotemporal flow fields. The new discrete neural operator can achieve higher prediction accuracy than the SOTA attention-residual-UNet structure. Derived from the finite volume method, the transmissibility matrices rather than permeability is adopted as the inputs of surrogates to enhance the prediction accuracy further." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://hanwo-ol.github.io/Unet_master/posts/a-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-12-02T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-12-02T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media"/>
+<meta name="twitter:description" content="Abstract This study proposes a new discrete neural operator for surrogate modeling of transient Darcy flow fields in heterogeneous porous media with random parameters. The new method integrates temporal encoding, operator learning and UNet to approximate the mapping between vector spaces of random parameter and spatiotemporal flow fields. The new discrete neural operator can achieve higher prediction accuracy than the SOTA attention-residual-UNet structure. Derived from the finite volume method, the transmissibility matrices rather than permeability is adopted as the inputs of surrogates to enhance the prediction accuracy further."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media",
+      "item": "https://hanwo-ol.github.io/Unet_master/posts/a-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media",
+  "name": "A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media",
+  "description": "Abstract This study proposes a new discrete neural operator for surrogate modeling of transient Darcy flow fields in heterogeneous porous media with random parameters. The new method integrates temporal encoding, operator learning and UNet to approximate the mapping between vector spaces of random parameter and spatiotemporal flow fields. The new discrete neural operator can achieve higher prediction accuracy than the SOTA attention-residual-UNet structure. Derived from the finite volume method, the transmissibility matrices rather than permeability is adopted as the inputs of surrogates to enhance the prediction accuracy further.",
+  "keywords": [
+    "Auto-Generated", "Draft"
+  ],
+  "articleBody": "Abstract This study proposes a new discrete neural operator for surrogate modeling of transient Darcy flow fields in heterogeneous porous media with random parameters. The new method integrates temporal encoding, operator learning and UNet to approximate the mapping between vector spaces of random parameter and spatiotemporal flow fields. The new discrete neural operator can achieve higher prediction accuracy than the SOTA attention-residual-UNet structure. Derived from the finite volume method, the transmissibility matrices rather than permeability is adopted as the inputs of surrogates to enhance the prediction accuracy further. To increase sampling efficiency, a generative latent space adaptive sampling method is developed employing the Gaussian mixture model for density estimation of generalization error. Validation is conducted on test cases of 2D/3D single- and two-phase Darcy flow field prediction. Results reveal consistent enhancement in prediction accuracy given limited training set.\nPDF Download PDF Download Local PDF View | Arxiv Original\n이 논문은 **“A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media”**에 대한 상세 분석 리포트입니다.\n1. 요약 (Executive Summary) 이 연구는 이질적인 다공성 매질(heterogeneous porous media) 내의 비정상(transient) Darcy 흐름을 위한 대리 모델링(Surrogate Modeling)을 위해 새로운 이산 신경망 연산자(Discrete Neural Operator)와 적응형 샘플링 기법을 제안합니다.\n새로운 모델 구조: 시간 인코딩(temporal encoding), 연산자 학습(operator learning), 그리고 U-Net 구조를 통합한 새로운 이산 신경망 연산자(Attention Residual Operator net, AROnet)를 제안합니다. 성능 향상: AROnet은 기존의 최첨단(SOTA) Attention-Residual-Unet(ARUnet) 구조보다 더 높은 예측 정확도를 달성합니다. 입력 최적화: 유한 체적법(Finite Volume Method, FVM)에서 파생된 **투과율 행렬($T_{ij}$, Transmissibility matrices)**을 입력으로 사용하여, 기존의 투수율($K$, Permeability)을 사용했을 때보다 예측 정확도를 더욱 향상시킵니다. 데이터 효율성 증대: 제한된 훈련 데이터셋($N$) 하에서 샘플링 효율성을 높이기 위해, 일반화 오차(generalization error)의 밀도 추정을 위해 가우시안 혼합 모델(Gaussian Mixture Model, GMM)을 활용하는 생성형 잠재 공간 적응형 샘플링(Generative Latent Space Adaptive Sampling) 방법을 개발했습니다. 검증: 2D/3D 단상 및 이상 Darcy 흐름장 예측 테스트 케이스를 통해 검증되었으며, 제한된 훈련 세트($N$)에서도 일관된 예측 정확도 향상을 보였습니다. 2. 7가지 핵심 질문 분석 (Key Analysis) 1) What is new in the work? (기존 연구와의 차별점) 이 연구는 크게 세 가지 측면에서 차별점을 가집니다. 첫째, 이산 신경망 연산자(AROnet) 구조를 제안하여, 기존의 CNN-LSTM 기반 모델이 가졌던 시간적 유연성 제약 및 오차 누적 문제를 해결하고, 임의의 시간($t$)에 대한 예측을 가능하게 합니다. 둘째, 대리 모델의 입력으로 기존에 사용되던 투수율($K$) 대신, 수치 해석적 이산화 방식(FVM)과 더 직접적인 관계가 있는 **투과율 행렬($T_{ij}$)**을 채택하여 예측 정확도를 높였습니다. 셋째, GMM 기반의 생성형 잠재 공간 적응형 샘플링 기법을 도입하여, PCA로 압축된 잠재 공간에서 예측 잔차(residual)가 높은 영역을 우선적으로 샘플링함으로써, 제한된 훈련 데이터($N$)의 효율성을 극대화했습니다.\n2) Why is the work important? (연구의 중요성) 이 연구는 지하 저류층 시뮬레이션과 같이 계산 비용이 매우 높은(computationally expensive) 편미분 방정식(PDEs) 기반의 문제에 대해 실시간 응답을 제공하는 정확한 시공간 대리 모델을 구축했다는 점에서 중요합니다. 특히, 실제 저류층 시뮬레이션에서 레이블링된 샘플을 얻는 것이 매우 제한적이라는 현실적인 문제를 해결하기 위해, 네트워크 구조 최적화와 데이터 샘플링 알고리즘 최적화를 동시에 수행하여 제한된 데이터($N$) 하에서도 높은 일반화 능력과 예측 정확도를 달성했습니다.\n3) What is the literature gap? (기존 연구의 한계점) 기존의 고전적인 수치 해석 방법(FDM, FEM, FVM)은 고차원 매개변수 공간이나 대규모 병렬화가 필요한 시나리오에서 계산 병목 현상을 겪습니다. 또한, 기존의 딥러닝 기반 대리 모델(예: ARUnet)은 이산화된 매개변수 필드와 해답 필드 간의 매핑을 근사하는 데 있어 정확도 한계가 있었으며, 특히 비정상 흐름을 예측하는 CNN-LSTM 구조는 미리 정의된 시간 단계만 순차적으로 예측해야 하므로 시간적 유연성이 제한되고 시간 단계가 증가함에 따라 오차가 누적되는 문제가 있었습니다.\n4) How is the gap filled? (해결 방안) AROnet은 연산자 학습 프레임워크를 사용하여 시간 임베딩(time embedding)을 통해 이러한 한계를 해결합니다. 사인-코사인 임베딩($TE$)을 구현하여 시간 표현을 엄격한 시간 순서에서 분리하고, 해답 도메인 내의 임의의 시간 인스턴스에서 동시 예측을 가능하게 합니다. 또한, AROnet은 매개변수 의존적 특징 맵을 생성하는 Branch Net과 시간 인코딩된 텐서를 공간 변조 가중치로 변환하는 Trunk Net을 분리하고, 이를 채널별 곱셈으로 결합하여 이질적인 매개변수 필드의 공간 상관관계를 명시적으로 인코딩합니다 (Figure 2b). 마지막으로, GMM 기반의 적응형 샘플링을 통해 잔차 분포가 높은 영역에서 샘플을 생성하여 통계적 오차를 최소화합니다.\n5) What is achieved with the new method? (달성한 성과) AROnet과 적응형 샘플링 기법은 기존 방법론 대비 일관되게 우수한 성능을 보였습니다.\n비교 항목 입력 데이터 NN 구조 샘플 수 MRE (Mean Relative Error) 비고 입력 특징 비교 (Table 2) Permeability ($K$) ARUnet 1500 $3.54 \\times 10^{-2}$ Transmissibility ($T$) ARUnet 1500 $2.44 \\times 10^{-2}$ 31% MRE 감소 구조 비교 (Table 4, 2D) Transmissibility ARUnet 700 $2.66 \\times 10^{-3}$ Transmissibility AROnet 700 $\\mathbf{2.21 \\times 10^{-3}}$ AROnet 우위 샘플링 비교 (Table 5, 3D) Transmissibility AROnet 300 $2.03 \\times 10^{-3}$ Random Sampling Transmissibility AROnet + GMM 300 $\\mathbf{1.21 \\times 10^{-3}}$ MRE 40% 이상 감소 샘플링 비교 (Table 7, 3D) Transmissibility AROnet 700 $1.35 \\times 10^{-3}$ Random Sampling Transmissibility AROnet + GMM 700 $\\mathbf{8.30 \\times 10^{-4}}$ MRE 38% 감소 특히, Table 5에 따르면 GMM 기반 적응형 샘플링은 KRnet($625s$)에 비해 샘플링 시간이 $0.60s$로 매우 빠르면서도 가장 낮은 MRE와 MSE($3.94 \\times 10^9$)를 달성하여 계산 효율성과 정확도를 모두 확보했습니다.\n6) What data are used? (사용 데이터셋 - 도메인 특성 포함) 도메인: 다공성 매질 내의 비정상 Darcy 흐름(Transient Darcy Flows in Porous Media). 매개변수 필드: 순차적 가우시안 시뮬레이션(sequential Gaussian simulation)을 통해 생성된 이질적인 투수율(permeability) 실현(realizations). 테스트 케이스: 2D 단상 Darcy 흐름 (압력장 예측). 3D 단상 Darcy 흐름 (압력장 예측). 2D 이상 Darcy 흐름 (압력 및 수분 포화도($S_w$) 동시 예측). 입력/출력: 입력은 투과율 텐서($T_{ij}$) 및 시간 임베딩 행렬이며, 출력은 해당 압력 및 포화도 필드입니다. 7) What are the limitations? (저자가 언급한 한계점) 저자는 기존 연구의 한계점(계산 비용, 제한된 데이터)을 언급하며 이를 해결하는 데 중점을 두었으나, 제안된 AROnet 및 적응형 샘플링 방법 자체의 내재적 한계점을 명시적으로 언급하지는 않았습니다. 다만, 이 연구의 핵심 동기는 지하 저류층 시뮬레이션의 레이블링된 샘플 수가 제한적이라는 점(Page 2)과 이로 인해 발생하는 **통계적 오차(statistical error)**를 극복하는 것(Page 8)이었습니다. 이는 데이터 희소성(data scarcity)이 여전히 근본적인 도전 과제임을 시사합니다.\n3. 아키텍처 및 방법론 (Architecture \u0026 Methodology) Figure 분석: AROnet 구조 이 논문은 기존의 SOTA 모델인 **Attentional Residual U-net (ARUnet)**을 기반으로 연산자 학습을 위한 **Attention Residual Operator net (AROnet)**을 개발했습니다.\nFigure 1 (ARUnet 구조 분석): ARUnet은 전형적인 인코더-디코더 구조를 따르는 U-Net 기반의 CNN입니다.\n인코더 (좌측): Residual Convolution Layer와 Max Pooling을 반복하여 공간 정보를 압축하고 다중 스케일 특징을 추출합니다. 디코더 (우측): Transpose Convolution Layer (업샘플링)와 Recover Convolution Layer를 사용하여 해상도를 복원합니다. Skip Connection: 인코더와 디코더의 동일 해상도 레벨 간에 Skip Concat을 통해 공간 정보를 보존합니다. Attention: 디코더 경로에 Channel Attention Layer를 추가하여 모델이 입력 데이터의 관련 영역에 집중하도록 합니다. Figure 2 (AROnet Operator Learning Framework 분석): AROnet은 ARUnet을 기반으로 하지만, 시공간 매핑을 위한 Branch-Trunk 구조를 채택하여 연산자 학습을 수행합니다.\n입력: 매개변수 $u$ (공간 정보, 예: 투과율 행렬 $T_{ij}$)와 시간 $t$ (시간 정보)를 분리하여 받습니다. Branch Net: $u$를 입력으로 받아 매개변수 의존적인 특징 맵을 생성합니다. 이는 ARUnet과 유사한 CNN 구조를 사용합니다. Trunk Net: 시간 $t$를 입력으로 받아 사인-코사인 임베딩을 거친 후, Residual Convolution Layer를 통해 시간 인코딩된 텐서를 공간 변조 가중치로 변환합니다. 결합: Branch Net의 특징 맵과 Trunk Net의 가중치는 **채널별 곱셈($\\times$)**을 통해 결합됩니다. 이 곱셈 연산은 이질적인 매개변수 필드의 공간 상관관계를 명시적으로 인코딩하는 핵심 메커니즘입니다. 출력: 결합된 특징은 CNN과 시그모이드(sigmoid) 활성화 함수를 거쳐 예측된 흐름장 $G_{\\theta}(u)(t)$를 생성합니다. 수식 상세 1. 단상 Darcy 흐름 지배 방정식 (Governing Equation for Single-Phase Darcy Flow) $$\\phi c_t \\frac{\\partial P}{\\partial t} = \\nabla \\cdot (\\frac{K}{\\mu} \\nabla P) + f \\quad \\text{(Eq. 1)}$$ 여기서 $\\phi$는 다공도(porosity), $c_t$는 총 압축률(total compressibility), $P$는 압력(pressure), $K$는 투수율(permeability), $\\mu$는 점성(viscosity), $f$는 소스/싱크 항(source/sink term)입니다.\n2. 시간 임베딩 (Time Embedding) AROnet은 임의의 시간 $t$에 대한 예측을 위해 사인-코사인 임베딩을 사용합니다. $d$는 임베딩 차원입니다. $$TE(t, 2i) = \\sin (t/10000^{2i/d})$$ $$TE(t, 2i+1) = \\cos (t/10000^{2i/d}) \\quad \\text{(Eq. 12)}$$\n3. AROnet 연산자 근사 (Operator Approximation) AROnet은 PDE 연산자 $G$를 근사하는 신경망 연산자 $G_{\\theta}$를 학습합니다. $$G_{\\theta}(u)(t) = f(\\sum_{k=1}^{q} b_k(u(x_1), u(x_2), …, u(x_m)) * t_k(t)) \\quad \\text{(Eq. 13)}$$ 여기서 $b_k$는 Branch Net의 출력(매개변수 특징 맵), $t_k$는 Trunk Net의 출력(시간 인코딩 가중치), $f$는 CNN과 시그모이드 활성화 함수, $*$는 채널별 곱셈을 나타냅니다.\n4. 손실 함수 (Operator Loss Function) $N$은 샘플 수, $M$은 시간 단계 수입니다. $$\\mathcal{L}{\\text{operator}}(\\theta) = \\frac{1}{NM} \\sum{i=1}^{N} \\sum_{j=1}^{M} ||G_{\\theta}(u^{(i)})(y_j^{(i)}) - G(u^{(i)})(y_j^{(i)})||^2 \\quad \\text{(Eq. 14)}$$\n5. 잔차 벡터 (Residual Vector for Adaptive Sampling) 훈련된 네트워크 $F$의 예측 $\\hat{y}$와 실제 값 $y$ 사이의 MSE를 잔차 제곱 $r^2(X_t)$로 정의합니다. $$r^2(X_t) \\Leftrightarrow R_t^{(0)} = ||\\hat{y}t^{(0)} - y_t^{(0)}||2^2 \\quad \\text{(Eq. 23)}$$ $$R{t,j}^{(0),i} = \\frac{1}{N_g} \\sum{j=1}^{N_g} (y_{t,j}^{(0),i} - \\hat{y}_{t,j}^{(0),i})^2 \\quad \\text{(Eq. 24)}$$ 여기서 $N_g$는 샘플당 메쉬 노드 수입니다.\nVanilla U-Net 비교 특징 Vanilla U-Net ARUnet (SOTA Baseline) AROnet (제안 모델) 기본 구조 인코더-디코더, 스킵 연결 Residual Block, Attention 추가 Branch-Trunk 구조 시간 처리 정적 이미지-이미지 매핑 시간 $t$를 입력 채널에 연결(Concatenate) Trunk Net을 통한 시간 임베딩 핵심 모듈 추가/수정 표준 Convolution Residual Convolution Layer, Channel Attention Layer Branch Net, Trunk Net, 시간 임베딩 모듈 정보 결합 방식 Concatenation (스킵 연결) Concatenation (스킵 연결) 채널별 곱셈($\\times$) (Branch/Trunk 결합) 학습 목표 이미지 세그멘테이션/변환 이산 필드 매핑 연산자 학습 $G(u, t) \\to p(t)$ 입력 특징 이미지 픽셀 값 매개변수 필드 $K$ 또는 $T$ 최적화된 $T_{ij}$ 사용 AROnet은 기존 U-Net의 인코더-디코더 구조를 Branch Net으로 활용하되, 시간 정보를 분리된 Trunk Net에서 처리하고, 두 정보를 곱셈으로 결합하여 시공간 연산자 매핑을 직접 학습하도록 구조를 근본적으로 수정했습니다.\n4. 태그 제안 (Tags Suggestion) Discrete Neural Operator Adaptive Sampling Surrogate Modeling Darcy Flow Operator Learning ",
+  "wordCount" : "1465",
+  "inLanguage": "en",
+  "datePublished": "2025-12-02T00:00:00Z",
+  "dateModified": "2025-12-02T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hanwo-ol.github.io/Unet_master/posts/a-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Research Agent Knowledge Base",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hanwo-ol.github.io/Unet_master/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://hanwo-ol.github.io/Unet_master/" accesskey="h" title="Research Agent Knowledge Base (Alt + H)">Research Agent Knowledge Base</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/categories/" title="categories">
+                    <span>categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://hanwo-ol.github.io/Unet_master/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://hanwo-ol.github.io/Unet_master/">Home</a>&nbsp;»&nbsp;<a href="https://hanwo-ol.github.io/Unet_master/posts/">Posts</a></div>
+    <h1 class="post-title">
+      A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media
+    </h1>
+    <div class="post-meta">&lt;span title=&#39;2025-12-02 00:00:00 &#43;0000 UTC&#39;&gt;December 2, 2025&lt;/span&gt;&amp;nbsp;·&amp;nbsp;7 min
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="abstract">Abstract<a hidden class="anchor" aria-hidden="true" href="#abstract">#</a></h2>
+<p>This study proposes a new discrete neural operator for surrogate modeling of transient Darcy flow fields in heterogeneous porous media with random parameters. The new method integrates temporal encoding, operator learning and UNet to approximate the mapping between vector spaces of random parameter and spatiotemporal flow fields. The new discrete neural operator can achieve higher prediction accuracy than the SOTA attention-residual-UNet structure. Derived from the finite volume method, the transmissibility matrices rather than permeability is adopted as the inputs of surrogates to enhance the prediction accuracy further. To increase sampling efficiency, a generative latent space adaptive sampling method is developed employing the Gaussian mixture model for density estimation of generalization error. Validation is conducted on test cases of 2D/3D single- and two-phase Darcy flow field prediction. Results reveal consistent enhancement in prediction accuracy given limited training set.</p>
+<h2 id="pdf-download">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download">#</a></h2>
+<h2 id="pdf-download-1">PDF Download<a hidden class="anchor" aria-hidden="true" href="#pdf-download-1">#</a></h2>
+<p><a href="//172.22.138.185/Research_pdf/2512.03113v1.pdf">Local PDF View</a> | <a href="http://arxiv.org/abs/2512.03113v1">Arxiv Original</a></p>
+<p>이 논문은 **&ldquo;A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media&rdquo;**에 대한 상세 분석 리포트입니다.</p>
+<hr>
+<h2 id="1-요약-executive-summary">1. 요약 (Executive Summary)<a hidden class="anchor" aria-hidden="true" href="#1-요약-executive-summary">#</a></h2>
+<p>이 연구는 이질적인 다공성 매질(heterogeneous porous media) 내의 비정상(transient) Darcy 흐름을 위한 대리 모델링(Surrogate Modeling)을 위해 새로운 이산 신경망 연산자(Discrete Neural Operator)와 적응형 샘플링 기법을 제안합니다.</p>
+<ul>
+<li><strong>새로운 모델 구조:</strong> 시간 인코딩(temporal encoding), 연산자 학습(operator learning), 그리고 U-Net 구조를 통합한 새로운 이산 신경망 연산자(Attention Residual Operator net, AROnet)를 제안합니다.</li>
+<li><strong>성능 향상:</strong> AROnet은 기존의 최첨단(SOTA) Attention-Residual-Unet(ARUnet) 구조보다 더 높은 예측 정확도를 달성합니다.</li>
+<li><strong>입력 최적화:</strong> 유한 체적법(Finite Volume Method, FVM)에서 파생된 **투과율 행렬($T_{ij}$, Transmissibility matrices)**을 입력으로 사용하여, 기존의 투수율($K$, Permeability)을 사용했을 때보다 예측 정확도를 더욱 향상시킵니다.</li>
+<li><strong>데이터 효율성 증대:</strong> 제한된 훈련 데이터셋($N$) 하에서 샘플링 효율성을 높이기 위해, 일반화 오차(generalization error)의 밀도 추정을 위해 가우시안 혼합 모델(Gaussian Mixture Model, GMM)을 활용하는 생성형 잠재 공간 적응형 샘플링(Generative Latent Space Adaptive Sampling) 방법을 개발했습니다.</li>
+<li><strong>검증:</strong> 2D/3D 단상 및 이상 Darcy 흐름장 예측 테스트 케이스를 통해 검증되었으며, 제한된 훈련 세트($N$)에서도 일관된 예측 정확도 향상을 보였습니다.</li>
+</ul>
+<h2 id="2-7가지-핵심-질문-분석-key-analysis">2. 7가지 핵심 질문 분석 (Key Analysis)<a hidden class="anchor" aria-hidden="true" href="#2-7가지-핵심-질문-분석-key-analysis">#</a></h2>
+<h3 id="1-what-is-new-in-the-work-기존-연구와의-차별점">1) What is new in the work? (기존 연구와의 차별점)<a hidden class="anchor" aria-hidden="true" href="#1-what-is-new-in-the-work-기존-연구와의-차별점">#</a></h3>
+<p>이 연구는 크게 세 가지 측면에서 차별점을 가집니다. 첫째, <strong>이산 신경망 연산자(AROnet)</strong> 구조를 제안하여, 기존의 CNN-LSTM 기반 모델이 가졌던 시간적 유연성 제약 및 오차 누적 문제를 해결하고, 임의의 시간($t$)에 대한 예측을 가능하게 합니다. 둘째, 대리 모델의 입력으로 기존에 사용되던 투수율($K$) 대신, 수치 해석적 이산화 방식(FVM)과 더 직접적인 관계가 있는 **투과율 행렬($T_{ij}$)**을 채택하여 예측 정확도를 높였습니다. 셋째, <strong>GMM 기반의 생성형 잠재 공간 적응형 샘플링</strong> 기법을 도입하여, PCA로 압축된 잠재 공간에서 예측 잔차(residual)가 높은 영역을 우선적으로 샘플링함으로써, 제한된 훈련 데이터($N$)의 효율성을 극대화했습니다.</p>
+<h3 id="2-why-is-the-work-important-연구의-중요성">2) Why is the work important? (연구의 중요성)<a hidden class="anchor" aria-hidden="true" href="#2-why-is-the-work-important-연구의-중요성">#</a></h3>
+<p>이 연구는 지하 저류층 시뮬레이션과 같이 계산 비용이 매우 높은(computationally expensive) 편미분 방정식(PDEs) 기반의 문제에 대해 실시간 응답을 제공하는 정확한 시공간 대리 모델을 구축했다는 점에서 중요합니다. 특히, 실제 저류층 시뮬레이션에서 레이블링된 샘플을 얻는 것이 매우 제한적이라는 현실적인 문제를 해결하기 위해, 네트워크 구조 최적화와 데이터 샘플링 알고리즘 최적화를 동시에 수행하여 제한된 데이터($N$) 하에서도 높은 일반화 능력과 예측 정확도를 달성했습니다.</p>
+<h3 id="3-what-is-the-literature-gap-기존-연구의-한계점">3) What is the literature gap? (기존 연구의 한계점)<a hidden class="anchor" aria-hidden="true" href="#3-what-is-the-literature-gap-기존-연구의-한계점">#</a></h3>
+<p>기존의 고전적인 수치 해석 방법(FDM, FEM, FVM)은 고차원 매개변수 공간이나 대규모 병렬화가 필요한 시나리오에서 계산 병목 현상을 겪습니다. 또한, 기존의 딥러닝 기반 대리 모델(예: ARUnet)은 이산화된 매개변수 필드와 해답 필드 간의 매핑을 근사하는 데 있어 정확도 한계가 있었으며, 특히 비정상 흐름을 예측하는 CNN-LSTM 구조는 미리 정의된 시간 단계만 순차적으로 예측해야 하므로 시간적 유연성이 제한되고 시간 단계가 증가함에 따라 오차가 누적되는 문제가 있었습니다.</p>
+<h3 id="4-how-is-the-gap-filled-해결-방안">4) How is the gap filled? (해결 방안)<a hidden class="anchor" aria-hidden="true" href="#4-how-is-the-gap-filled-해결-방안">#</a></h3>
+<p>AROnet은 연산자 학습 프레임워크를 사용하여 시간 임베딩(time embedding)을 통해 이러한 한계를 해결합니다. 사인-코사인 임베딩($TE$)을 구현하여 시간 표현을 엄격한 시간 순서에서 분리하고, 해답 도메인 내의 임의의 시간 인스턴스에서 동시 예측을 가능하게 합니다. 또한, AROnet은 매개변수 의존적 특징 맵을 생성하는 <strong>Branch Net</strong>과 시간 인코딩된 텐서를 공간 변조 가중치로 변환하는 <strong>Trunk Net</strong>을 분리하고, 이를 채널별 곱셈으로 결합하여 이질적인 매개변수 필드의 공간 상관관계를 명시적으로 인코딩합니다 (Figure 2b). 마지막으로, GMM 기반의 적응형 샘플링을 통해 잔차 분포가 높은 영역에서 샘플을 생성하여 통계적 오차를 최소화합니다.</p>
+<h3 id="5-what-is-achieved-with-the-new-method-달성한-성과">5) What is achieved with the new method? (달성한 성과)<a hidden class="anchor" aria-hidden="true" href="#5-what-is-achieved-with-the-new-method-달성한-성과">#</a></h3>
+<p>AROnet과 적응형 샘플링 기법은 기존 방법론 대비 일관되게 우수한 성능을 보였습니다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">비교 항목</th>
+<th style="text-align:left">입력 데이터</th>
+<th style="text-align:left">NN 구조</th>
+<th style="text-align:left">샘플 수</th>
+<th style="text-align:left">MRE (Mean Relative Error)</th>
+<th style="text-align:left">비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>입력 특징 비교 (Table 2)</strong></td>
+<td style="text-align:left">Permeability ($K$)</td>
+<td style="text-align:left">ARUnet</td>
+<td style="text-align:left">1500</td>
+<td style="text-align:left">$3.54 \times 10^{-2}$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Transmissibility ($T$)</td>
+<td style="text-align:left">ARUnet</td>
+<td style="text-align:left">1500</td>
+<td style="text-align:left">$2.44 \times 10^{-2}$</td>
+<td style="text-align:left"><strong>31% MRE 감소</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>구조 비교 (Table 4, 2D)</strong></td>
+<td style="text-align:left">Transmissibility</td>
+<td style="text-align:left">ARUnet</td>
+<td style="text-align:left">700</td>
+<td style="text-align:left">$2.66 \times 10^{-3}$</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Transmissibility</td>
+<td style="text-align:left"><strong>AROnet</strong></td>
+<td style="text-align:left">700</td>
+<td style="text-align:left">$\mathbf{2.21 \times 10^{-3}}$</td>
+<td style="text-align:left"><strong>AROnet 우위</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>샘플링 비교 (Table 5, 3D)</strong></td>
+<td style="text-align:left">Transmissibility</td>
+<td style="text-align:left">AROnet</td>
+<td style="text-align:left">300</td>
+<td style="text-align:left">$2.03 \times 10^{-3}$</td>
+<td style="text-align:left">Random Sampling</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Transmissibility</td>
+<td style="text-align:left"><strong>AROnet + GMM</strong></td>
+<td style="text-align:left">300</td>
+<td style="text-align:left">$\mathbf{1.21 \times 10^{-3}}$</td>
+<td style="text-align:left"><strong>MRE 40% 이상 감소</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>샘플링 비교 (Table 7, 3D)</strong></td>
+<td style="text-align:left">Transmissibility</td>
+<td style="text-align:left">AROnet</td>
+<td style="text-align:left">700</td>
+<td style="text-align:left">$1.35 \times 10^{-3}$</td>
+<td style="text-align:left">Random Sampling</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">Transmissibility</td>
+<td style="text-align:left"><strong>AROnet + GMM</strong></td>
+<td style="text-align:left">700</td>
+<td style="text-align:left">$\mathbf{8.30 \times 10^{-4}}$</td>
+<td style="text-align:left"><strong>MRE 38% 감소</strong></td>
+</tr>
+</tbody>
+</table>
+<p>특히, Table 5에 따르면 GMM 기반 적응형 샘플링은 KRnet($625s$)에 비해 샘플링 시간이 $0.60s$로 매우 빠르면서도 가장 낮은 MRE와 MSE($3.94 \times 10^9$)를 달성하여 계산 효율성과 정확도를 모두 확보했습니다.</p>
+<h3 id="6-what-data-are-used-사용-데이터셋---도메인-특성-포함">6) What data are used? (사용 데이터셋 - 도메인 특성 포함)<a hidden class="anchor" aria-hidden="true" href="#6-what-data-are-used-사용-데이터셋---도메인-특성-포함">#</a></h3>
+<ul>
+<li><strong>도메인:</strong> 다공성 매질 내의 비정상 Darcy 흐름(Transient Darcy Flows in Porous Media).</li>
+<li><strong>매개변수 필드:</strong> 순차적 가우시안 시뮬레이션(sequential Gaussian simulation)을 통해 생성된 이질적인 투수율(permeability) 실현(realizations).</li>
+<li><strong>테스트 케이스:</strong>
+<ul>
+<li>2D 단상 Darcy 흐름 (압력장 예측).</li>
+<li>3D 단상 Darcy 흐름 (압력장 예측).</li>
+<li>2D 이상 Darcy 흐름 (압력 및 수분 포화도($S_w$) 동시 예측).</li>
+</ul>
+</li>
+<li><strong>입력/출력:</strong> 입력은 투과율 텐서($T_{ij}$) 및 시간 임베딩 행렬이며, 출력은 해당 압력 및 포화도 필드입니다.</li>
+</ul>
+<h3 id="7-what-are-the-limitations-저자가-언급한-한계점">7) What are the limitations? (저자가 언급한 한계점)<a hidden class="anchor" aria-hidden="true" href="#7-what-are-the-limitations-저자가-언급한-한계점">#</a></h3>
+<p>저자는 기존 연구의 한계점(계산 비용, 제한된 데이터)을 언급하며 이를 해결하는 데 중점을 두었으나, 제안된 AROnet 및 적응형 샘플링 방법 자체의 내재적 한계점을 명시적으로 언급하지는 않았습니다. 다만, 이 연구의 핵심 동기는 지하 저류층 시뮬레이션의 <strong>레이블링된 샘플 수가 제한적</strong>이라는 점(Page 2)과 이로 인해 발생하는 **통계적 오차(statistical error)**를 극복하는 것(Page 8)이었습니다. 이는 데이터 희소성(data scarcity)이 여전히 근본적인 도전 과제임을 시사합니다.</p>
+<hr>
+<h2 id="3-아키텍처-및-방법론-architecture--methodology">3. 아키텍처 및 방법론 (Architecture &amp; Methodology)<a hidden class="anchor" aria-hidden="true" href="#3-아키텍처-및-방법론-architecture--methodology">#</a></h2>
+<h3 id="figure-분석-aronet-구조">Figure 분석: AROnet 구조<a hidden class="anchor" aria-hidden="true" href="#figure-분석-aronet-구조">#</a></h3>
+<p>이 논문은 기존의 SOTA 모델인 **Attentional Residual U-net (ARUnet)**을 기반으로 연산자 학습을 위한 **Attention Residual Operator net (AROnet)**을 개발했습니다.</p>
+<p><strong>Figure 1 (ARUnet 구조 분석):</strong>
+ARUnet은 전형적인 인코더-디코더 구조를 따르는 U-Net 기반의 CNN입니다.</p>
+<ol>
+<li><strong>인코더 (좌측):</strong> Residual Convolution Layer와 Max Pooling을 반복하여 공간 정보를 압축하고 다중 스케일 특징을 추출합니다.</li>
+<li><strong>디코더 (우측):</strong> Transpose Convolution Layer (업샘플링)와 Recover Convolution Layer를 사용하여 해상도를 복원합니다.</li>
+<li><strong>Skip Connection:</strong> 인코더와 디코더의 동일 해상도 레벨 간에 Skip Concat을 통해 공간 정보를 보존합니다.</li>
+<li><strong>Attention:</strong> 디코더 경로에 Channel Attention Layer를 추가하여 모델이 입력 데이터의 관련 영역에 집중하도록 합니다.</li>
+</ol>
+<p><strong>Figure 2 (AROnet Operator Learning Framework 분석):</strong>
+AROnet은 ARUnet을 기반으로 하지만, 시공간 매핑을 위한 <strong>Branch-Trunk</strong> 구조를 채택하여 연산자 학습을 수행합니다.</p>
+<ol>
+<li><strong>입력:</strong> 매개변수 $u$ (공간 정보, 예: 투과율 행렬 $T_{ij}$)와 시간 $t$ (시간 정보)를 분리하여 받습니다.</li>
+<li><strong>Branch Net:</strong> $u$를 입력으로 받아 매개변수 의존적인 특징 맵을 생성합니다. 이는 ARUnet과 유사한 CNN 구조를 사용합니다.</li>
+<li><strong>Trunk Net:</strong> 시간 $t$를 입력으로 받아 사인-코사인 임베딩을 거친 후, Residual Convolution Layer를 통해 시간 인코딩된 텐서를 공간 변조 가중치로 변환합니다.</li>
+<li><strong>결합:</strong> Branch Net의 특징 맵과 Trunk Net의 가중치는 **채널별 곱셈($\times$)**을 통해 결합됩니다. 이 곱셈 연산은 이질적인 매개변수 필드의 공간 상관관계를 명시적으로 인코딩하는 핵심 메커니즘입니다.</li>
+<li><strong>출력:</strong> 결합된 특징은 CNN과 시그모이드(sigmoid) 활성화 함수를 거쳐 예측된 흐름장 $G_{\theta}(u)(t)$를 생성합니다.</li>
+</ol>
+<h3 id="수식-상세">수식 상세<a hidden class="anchor" aria-hidden="true" href="#수식-상세">#</a></h3>
+<h4 id="1-단상-darcy-흐름-지배-방정식-governing-equation-for-single-phase-darcy-flow">1. 단상 Darcy 흐름 지배 방정식 (Governing Equation for Single-Phase Darcy Flow)<a hidden class="anchor" aria-hidden="true" href="#1-단상-darcy-흐름-지배-방정식-governing-equation-for-single-phase-darcy-flow">#</a></h4>
+<p>$$\phi c_t \frac{\partial P}{\partial t} = \nabla \cdot (\frac{K}{\mu} \nabla P) + f \quad \text{(Eq. 1)}$$
+여기서 $\phi$는 다공도(porosity), $c_t$는 총 압축률(total compressibility), $P$는 압력(pressure), $K$는 투수율(permeability), $\mu$는 점성(viscosity), $f$는 소스/싱크 항(source/sink term)입니다.</p>
+<h4 id="2-시간-임베딩-time-embedding">2. 시간 임베딩 (Time Embedding)<a hidden class="anchor" aria-hidden="true" href="#2-시간-임베딩-time-embedding">#</a></h4>
+<p>AROnet은 임의의 시간 $t$에 대한 예측을 위해 사인-코사인 임베딩을 사용합니다. $d$는 임베딩 차원입니다.
+$$TE(t, 2i) = \sin (t/10000^{2i/d})$$
+$$TE(t, 2i+1) = \cos (t/10000^{2i/d}) \quad \text{(Eq. 12)}$$</p>
+<h4 id="3-aronet-연산자-근사-operator-approximation">3. AROnet 연산자 근사 (Operator Approximation)<a hidden class="anchor" aria-hidden="true" href="#3-aronet-연산자-근사-operator-approximation">#</a></h4>
+<p>AROnet은 PDE 연산자 $G$를 근사하는 신경망 연산자 $G_{\theta}$를 학습합니다.
+$$G_{\theta}(u)(t) = f(\sum_{k=1}^{q} b_k(u(x_1), u(x_2), &hellip;, u(x_m)) * t_k(t)) \quad \text{(Eq. 13)}$$
+여기서 $b_k$는 Branch Net의 출력(매개변수 특징 맵), $t_k$는 Trunk Net의 출력(시간 인코딩 가중치), $f$는 CNN과 시그모이드 활성화 함수, $*$는 채널별 곱셈을 나타냅니다.</p>
+<h4 id="4-손실-함수-operator-loss-function">4. 손실 함수 (Operator Loss Function)<a hidden class="anchor" aria-hidden="true" href="#4-손실-함수-operator-loss-function">#</a></h4>
+<p>$N$은 샘플 수, $M$은 시간 단계 수입니다.
+$$\mathcal{L}<em>{\text{operator}}(\theta) = \frac{1}{NM} \sum</em>{i=1}^{N} \sum_{j=1}^{M} ||G_{\theta}(u^{(i)})(y_j^{(i)}) - G(u^{(i)})(y_j^{(i)})||^2 \quad \text{(Eq. 14)}$$</p>
+<h4 id="5-잔차-벡터-residual-vector-for-adaptive-sampling">5. 잔차 벡터 (Residual Vector for Adaptive Sampling)<a hidden class="anchor" aria-hidden="true" href="#5-잔차-벡터-residual-vector-for-adaptive-sampling">#</a></h4>
+<p>훈련된 네트워크 $F$의 예측 $\hat{y}$와 실제 값 $y$ 사이의 MSE를 잔차 제곱 $r^2(X_t)$로 정의합니다.
+$$r^2(X_t) \Leftrightarrow R_t^{(0)} = ||\hat{y}<em>t^{(0)} - y_t^{(0)}||<em>2^2 \quad \text{(Eq. 23)}$$
+$$R</em>{t,j}^{(0),i} = \frac{1}{N_g} \sum</em>{j=1}^{N_g} (y_{t,j}^{(0),i} - \hat{y}_{t,j}^{(0),i})^2 \quad \text{(Eq. 24)}$$
+여기서 $N_g$는 샘플당 메쉬 노드 수입니다.</p>
+<h3 id="vanilla-u-net-비교">Vanilla U-Net 비교<a hidden class="anchor" aria-hidden="true" href="#vanilla-u-net-비교">#</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">특징</th>
+<th style="text-align:left">Vanilla U-Net</th>
+<th style="text-align:left">ARUnet (SOTA Baseline)</th>
+<th style="text-align:left">AROnet (제안 모델)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>기본 구조</strong></td>
+<td style="text-align:left">인코더-디코더, 스킵 연결</td>
+<td style="text-align:left">Residual Block, Attention 추가</td>
+<td style="text-align:left">Branch-Trunk 구조</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>시간 처리</strong></td>
+<td style="text-align:left">정적 이미지-이미지 매핑</td>
+<td style="text-align:left">시간 $t$를 입력 채널에 연결(Concatenate)</td>
+<td style="text-align:left"><strong>Trunk Net</strong>을 통한 시간 임베딩</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>핵심 모듈 추가/수정</strong></td>
+<td style="text-align:left">표준 Convolution</td>
+<td style="text-align:left">Residual Convolution Layer, Channel Attention Layer</td>
+<td style="text-align:left"><strong>Branch Net</strong>, <strong>Trunk Net</strong>, <strong>시간 임베딩 모듈</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>정보 결합 방식</strong></td>
+<td style="text-align:left">Concatenation (스킵 연결)</td>
+<td style="text-align:left">Concatenation (스킵 연결)</td>
+<td style="text-align:left"><strong>채널별 곱셈($\times$)</strong> (Branch/Trunk 결합)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>학습 목표</strong></td>
+<td style="text-align:left">이미지 세그멘테이션/변환</td>
+<td style="text-align:left">이산 필드 매핑</td>
+<td style="text-align:left"><strong>연산자 학습</strong> $G(u, t) \to p(t)$</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>입력 특징</strong></td>
+<td style="text-align:left">이미지 픽셀 값</td>
+<td style="text-align:left">매개변수 필드 $K$ 또는 $T$</td>
+<td style="text-align:left">최적화된 $T_{ij}$ 사용</td>
+</tr>
+</tbody>
+</table>
+<p>AROnet은 기존 U-Net의 인코더-디코더 구조를 Branch Net으로 활용하되, 시간 정보를 분리된 Trunk Net에서 처리하고, 두 정보를 곱셈으로 결합하여 시공간 연산자 매핑을 직접 학습하도록 구조를 근본적으로 수정했습니다.</p>
+<hr>
+<h2 id="4-태그-제안-tags-suggestion">4. 태그 제안 (Tags Suggestion)<a hidden class="anchor" aria-hidden="true" href="#4-태그-제안-tags-suggestion">#</a></h2>
+<ol>
+<li>Discrete Neural Operator</li>
+<li>Adaptive Sampling</li>
+<li>Surrogate Modeling</li>
+<li>Darcy Flow</li>
+<li>Operator Learning</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/auto-generated/">Auto-Generated</a></li>
+      <li><a href="https://hanwo-ol.github.io/Unet_master/tags/draft/">Draft</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="https://hanwo-ol.github.io/Unet_master/posts/lean-unet-a-compact-model-for-image-segmentation/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Lean Unet: A Compact Model for Image Segmentation</span>
+  </a>
+  <a class="next" href="https://hanwo-ol.github.io/Unet_master/posts/multifractal-recalibration-of-neural-networks-for-medical-imaging-segmentation/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Multifractal Recalibration of Neural Networks for Medical Imaging Segmentation</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media on twitter"
+        href="https://twitter.com/intent/tweet/?text=A%20Discrete%20Neural%20Operator%20with%20Adaptive%20Sampling%20for%20Surrogate%20Modeling%20of%20Parametric%20Transient%20Darcy%20Flows%20in%20Porous%20Media&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fa-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media%2f&amp;hashtags=Auto-Generated%2cDraft">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fa-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media%2f&amp;title=A%20Discrete%20Neural%20Operator%20with%20Adaptive%20Sampling%20for%20Surrogate%20Modeling%20of%20Parametric%20Transient%20Darcy%20Flows%20in%20Porous%20Media&amp;summary=A%20Discrete%20Neural%20Operator%20with%20Adaptive%20Sampling%20for%20Surrogate%20Modeling%20of%20Parametric%20Transient%20Darcy%20Flows%20in%20Porous%20Media&amp;source=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fa-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fa-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media%2f&title=A%20Discrete%20Neural%20Operator%20with%20Adaptive%20Sampling%20for%20Surrogate%20Modeling%20of%20Parametric%20Transient%20Darcy%20Flows%20in%20Porous%20Media">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fa-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media on whatsapp"
+        href="https://api.whatsapp.com/send?text=A%20Discrete%20Neural%20Operator%20with%20Adaptive%20Sampling%20for%20Surrogate%20Modeling%20of%20Parametric%20Transient%20Darcy%20Flows%20in%20Porous%20Media%20-%20https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fa-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share A Discrete Neural Operator with Adaptive Sampling for Surrogate Modeling of Parametric Transient Darcy Flows in Porous Media on telegram"
+        href="https://telegram.me/share/url?text=A%20Discrete%20Neural%20Operator%20with%20Adaptive%20Sampling%20for%20Surrogate%20Modeling%20of%20Parametric%20Transient%20Darcy%20Flows%20in%20Porous%20Media&amp;url=https%3a%2f%2fhanwo-ol.github.io%2fUnet_master%2fposts%2fa-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://hanwo-ol.github.io/Unet_master/">Research Agent Knowledge Base</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

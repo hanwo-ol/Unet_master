@@ -2,10 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://hanwo-ol.github.io/Unet_master/tags/auto-generated/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://hanwo-ol.github.io/Unet_master/categories/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/tags/draft/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/categories/literature-review/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/meltwaterbench-deep-learning-for-spatiotemporal-downscaling-of-surface-meltwater/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://hanwo-ol.github.io/Unet_master/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://hanwo-ol.github.io/Unet_master/tags/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/categories/u-net/</loc>
+    <lastmod>2025-12-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/accelerated-rotation-invariant-convolution-for-uav-image-segmentation/</loc>
+    <lastmod>2025-12-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/clinical-interpretability-of-deep-learning-segmentation-through-shapley-derived-agreement-and-uncertainty-metrics/</loc>
+    <lastmod>2025-12-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/robust-variational-model-based-tailored-unet-leveraging-edge-detector-and-mean-curvature-for-improved-image-segmentation/</loc>
+    <lastmod>2025-12-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/daunet-a-lightweight-unet-variant-with-deformable-convolutions-and-parameter-free-attention-for-medical-image-segmentation/</loc>
+    <lastmod>2025-12-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/lean-unet-a-compact-model-for-image-segmentation/</loc>
+    <lastmod>2025-12-03T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/a-discrete-neural-operator-with-adaptive-sampling-for-surrogate-modeling-of-parametric-transient-darcy-flows-in-porous-media/</loc>
+    <lastmod>2025-12-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/multifractal-recalibration-of-neural-networks-for-medical-imaging-segmentation/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/spatiotemporal-satellite-image-downscaling-with-transfer-encoders-and-autoregressive-generative-models/</loc>
+    <lastmod>2025-12-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://hanwo-ol.github.io/Unet_master/posts/satellite-to-street-disaster-impact-estimator/</loc>
+    <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url>
 </urlset>
