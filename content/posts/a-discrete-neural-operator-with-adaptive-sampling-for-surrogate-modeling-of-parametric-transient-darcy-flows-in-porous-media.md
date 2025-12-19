@@ -136,9 +136,11 @@ $$G_{\theta}(u)(t) = f(\sum_{k=1}^{q} b_k(u(x_1), u(x_2), ..., u(x_m)) * t_k(t))
 $N$은 샘플 수, $M$은 시간 단계 수입니다.
 
 
+<div>
 $$
 \mathcal{L}_{\text{operator}}(\theta) = \frac{1}{NM} \sum_{i=1}^{N} \sum_{j=1}^{M} ||G_{\theta}(u^{(i)})(y_j^{(i)}) - G(u^{(i)})(y_j^{(i)})||^2
 $$
+</div>
 
 
 #### 5. 잔차 벡터 (Residual Vector for Adaptive Sampling)
