@@ -132,15 +132,19 @@ $$
 모노프랙탈 재조정은 횔더 지수 $H_l = [\alpha(\Psi_{l,c}(x))]$의 기댓값(평균)을 사용하여 채널별 재조정 벡터를 생성합니다.
 
 **Squeeze Function ($g^{\text{Mono}}$):**
+
 $$
 g^{\text{Mono}}(\Psi_l(X)) = \sigma(W_2 \delta(W_1 \text{GAP}(H_l))),
 $$
+
 여기서 $\text{GAP}(H_l)$은 $H_l$의 채널별 기댓값 $E_x[\alpha]$를 나타내며, $\sigma$는 시그모이드, $\delta$는 ReLU 활성화 함수입니다. $W_1$과 $W_2$는 학습 가능한 선형 레이어입니다.
 
 **Recalibrated Output:**
+
 $$
 \Psi_l^{\text{Mono}}(X) = \Psi_l(X) \odot g^{\text{Mono}}(\Psi_l(X)).
 $$
+
 여기서 $\odot$는 요소별 곱셈(element-wise product)입니다.
 
 #### 3. Multifractal Recalibration (Eq. 23, 24, 25)
@@ -148,19 +152,24 @@ $$
 다중 프랙탈 재조정은 $Q$개의 학습 가능한 스케일링 지수 $H_l^{(q)}$를 중심으로 하는 확률적 레벨 세트의 분포를 사용하여 고차 통계를 포착합니다.
 
 **Level Set Density ($p_l^{(q)}$):**
+
 $$
 p_l^{(q)}(H_l) \propto \frac{\exp(-s_q^2 (H_l - H_l^{(q)})^2)}{\sum_{q'} \exp(-s_{q'}^2 (H_l - H_l^{(q')})^2)},
 $$
+
 여기서 $q \in \{1, \dots, Q\}$는 레벨 세트 인덱스이며, $H_l^{(q)} \in \mathbb{R}^Q$와 $s_q^2 \in \mathbb{R}$는 학습 가능한 파라미터입니다. 이는 $H_l$이 $Q$개의 가우시안 혼합으로 인코딩됨을 의미합니다.
 
 **Multifractal Recalibration Vector ($\tilde{H}_l$):**
+
 $$
 \tilde{H}_l := g^{\text{Multi}}(\Psi_l(X))) = \sigma \left( \delta \left( \sum_q \phi(p_l^{(q)}(\alpha^{(q)})) \right) \right),
 $$
+
 여기서 $\sum_q$는 $Q$ 축을 따라 가중 합(weighted sum aggregation)을 수행하며, $\phi$는 학습 가능한 선형 맵입니다.
 
 **Final Multifractal Recalibration Output:**
 저자들은 요소별 합산(element-wise sum) 전략이 효과적임을 발견했습니다.
+
 $$
 \Psi_l^{\text{Multi}}(X) = \Psi_l(X) + \tilde{H}_l.
 $$

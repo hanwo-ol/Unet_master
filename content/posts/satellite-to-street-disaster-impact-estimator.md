@@ -101,11 +101,16 @@ SE-ResNeXt50 U-Net은 평균 IoU(mIoU)에서 **0.74**를, Dice 점수에서 **0.
 #### 1. 입력/출력 텐서 형태 (Input/Output Tensor Shape)
 
 *   **입력 텐서 ($I_{input}$):** 재난 전 이미지(RGB, 3채널)와 재난 후 이미지(RGB, 3채널)를 채널 축으로 쌓아 6채널로 구성합니다.
-    $$I_{input} \in \mathbb{R}^{H \times W \times 6}$$
+    
+
+$$I_{input} \in \mathbb{R}^{H \times W \times 6}$$
+
     *여기서 $H=256, W=256$ (실험에서 사용된 해상도).*
 
 *   **출력 텐서 ($M_{output}$):** 픽셀별 7가지 피해 클래스에 대한 확률 마스크입니다.
-    $$M_{output} \in \mathbb{R}^{H \times W \times 7}$$
+    
+
+$$M_{output} \in \mathbb{R}^{H \times W \times 7}$$
 
 #### 2. 손실 함수 (Loss Function)
 

@@ -120,22 +120,28 @@ We present a transfer-learning generative downscaling framework to reconstruct f
 
 **1. Small Model의 자기회귀적 예측 (Eq. 1):**
 MERRA-2의 시계열 입력 $x_{t-T_{lag}+1:t}$를 사용하여 다음 날의 MERRA-2 값 $\hat{x}_{i,j,t+1}$을 예측합니다.
+
 $$ \hat{x}_{i,j,t+1} = f_{\theta}(x_{t-T_{lag}+1:t}) $$
 
 **2. Main Downscaling Model의 예측 (Eq. 2):**
 메인 모델 $f_{\theta}$는 다음 날의 MERRA-2, 고도, 기타 변수, 그리고 고정된 인코더 $\phi_{\psi}$를 통해 G5NR 시계열에서 추출된 전이 특징을 통합하여 다음 날의 G5NR 값 $\hat{y}_{i,j,t+1}$을 예측합니다.
+
 $$ \hat{y}_{i,j,t+1} = f_{\theta}(x_{i,j,t+1}, x_{ele,i,j}, x_{other,i,j}, \phi_{\psi}(y_{t-T_{lag}+1:t})) $$
 
 **3. Loss Function (Eq. 3):**
 모델의 손실 함수는 태스크 손실($\mathcal{L}_{data}$)과 $L_2$ 정규화(가중치 감소) 항으로 구성됩니다. 전이된 인코더 $\phi_{\psi}$의 파라미터는 고정되어 정규화 항에서 제외됩니다.
+
 $$ \mathcal{L}(\Theta) = \mathcal{L}_{data}(\Theta) + \lambda_{wd} \sum_{\rho \in \mathcal{P}_{train}} ||\rho||_{2}^{2} $$
+
 *   DDPM의 $\mathcal{L}_{data}$는 squared-cosine noise schedule을 사용합니다.
 *   U-Net의 $\mathcal{L}_{data}$는 픽셀 단위 MAE(Mean Absolute Error) 손실을 사용합니다.
 *   VAE의 $\mathcal{L}_{data}$는 KL Divergence와 스케일된 이미지 재구성 손실을 결합한 하이브리드 손실을 사용합니다.
 
 **4. 패치 스티칭 (Patch Stitching) - 최종 예측 (Eq. 9):**
 추론 시, 겹치는 패치들의 예측값 $\hat{Y}_{i}(y, x)$에 Hann 윈도우 가중치 $W_{i}(y, x)$를 적용하여 가중 합 이미지 $S(y, x)$와 가중치 이미지 $Z(y, x)$를 구한 후, 최종 스티칭된 이미지 $\hat{Y}(y, x)$를 계산합니다.
+
 $$ \hat{Y}(y, x) = \frac{S(y, x)}{\max\{Z(y, x), \epsilon\}} $$
+
 여기서 $S(y, x) = \sum_{i} \mathbb{1}\{(y, x) \in Q_{i}\} W_{i}(y, x) \hat{Y}_{i}(y, x)$ 이고, $Z(y, x) = \sum_{i} \mathbb{1}\{(y, x) \in Q_{i}\} W_{i}(y, x)$ 입니다. ($\epsilon$은 수치적 안전을 위한 작은 상수).
 
 #### Vanilla U-Net 비교

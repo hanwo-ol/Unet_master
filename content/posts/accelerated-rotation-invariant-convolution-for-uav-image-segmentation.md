@@ -154,9 +154,14 @@ $$\psi_\theta(x, y) = \sin(\theta) \cdot f_x(x, y) + \cos(\theta) \cdot f_y(x, y
 $$\mathcal{L}_{total} = \mathcal{L}_{CE} + \lambda_{mag} \mathcal{L}_{mag} + \lambda_{orth} \mathcal{L}_{orth}$$
 
 *   **크기 일치 손실 (Magnitude-matching Loss, Eq. 19):** 두 기저 필터 $f_x$와 $f_y$의 평탄화된 커널 가중치 $w_b^{(x)}$와 $w_b^{(y)}$가 유사한 에너지 레벨을 유지하도록 장려합니다.
-    $$\mathcal{L}_{mag} = \frac{1}{B} \sum_{b=1}^{B} \left( \left\| w_b^{(x)} \right\|_2^2 - \left\| w_b^{(y)} \right\|_2^2 \right)^2$$
+    
+
+$$\mathcal{L}_{mag} = \frac{1}{B} \sum_{b=1}^{B} \left( \left\| w_b^{(x)} \right\|_2^2 - \left\| w_b^{(y)} \right\|_2^2 \right)^2$$
+
 *   **직교성 손실 (Orthogonality Loss, Eq. 20):** 두 방향 기저 간의 상관관계를 억제하여 회전 독립성을 촉진합니다.
-    $$\mathcal{L}_{orth} = \frac{1}{B} \sum_{b=1}^{B} \left( \frac{\langle w_b^{(x)}, w_b^{(y)} \rangle}{\| w_b^{(x)} \|_2 \| w_b^{(y)} \|_2 + \epsilon} \right)^2$$
+    
+
+$$\mathcal{L}_{orth} = \frac{1}{B} \sum_{b=1}^{B} \left( \frac{\langle w_b^{(x)}, w_b^{(y)} \rangle}{\| w_b^{(x)} \|_2 \| w_b^{(y)} \|_2 + \epsilon} \right)^2$$
 
 ### Vanilla U-Net 비교
 

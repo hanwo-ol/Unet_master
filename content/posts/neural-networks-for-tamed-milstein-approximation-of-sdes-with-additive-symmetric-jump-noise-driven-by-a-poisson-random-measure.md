@@ -33,7 +33,10 @@ This work aims to estimate the drift and diffusion functions in stochastic diffe
 *   **연구 목표:** 유한 점프 강도(finite jump intensity)를 가진 Lévy 과정에 의해 구동되는 SDE의 표류 함수 $f(X(t))$와 확산 함수 $g(X(t))$를 비모수적으로 추정하는 프레임워크를 개발합니다.
 *   **핵심 방법론:** 신경망(Neural Networks)을 비모수적 함수 근사기로 활용하고, 이를 **Tamed-Milstein 수치 기법**과 통합합니다.
 *   **모델 형태:** 관심 SDE는 다음과 같습니다.
-    $$dX(t) = \xi + f(X(t))dt + g(X(t))dW + \int_Z \gamma z N(dt, dz)$$
+    
+
+$$dX(t) = \xi + f(X(t))dt + g(X(t))dW + \int_Z \gamma z N(dt, dz)$$
+
     여기서 $W$는 표준 브라운 운동, $N(dt, dz)$는 푸아송 랜덤 측도(Poisson Random Measure)입니다.
 *   **훈련 전략:** 증분(increments)의 조건부 1차 및 2차 모멘트 최소화에 의존하는 손실 함수를 사용하여 신경망을 훈련합니다.
 *   **주요 성과:** 제안된 방법론은 상태 의존적 노이즈와 불연속성(점프)을 가진 시스템에 대해 유연한 추론 대안을 제공하며, 수치 실험을 통해 연속 및 점프 구동 환경 모두에서 표류 및 확산 계수를 정확하게 추정함을 입증했습니다.
@@ -113,34 +116,46 @@ SDE는 금융, 생태학, 신경과학 등 불확실성과 노이즈에 의해 �
 
 #### SDE 모델 (Equation 1)
 이 연구에서 다루는 SDE는 다음과 같습니다.
+
 $$dX(t) = \xi + f(X(t))dt + g(X(t))dW + \int_Z \gamma z N(dt, dz)$$
+
 여기서 $f: \mathbb{R} \to \mathbb{R}$는 표류 함수, $g: \mathbb{R} \to \mathbb{R}$는 확산 계수, $\gamma > 0$는 점프 크기 스케일링 매개변수입니다.
 
 #### Tamed-Milstein 근사 (Equation 7)
 시간 간격 $h$에 대한 이산화 근사 $X_{t+\Delta t}$는 다음과 같습니다.
+
 $$\begin{aligned} X_{t+\Delta t} = X_t &+ f^{\Delta t}(X_t) \Delta t + g(X_t) \Delta W_t \\ &+ \frac{1}{2} g(X_t) g'(X_t) ((\Delta W_t)^2 - \Delta t) \\ &+ \sum_{i=1}^{N((t, t+\Delta t], Z)} \gamma z_i \\ &+ \sum_{i=1}^{N((t, t+\Delta t], Z)} (g(X_t + \gamma z_i) - g(X_t)) (\Delta W_{t+\Delta t} - \Delta W_{t_i}) \end{aligned}$$
+
 여기서 $f^{\Delta t}(x)$는 테이밍된(tamed) 표류 항으로, 다음과 같이 정의됩니다.
+
 $$f^{\Delta t}(x) = \frac{f(x)}{1+\Delta t f^2(x)}$$
 
 #### 조건부 1차 모멘트 (Conditional Expectation, Equation 8)
+
 $$E (X_{t+\Delta t} | \mathcal{F}(X_t)) = X_t + f^{\Delta t}(X_t) \Delta t$$
 
 #### 조건부 2차 모멘트 (Conditional Second Moment, Equation 15)
 증분의 조건부 분산은 $E(M_1^2 | \mathcal{F}(X_t)) + E(M_2^2 | \mathcal{F}(X_t))$로 주어지며, $\lambda \neq 0$ 및 $\gamma \neq 0$일 때 다음과 같습니다.
+
 $$\begin{aligned} E \left( (X_{t+\Delta t} - E(X_{t+\Delta t} | \mathcal{F}(X_t)))^2 | \mathcal{F}(X_t) \right) &= g^2(X_t)\Delta t + \frac{1}{4} (g(X_t)g'(X_t)\Delta t)^2 \\ &+ \gamma^2 \mu_2 \lambda \Delta t + \text{higher order jump terms} \end{aligned}$$
+
 여기서 $\mu_2 = E[z^2]$는 점프 크기의 2차 모멘트입니다.
 
 #### 표류 함수 손실 $D_1$ (Loss Function for Drift, Equation 11)
 Phase 1에서 표류 함수 $\hat{f}$를 추정하기 위해 사용되는 평균 제곱 오차(MSE) 손실 함수입니다.
+
 $$D_1(\hat{f}, \hat{g}, B_k, j) := \frac{1}{|B_k|-1} \sum_{t_i \in B_k \setminus \{t_{k, |B_k|}\}} \left[ X_{j, t_{i+1}} - X_{j, t_i} - \hat{f}^{\Delta t}(X_{j, t_i}) \Delta t_{i+1} \right]^2$$
 
 #### 확산 함수 손실 $D_2$ (Loss Function for Diffusion, Equation 12)
 Phase 1에서 확산 함수 $\hat{g}$를 추정하기 위해 사용되는 근사 우도(likelihood) 손실 함수입니다.
+
 $$D_2(\hat{f}, \hat{g}, B_k, j) := - \sum_{t_i \in B_k \setminus \{t_{k, |B_k|}\}} \log f_{t_i, \Delta t_i}^{M, h, a} (X_{j, t_{i+1}} | X_{j, t_i})$$
+
 여기서 $f^{M, h, a}$는 특성 함수(Characteristic Function)를 이용해 근사된 조건부 밀도 함수입니다.
 
 #### 표준화된 조건부 증분 $Y_{t, \Delta t}^*$ (Equation 19, $\gamma=0$일 때)
 Phase 3에서 선택적 훈련을 위해 사용되는 표준화된 조건부 증분입니다.
+
 $$Y_{t, \Delta t}^* := \frac{X_{t+\Delta t} - (X_t + \hat{f}^{\Delta t}(X_t)\Delta t)}{\sqrt{g^2(X_t)\Delta t + \frac{1}{4} (g(X_t)g'(X_t)\Delta t)^2}}$$
 
 ### Vanilla U-Net 비교

@@ -146,6 +146,7 @@ $$R_{\Omega}(\hat{\theta}(\cdot, \zeta)) \approx \frac{1}{K} \sum_{\theta \in \T
 순열 불변성을 강제하는 신경망 추정량 $\hat{\theta}(\mathbf{X}; \zeta)$는 다음과 같이 정의됩니다 (Eq. 4):
 
 $$\hat{\theta}(\mathbf{X}; \zeta) = \phi \left( T(\mathbf{X}; \zeta_{\Lambda}); \zeta_{\phi} \right)$$
+
 $$T(\mathbf{X}; \zeta_{\Lambda}) = a \left( \left\{ \Lambda(\tilde{X}_i; \zeta_{\Lambda}) \right\}_{i=1}^{n-1} \right) \quad (4)$$
 
 여기서:
@@ -157,6 +158,7 @@ $$T(\mathbf{X}; \zeta_{\Lambda}) = a \left( \left\{ \Lambda(\tilde{X}_i; \zeta_{
 본 연구에서 최종적으로 선택된 손실 함수는 **평균 제곱 로그 오차(Mean Squared Logarithmic Error, MSLE)**입니다 (Page 20).
 
 $$L(\theta, \hat{\theta}) = \frac{1}{P} \sum_{p=1}^{P} (\log(1 + \theta_p) - \log(1 + \hat{\theta}_p))^2$$
+
 (여기서 $P$는 매개변수의 총 개수이며, $\theta_p$와 $\hat{\theta}_p$는 $p$번째 참값과 추정값입니다. MSLE는 특히 양수 값 매개변수(예: 분산, 강도)에 대해 0 근처의 작은 값에 민감하게 반응하도록 합니다.)
 
 ### Vanilla U-Net 비교

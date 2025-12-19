@@ -120,7 +120,9 @@ $$d S_t = S_t \left( (\mu - \lambda k) dt + \sigma d W_t + d Q_t \right)$$
 *   $d Q_t$: 복합 포아송 과정(Compound Poisson process)으로 모델링된 점프 성분. 불연속적인 가격 변화를 포착합니다.
 
 점프 성분 $d Q_t$는 다음과 같이 정의됩니다 (p. 5):
+
 $$d Q_t = \sum_{i=1}^{N_t} (Y_i - 1)$$
+
 여기서 $N_t$는 강도 $\lambda$를 갖는 포아송 과정이며, $Y_i$는 점프 크기를 나타내는 독립적이고 동일하게 분포된(i.i.d.) 로그 정규 분포 $\ln(Y_i) \sim \mathcal{N}(m, \delta^2)$를 따르는 확률 변수입니다.
 
 #### 2. Calibration Loss Function (NN 기반 보정)
@@ -137,6 +139,7 @@ $$\mathcal{L}(\theta) = \frac{1}{N} \sum_{i=1}^{N} (P_{\text{market}, i} - P_{\t
 신경망의 가중치 $W^{(l)}$와 편향 $b^{(l)}$는 경사 하강법(Adam)을 사용하여 다음과 같이 업데이트됩니다 (p. 7):
 
 $$W_{\text{new}}^{(l)} = W^{(l)} - \eta \frac{\partial \mathcal{L}}{\partial W^{(l)}}$$
+
 $$b_{\text{new}}^{(l)} = b^{(l)} - \eta \frac{\partial \mathcal{L}}{\partial b^{(l)}}$$
 
 여기서 $\eta$는 학습률(learning rate)입니다.

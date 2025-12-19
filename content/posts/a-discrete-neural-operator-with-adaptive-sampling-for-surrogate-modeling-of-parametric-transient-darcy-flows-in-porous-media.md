@@ -113,27 +113,37 @@ AROnet은 ARUnet을 기반으로 하지만, 시공간 매핑을 위한 **Branch-
 ### 수식 상세
 
 #### 1. 단상 Darcy 흐름 지배 방정식 (Governing Equation for Single-Phase Darcy Flow)
+
 $$\phi c_t \frac{\partial P}{\partial t} = \nabla \cdot (\frac{K}{\mu} \nabla P) + f \quad \text{(Eq. 1)}$$
+
 여기서 $\phi$는 다공도(porosity), $c_t$는 총 압축률(total compressibility), $P$는 압력(pressure), $K$는 투수율(permeability), $\mu$는 점성(viscosity), $f$는 소스/싱크 항(source/sink term)입니다.
 
 #### 2. 시간 임베딩 (Time Embedding)
 AROnet은 임의의 시간 $t$에 대한 예측을 위해 사인-코사인 임베딩을 사용합니다. $d$는 임베딩 차원입니다.
+
 $$TE(t, 2i) = \sin (t/10000^{2i/d})$$
+
 $$TE(t, 2i+1) = \cos (t/10000^{2i/d}) \quad \text{(Eq. 12)}$$
 
 #### 3. AROnet 연산자 근사 (Operator Approximation)
 AROnet은 PDE 연산자 $G$를 근사하는 신경망 연산자 $G_{\theta}$를 학습합니다.
+
 $$G_{\theta}(u)(t) = f(\sum_{k=1}^{q} b_k(u(x_1), u(x_2), ..., u(x_m)) * t_k(t)) \quad \text{(Eq. 13)}$$
+
 여기서 $b_k$는 Branch Net의 출력(매개변수 특징 맵), $t_k$는 Trunk Net의 출력(시간 인코딩 가중치), $f$는 CNN과 시그모이드 활성화 함수, $*$는 채널별 곱셈을 나타냅니다.
 
 #### 4. 손실 함수 (Operator Loss Function)
 $N$은 샘플 수, $M$은 시간 단계 수입니다.
+
 $$\mathcal{L}_{\text{operator}}(\theta) = \frac{1}{NM} \sum_{i=1}^{N} \sum_{j=1}^{M} ||G_{\theta}(u^{(i)})(y_j^{(i)}) - G(u^{(i)})(y_j^{(i)})||^2 \quad \text{(Eq. 14)}$$
 
 #### 5. 잔차 벡터 (Residual Vector for Adaptive Sampling)
 훈련된 네트워크 $F$의 예측 $\hat{y}$와 실제 값 $y$ 사이의 MSE를 잔차 제곱 $r^2(X_t)$로 정의합니다.
+
 $$r^2(X_t) \Leftrightarrow R_t^{(0)} = ||\hat{y}_t^{(0)} - y_t^{(0)}||_2^2 \quad \text{(Eq. 23)}$$
+
 $$R_{t,j}^{(0),i} = \frac{1}{N_g} \sum_{j=1}^{N_g} (y_{t,j}^{(0),i} - \hat{y}_{t,j}^{(0),i})^2 \quad \text{(Eq. 24)}$$
+
 여기서 $N_g$는 샘플당 메쉬 노드 수입니다.
 
 ### Vanilla U-Net 비교

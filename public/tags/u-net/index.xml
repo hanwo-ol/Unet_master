@@ -6,7 +6,25 @@
     <description>Recent content in U-Net on Research Agent Knowledge Base</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ko-kr</language>
-    <lastBuildDate>Wed, 03 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/u-net/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 08 Dec 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://hanwo-ol.github.io/Unet_master/tags/u-net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Robust Variational Model Based Tailored UNet: Leveraging Edge Detector and Mean Curvature for Improved Image Segmentation</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/robust-variational-model-based-tailored-unet-leveraging-edge-detector-and-mean-curvature-for-improved-image-segmentation/</link>
+      <pubDate>Mon, 08 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/robust-variational-model-based-tailored-unet-leveraging-edge-detector-and-mean-curvature-for-improved-image-segmentation/</guid>
+      <description>Abstract To address the challenge of segmenting noisy images with blurred or fragmented boundaries, this paper presents a robust version of Variational Model Based Tailored UNet (VM_TUNet), a hybrid framework that integrates variational methods with deep learning. The proposed approach incorporates physical priors, an edge detector and a mean curvature term, into a modified Cahn-Hilliard equation, aiming to combine the interpretability and boundary-smoothing advantages of variational partial differential equations (PDEs) with the strong representational ability of deep neural networks.</description>
+    </item>
+    
+    <item>
+      <title>DAUNet: A Lightweight UNet Variant with Deformable Convolutions and Parameter-Free Attention for Medical Image Segmentation</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/daunet-a-lightweight-unet-variant-with-deformable-convolutions-and-parameter-free-attention-for-medical-image-segmentation/</link>
+      <pubDate>Sun, 07 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/daunet-a-lightweight-unet-variant-with-deformable-convolutions-and-parameter-free-attention-for-medical-image-segmentation/</guid>
+      <description>Abstract Medical image segmentation plays a pivotal role in automated diagnostic and treatment planning systems. In this work, we present DAUNet, a novel lightweight UNet variant that integrates Deformable V2 Convolutions and Parameter-Free Attention (SimAM) to improve spatial adaptability and context-aware feature fusion without increasing model complexity. DAUNet&amp;rsquo;s bottleneck employs dynamic deformable kernels to handle geometric variations, while the decoder and skip pathways are enhanced using SimAM attention modules for saliency-aware refinement.</description>
+    </item>
+    
     <item>
       <title>Lean Unet: A Compact Model for Image Segmentation</title>
       <link>https://hanwo-ol.github.io/Unet_master/posts/lean-unet-a-compact-model-for-image-segmentation/</link>
@@ -23,6 +41,15 @@
       
       <guid>https://hanwo-ol.github.io/Unet_master/posts/multifractal-recalibration-of-neural-networks-for-medical-imaging-segmentation/</guid>
       <description>Abstract Multifractal analysis has revealed regularities in many self-seeding phenomena, yet its use in modern deep learning remains limited. Existing end-to-end multifractal methods rely on heavy pooling or strong feature-space decimation, which constrain tasks such as semantic segmentation. Motivated by these limitations, we introduce two inductive priors: Monofractal and Multifractal Recalibration. These methods leverage relationships between the probability mass of the exponents and the multifractal spectrum to form statistical descriptions of encoder embeddings, implemented as channel-attention functions in convolutional networks.</description>
+    </item>
+    
+    <item>
+      <title>Spatiotemporal Satellite Image Downscaling with Transfer Encoders and Autoregressive Generative Models</title>
+      <link>https://hanwo-ol.github.io/Unet_master/posts/spatiotemporal-satellite-image-downscaling-with-transfer-encoders-and-autoregressive-generative-models/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://hanwo-ol.github.io/Unet_master/posts/spatiotemporal-satellite-image-downscaling-with-transfer-encoders-and-autoregressive-generative-models/</guid>
+      <description>Abstract We present a transfer-learning generative downscaling framework to reconstruct fine resolution satellite images from coarse scale inputs. Our approach combines a lightweight U-Net transfer encoder with a diffusion-based generative model. The simpler U-Net is first pretrained on a long time series of coarse resolution data to learn spatiotemporal representations; its encoder is then frozen and transferred to a larger downscaling model as physically meaningful latent features. Our application uses NASA&amp;rsquo;s MERRA-2 reanalysis as the low resolution source domain (50 km) and the GEOS-5 Nature Run (G5NR) as the high resolution target (7 km).</description>
     </item>
     
   </channel>

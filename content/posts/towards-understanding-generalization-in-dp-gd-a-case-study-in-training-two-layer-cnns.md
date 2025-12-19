@@ -99,30 +99,41 @@ Modern deep learning techniques focus on extracting intricate information from d
 
 **모델 구조:**
 모델의 출력 함수 $f(W, x)$는 다음과 같이 정의됩니다:
+
 $$f(W, x) = F_{+1}(W_{+1}, x) - F_{-1}(W_{-1}, x)$$
+
 여기서 $F_j(W_j, x)$는 $j \in \{+1, -1\}$에 대한 필터 집합 $W_j$의 출력이며, $m$개의 컨볼루션 필터의 평균으로 계산됩니다:
+
 $$F_j(W_j, x) = \frac{1}{m} \sum_{r=1}^m [\sigma(\langle w_{j,r}, x^{(1)} \rangle) + \sigma(\langle w_{j,r}, x^{(2)} \rangle)]$$
+
 입력 데이터 $x \in \mathbb{R}^{2d}$는 두 부분 $x = [x^{(1)T}, x^{(2)T}]^T$으로 나뉘며, $x^{(1)}$ 또는 $x^{(2)}$ 중 하나가 신호($y\mu$)를, 다른 하나가 잡음($\xi$)을 포함합니다.
 
 ### 수식 상세
 
 #### Huberized ReLU Activation Function ($\sigma(z)$)
 Huberized ReLU는 분석의 용이성을 위해 사용되는 부드러운(smooth) 활성화 함수입니다.
+
 $$\sigma(z) = \kappa^{-q} z^q \cdot \mathbb{1}_{\{z \in [0, \kappa]\}} + \left(z - \kappa + \frac{\kappa^{q}}{q}\right) \cdot \mathbb{1}_{\{z > \kappa\}}$$
+
 여기서 $\kappa$는 다항식($z^q$)과 선형 함수($z - \kappa + \kappa^q/q$) 사이의 경계 임계값이며, $q \ge 3$입니다.
 
 #### Empirical Cross-Entropy Loss ($L_S(W)$)
 훈련 데이터셋 $S = \{(x_i, y_i)\}_{i=1}^n$에 대한 경험적 교차 엔트로피 손실 함수는 다음과 같습니다:
+
 $$L_S(W) = \frac{1}{n} \sum_{i=1}^n l[y_i \cdot f(W, x_i)]$$
+
 여기서 $l(t) = \log(1 + e^{-t})$는 로지스틱 손실(logistic loss)입니다.
 
 #### DP-GD Update Rule (Equation 1)
 DP-GD는 표준 GD에 반복마다 가우시안 잡음 $b_{j,r,t}$를 추가하여 프라이버시를 보장합니다.
+
 $$w_{j,r}^{(t+1)} = w_{j,r}^{(t)} - \eta \left( \nabla_{w_{j,r}} L_S(W^{(t)}) + b_{j,r,t} \right)$$
+
 여기서 $\eta$는 학습률(learning rate)이며, 추가된 가우시안 잡음은 $b_{j,r,t} \sim \mathcal{N}(0, \sigma_b^2 I_d)$를 따릅니다.
 
 #### GD Update Rule (Equation 2)
 표준 GD는 추가 잡음 없이 기울기만을 사용하여 가중치를 업데이트합니다.
+
 $$w_{j,r}^{(t+1)} = w_{j,r}^{(t)} - \eta \nabla_{w_{j,r}} L_S(W^{(t)})$$
 
 ### Vanilla U-Net 비교

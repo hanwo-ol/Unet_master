@@ -128,16 +128,20 @@ Figure 1은 제안된 표적형 적대적 GAN (A-GAN)의 고수준 아키텍처 
 
 **General Slope Attack (GSA) 기울기 ($m$):**
 예측의 끝점 $(x_1, y_1)$과 $(x_2, y_2)$ 사이의 이산적인 기울기입니다.
+
 $$m = \frac{y_2 - y_1}{x_2 - x_1}$$
 
 **Least-Squares Slope Attack (LSSA) 기울기 ($m$):**
 최소 제곱 선형 회귀의 폐쇄형 해(Closed-form Solution)에서 가중치 항(기울기)을 사용합니다. $N$은 예측 길이, $\bar{x}$와 $\bar{y}$는 각각 $x$와 $y$의 평균입니다.
+
 $$m = \frac{\sum_{i=0}^{N} (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=0}^{N} (x_i - \bar{x})^2}$$
 
 #### 2. 기울기 공격 손실 함수 (Loss Function)
 
 GSA와 LSSA 모두 동일한 손실 함수 구조를 사용하며, $m$은 위에서 계산된 기울기입니다. $t \in \{-1, 0, 1\}$은 목표 방향입니다.
+
 $$\text{loss} = \begin{cases} c e^{-tdm} & \text{if } t \in \{-1, 1\} \\ c m^2 & \text{if } t = 0 \end{cases} \quad (1)$$
+
 *   $t=1$ (상승 목표): $m$이 작거나 음수일 때 손실이 커집니다.
 *   $t=-1$ (하락 목표): $m$이 크거나 양수일 때 손실이 커집니다.
 *   $t=0$ (제로 기울기 목표): 기울기 $m$의 제곱에 비례하여 손실이 커집니다.
@@ -148,14 +152,18 @@ $$\text{loss} = \begin{cases} c e^{-tdm} & \text{if } t \in \{-1, 1\} \\ c m^2 &
 
 **A-GAN Generator Loss ($L_g$):**
 생성자는 판별자를 속이는 목표와 N-HiTS 모델을 속이는 목표를 동시에 가집니다.
+
 $$L_g = \mathbb{E}_{\mathbf{x} \sim p_{\mathbf{x}}} [D(\mathbf{x})] + \alpha \cdot \text{LSSA}(N\text{-HiTS}(\mathbf{x}))$$
+
 *   $\mathbb{E}_{\mathbf{x} \sim p_{\mathbf{x}}} [D(\mathbf{x})]$: 판별자가 생성된 데이터를 실제라고 판단하도록 유도하는 항 (WGAN Critic Loss).
 *   $\alpha$: 적대적 손실의 균형을 맞추는 스케일링 인자.
 *   $\text{LSSA}(N\text{-HiTS}(\mathbf{x}))$: N-HiTS 예측에 대한 LSSA 손실 (기울기 조작 목표).
 
 **A-GAN Final Loss ($L$):**
 WGAN-GP 형태의 최종 손실 함수입니다. $\tilde{\mathbf{x}}$는 합성 샘플, $\hat{\mathbf{x}}$는 실제와 합성 샘플 사이의 보간된 샘플입니다.
+
 $$L = L_g - \mathbb{E}_{\tilde{\mathbf{x}} \sim p_g} [D(\tilde{\mathbf{x}})] + \lambda \cdot \mathbb{E}_{\hat{\mathbf{x}} \sim p_{\hat{\mathbf{x}}}} [(\|\nabla_{\hat{\mathbf{x}}} D(\hat{\mathbf{x}})\| - 1)^2]$$
+
 *   $\lambda$: 기울기 페널티의 크기를 제어하는 상수.
 
 ### Vanilla U-Net 비교 (N-HiTS 아키텍처 분석)
