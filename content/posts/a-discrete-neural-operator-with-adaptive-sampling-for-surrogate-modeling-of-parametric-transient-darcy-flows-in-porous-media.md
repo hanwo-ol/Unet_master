@@ -135,7 +135,11 @@ $$G_{\theta}(u)(t) = f(\sum_{k=1}^{q} b_k(u(x_1), u(x_2), ..., u(x_m)) * t_k(t))
 #### 4. 손실 함수 (Operator Loss Function)
 $N$은 샘플 수, $M$은 시간 단계 수입니다.
 
-$$\mathcal{L}_{\text{operator}}(\theta) = \frac{1}{NM} \sum_{i=1}^{N} \sum_{j=1}^{M} ||G_{\theta}(u^{(i)})(y_j^{(i)}) - G(u^{(i)})(y_j^{(i)})||^2 \quad \text{(Eq. 14)}$$
+
+$$
+\mathcal{L}_{\text{operator}}(\theta) = \frac{1}{NM} \sum_{i=1}^{N} \sum_{j=1}^{M} ||G_{\theta}(u^{(i)})(y_j^{(i)}) - G(u^{(i)})(y_j^{(i)})||^2
+$$
+
 
 #### 5. 잔차 벡터 (Residual Vector for Adaptive Sampling)
 훈련된 네트워크 $F$의 예측 $\hat{y}$와 실제 값 $y$ 사이의 MSE를 잔차 제곱 $r^2(X_t)$로 정의합니다.
