@@ -14,6 +14,7 @@ tags:
 - Lightweight UNet (경량 U-Net)
 - Medical Image Segmentation (의료 영상 분할)
 - Real-Time Deployment (실시간 배포)
+- U-Net
 title: 'DAUNet: A Lightweight UNet Variant with Deformable Convolutions and Parameter-Free
   Attention for Medical Image Segmentation'
 ---

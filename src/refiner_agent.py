@@ -221,6 +221,22 @@ def main():
                 if extracted_tags:
                     # Clean tags
                     clean_tags = [t.strip() for t in extracted_tags]
+                    
+                    # Enforce U-Net tag rule
+                    keywords_unet = ["U-Net", "UNet", "u-net", "unet"]
+                    is_unet_paper = False
+                    
+                    # Check Title
+                    if any(k.lower() in post.get('title', '').lower() for k in keywords_unet):
+                        is_unet_paper = True
+                    # Check Tags
+                    elif any(k.lower() in t.lower() for t in clean_tags for k in keywords_unet):
+                        is_unet_paper = True
+                        
+                    if is_unet_paper and "U-Net" not in clean_tags:
+                        clean_tags.append("U-Net")
+                        print(" -> Enforced 'U-Net' tag")
+
                     post['tags'] = clean_tags
                     print(f"Extracted Tags: {clean_tags}")
             

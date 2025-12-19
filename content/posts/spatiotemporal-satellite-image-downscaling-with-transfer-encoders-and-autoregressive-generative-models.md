@@ -14,6 +14,7 @@ tags:
 - Diffusion Models (확산 모델)
 - Aerosol Optical Depth (AOD)
 - U-Net Architecture (U-Net 아키텍처)
+- U-Net
 title: Spatiotemporal Satellite Image Downscaling with Transfer Encoders and Autoregressive
   Generative Models
 ---

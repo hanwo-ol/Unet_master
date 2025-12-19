@@ -14,6 +14,7 @@ tags:
 - UNet Hybrid Architecture
 - Cahn-Hilliard Equation
 - Mean Curvature
+- U-Net
 title: 'Robust Variational Model Based Tailored UNet: Leveraging Edge Detector and
   Mean Curvature for Improved Image Segmentation'
 ---
